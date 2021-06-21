@@ -1,5 +1,5 @@
     - name: VARA Install, 32 bit system base
-      when: ansible_facts['distribution'] == 'Debian' and install_system_packages and install_wine
+      when: ansible_facts['distribution'] == 'Debian' and install_wine
       become: true
       become_user: root
       ignore_errors: yes

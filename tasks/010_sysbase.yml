@@ -28,7 +28,7 @@
             append: yes
 
         - name: System base - Install packages
-          when: ansible_facts['distribution'] == 'Debian' and install_system_packages
+          when: ansible_facts['distribution'] == 'Debian'
           become: true
           become_user: root
           ignore_errors: yes
@@ -39,23 +39,25 @@
                 install_recommends: no
                 state: present
                 name:
+                  - autoconf
+                  - bash-completion
+                  - build-essential
+                  - curl
+                  - emacs-nox
+                  - python3
+                  - python-pip
+                  - python3-pymysql
                   - sudo 
                   - vim-nox
-                  - emacs-nox
                   - mosquitto
                   - openvpn
                   - wireless-tools
                   - htop
                   - net-tools 
                   - wpasupplicant
-                  - python-pip
-                  - build-essential
-                  - autoconf
                   - git
-                  - bash-completion
                   - jq
                   - patch
-                  - curl
                   - xterm
                   - wmaker
                   - rxvt

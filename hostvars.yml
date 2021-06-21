@@ -8,8 +8,6 @@
     webpub_path: /var/www
     webapi_path: "{{ webpub_path }}/station-api"
     inbox_path: "{{ webapi_path }}/storage/app/inbox"
-    # check this !
-    install_system_packages: true
     install_wine: true
     ubitx_client: "/usr/bin/ubitx_client"
     # TODO
