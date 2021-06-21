@@ -5,14 +5,14 @@
           - name: Network - copying interface.d files
             become: true
             copy:
-              src: conf/interfaces.d
+              src: conf/interfaces.d/
               dest: /etc/network
               owner: root
               group: root
               mode: '0744'
               backup: yes
 
-          - name: Network - copying openvpn conf files
+          - name: Network - openvpn setup - copying conf file
             become: true
             copy:
               src: "conf/{{ hostname }}.ovpn"
@@ -22,7 +22,7 @@
               mode: '0744'
               backup: yes
 
-          - name: Network - copying dnsmasq.conf file
+          - name: Network - wifi setup- copying dnsmasq.conf file
             become: true
             copy:
               src: "conf/dnsmasq.conf"
@@ -33,19 +33,9 @@
               backup: yes
           
           
-          
           - name: Network - setting files TODO
             command: "echo test"
             #ansible.builtin.lineinfile:
               #path: "{{ webpub_path }}/station-api/.env"
               #regexp: '^HERMES_INBOX='
               #line: "HERMES_INBOX={{ inbox_path }}"
-
-          - name: Network - setting openVPN TODO
-            command: "echo test"
-
-          - name: Network - setting openVPN TODO
-            command: "echo test"
-
-          - name: Network - setting wifi TODO
-            command: "echo test"
