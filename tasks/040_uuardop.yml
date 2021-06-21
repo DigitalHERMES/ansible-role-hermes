@@ -1,0 +1,20 @@
+- name: Rhizomatica UUARDOP
+  become_user: root
+  block:
+    - name: UUARDOP - clone from github
+      become: false
+      git:
+        repo: "git://github.com/DigitalHERMES/rhizo-uuardop.git"
+        clone: yes
+        dest: "{{ build_path }}/rhizo-uuardop/"
+        version: HEAD
+    - name: UUARDOP - build
+      become: false
+      command: make 
+      args:
+        chdir: "{{ build_path }}/rhizo-uuardop/"
+    - name: UUARDOP - install 
+      become: true
+      command: make install
+      args:
+        chdir: "{{ build_path }}/rhizo-uuardop/"

@@ -1,0 +1,36 @@
+    - name: VARA Install, 32 bit system base
+      when: ansible_facts['distribution'] == 'Debian' and install_system_packages and install_wine
+      become: true
+      become_user: root
+      ignore_errors: yes
+      block:
+        - name: VARA Install - add 32bit arch
+          become: true
+          command: dpkg --add-architecture i386 
+
+        - name: VARA Install - refresh apt 
+          apt:
+            update_cache: yes
+
+        - name: VARA Install -  wine 64 and 32 bit packages
+          become: true
+          apt:
+            install_recommends: no
+            state: present
+            name:
+              - wine
+              - wine32
+              - libwine:i386
+              - wine64
+              - libwine
+              - fonts-wine
+
+        #- name: Service - nginx setup
+          #become: true
+          #copy:
+            #src: conf/vara
+            #dest: /home/hermes/vara
+            #owner: www-data
+            #group: www-data
+            #mode: '0577'
+            #backup: yes

@@ -1,0 +1,16 @@
+    - name: HERMES station-api backend software
+
+      block:
+          - name: Network - setting files TODO
+            command: "echo test"
+            #ansible.builtin.lineinfile:
+              #path: "{{ webpub_path }}/station-api/.env"
+              #regexp: '^HERMES_INBOX='
+              #line: "HERMES_INBOX={{ inbox_path }}"
+
+
+          - name: Network - setting openVPN TODO
+            command: "echo test"
+
+          - name: Network - setting wifi TODO
+            command: "echo test"

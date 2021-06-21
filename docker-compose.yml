@@ -1,0 +1,20 @@
+version: '3.5'
+services:
+  debianhermes:
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    image: jrei/systemd-debian:10
+    restart: unless-stopped
+    tmpfs:
+      - /tmp 
+      - /run
+      - /run/lock
+    ports:
+    #- "8889:80"
+      - "2222:22"  
+    volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+    #- /srv/audio-sandbox/home/:/home/:rw
+    #- /srv/audio-sandbox/etc/:/etc/:rw
+    #entrypoint: "/bin/sh"v
+    #environment: 

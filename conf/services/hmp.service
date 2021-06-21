@@ -1,0 +1,25 @@
+[Unit]
+Description=Message Packet input monitor
+After=syslog.target network.target
+
+[Service]
+#Type=forking
+Type=simple
+User=hermes
+Group=hermes
+WorkingDirectory=/var/www/station-api/storage/app
+PIDFile=/var/run/vnc%H:1.pid
+ExecStart=/var/www/station-api/scripts/monitor.sh
+ExecStop=killall -9 monitor.sh
+#IgnoreSIGPIPE=no
+#StandardOutput=null
+#StandardError=null
+#StandardOutput=syslog
+#StandardError=syslog
+#Restart=always
+#TimeoutSec=30
+#ExecStartPre=/bin/sleep 1
+
+[Install]
+WantedBy=multi-user.target
+

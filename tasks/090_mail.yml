@@ -1,0 +1,44 @@
+---
+- name: ISP Config 
+  become_user: root
+  block:
+    - name: Mail - install packages
+      become: true
+      apt:
+        install_recommends: no
+        state: present
+        name:
+          - postfix
+          - postfix-mysql
+          - postfix-doc
+          - spamassassin
+          - ntp
+          - mariadb-client
+          - binutils
+          - mariadb-server
+          - openssl
+          - getmail4
+          - rkhunter
+          - binutils
+          - dovecot-imapd
+          - dovecot-pop3d
+          - dovecot-mysql
+          - dovecot-sieve
+          - dovecot-lmtpd
+          - amavisd-milter
+          - clamav-freshclam
+          - clamav
+          - clamav-daemon
+          - clamav-unofficial-sigs
+
+    - name:  Mail - ISPconfig download and extract tarball
+      unarchive:
+        src: 'https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz'
+        dest: '{{ build_path }}'
+        remote_src: yes
+    - name: ISPconfig  shell setup TODO
+      command: echo {{ password_api }}
+    - name: ISPconfig  api setup TODO
+      command: echo {{ password_api }}
+
+

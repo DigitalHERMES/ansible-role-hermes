@@ -1,0 +1,122 @@
+---
+- name: php and nginx install and setup
+  become_user: root
+  block:
+    - name: Web Setup - PHP - install php-fpm, plugins and composer debian packages
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+          - php-fpm
+          - php-cli
+          - php-mysql
+          - php-curl
+          - php-mbstring
+          - php-xml 
+          - php-soap
+          - composer   
+
+    - name: Web Setup - PHP - Set date.timezone for FPM
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: "date.timezone ="
+        line: "date.timezone = UTC"
+
+    - name: Web Setup - PHP -  enabling mysql extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=pdo_mysql"
+        line: "extension=pdo_mysql"
+
+    - name: Web Setup - PHP -  enabling sqlite extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=sqlite3"
+        line: "extension=sqlite3"
+
+    - name: Web Setup - PHP -  enabling soap extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=soap"
+        line: "extension=soap"
+
+    - name: Web Setup - PHP -  enabling mbstring extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=mbstring"
+        line: "extension=mbstring"
+
+    - name: Web Setup - PHP -  enabling mbstring extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=mbstring"
+        line: "extension=mbstring"
+
+    - name: Web Setup - PHP  - enabling service
+      become: true
+      ansible.builtin.service:
+        name: php7.3-fpm
+        enabled: yes
+
+
+    - name: Web Setup - NGINX -  install nginx debian packages
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+          - nginx
+
+    - name: Web Setup - NGINX -  public folder permissions 
+      become: true
+      ansible.builtin.file:
+        path: "{{ webpub_path }}/html" 
+        state: directory
+        recurse: yes
+        owner: "{{ ansible_user }}"
+        group: "{{ www_group }}"
+
+    - name: Web Setup - NGINX setup
+      become: true
+      copy:
+        src: conf/nginx_hermes.conf 
+        #dest: /etc/uucp/
+        dest: /etc/nginx/sites-available/hermes.conf
+        owner: www-data
+        group: www-data
+        mode: '0577'
+        backup: yes
+        
+    - name: Web Setup - NGINX - check for absent debian nginx default link
+      become: true
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Web Setup - NGINX - Create a symbolic link to hermes.conf
+      become: true
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/hermes.conf
+        dest: /etc/nginx/sites-enabled/01-hermes.conf
+        owner: www-data
+        group: www-data
+        state: link
+
+    - name: Web Setup - NGINX - enable service
+      become: true
+      ansible.builtin.service:
+        name: nginx
+        enabled: yes
+
+    - name: Web Setup - NGINX - restart service
+      become: true
+      ansible.builtin.service:
+        name: nginx
+        state: restarted

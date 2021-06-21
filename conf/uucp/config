@@ -1,0 +1,28 @@
+nodename trambolho
+
+spool /usr/spool/uucp
+
+pubdir /usr/spool/uucppublic
+
+logfile /usr/spool/uucp/Log
+portfile /etc/uucp/port
+sysfile /etc/uucp/sys
+
+statfile /usr/spool/uucp/Stats
+debugfile /usr/spool/uucp/Debug
+
+debug all
+
+# programs run at the same time with the following command.  The
+# default is to have no maximum.
+# max-uuxqts 1				# The maximum number of uuxqts
+
+# timetable Day Wk0905-1655
+
+# The public directory is /usr/spool/anonymous
+# unknown pubdir /usr/spool/anonymous
+# Only files in the public directory may be sent; users may not download
+# files from the upload directory
+# unknown remote-send ~ !~/upload
+# May only upload files into /usr/spool/anonymous/upload
+# unknown remote-receive ~/upload

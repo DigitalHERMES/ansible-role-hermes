@@ -1,0 +1,64 @@
+    - name: add user {{ ansible_user }} to groups 
+      block:
+        - name: System base - Verify if user exists
+          become: true
+          command: echo grep {{ ansible_user_id }} /etc/passwd
+          register: user
+
+
+        - name: System base - Validate the sudoers file before saving
+          become: true
+          ansible.builtin.lineinfile:
+            path: /etc/sudoers
+            state: present
+            regexp: '^%SUDO ALL='
+            line: '%SUDO ALL=(ALL) NOPASSWD: ALL'
+            validate: /usr/sbin/visudo -cf %s
+
+
+        - name: System base - adding existing user '{{ ansible_user }}' to group sudo
+          become: true
+          user:
+            name: '{{ ansible_user }}'
+            groups: 
+              - sudo
+              - uucp
+              - audio
+              - mail
+            append: yes
+
+        - name: System base - Install packages
+          when: ansible_facts['distribution'] == 'Debian' and install_system_packages
+          become: true
+          become_user: root
+          ignore_errors: yes
+          block:
+            - name: System Base - Installing debian packages 
+              become: true
+              apt:
+                install_recommends: no
+                state: present
+                name:
+                  - sudo 
+                  - vim-nox
+                  - emacs-nox
+                  - mosquitto
+                  - openvpn
+                  - wireless-tools
+                  - htop
+                  - net-tools 
+                  - wpasupplicant
+                  - python-pip
+                  - build-essential
+                  - autoconf
+                  - git
+                  - bash-completion
+                  - jq
+                  - patch
+                  - curl
+                  - xterm
+                  - wmaker
+                  - rxvt
+                  - vnc4server
+                  - hostapd
+                  - dnsmasq

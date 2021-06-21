@@ -1,0 +1,93 @@
+    - name: HERMES station-api backend software
+
+      block:
+
+        - name: HERMES API - Download HERMES station-api from github
+          become: true
+          git:
+            repo: "git://github.com/DigitalHERMES/station-api.git"
+            clone: yes
+            dest: "{{ webpub_path }}/station-api"
+            version: HEAD
+            force: yes
+
+        - name: HERMES API - setting permissions 
+          become: true
+          ansible.builtin.file:
+            path: "{{ webpub_path }}/station-api"
+            recurse: yes
+            owner: hermes
+            group: www-data
+            mode: '0775'
+
+        - name: HERMES API - Create a symbolic link for public html
+          ansible.builtin.file:
+            src: "{{ webpub_path }}/station-api/public"
+            dest: "{{ webpub_path }}/html/api"
+            owner: hermes
+            group: www-data
+            state: link
+
+        - name: HERMES API - composer install
+          become: true
+          command: "composer install"
+          args:
+            chdir: "{{ webpub_path }}/station-api"
+
+        - name: HERMES API - check for .env
+          stat:
+            path: "{{ webpub_path }}/station-api/.env"
+          register: api_env
+
+        - name: HERMES API - .env exist?
+          when: not api_env.stat.exists
+          block: 
+          - name: HERMES API - copy .env from .env.example 
+            become: true
+            command: "cp .env.example .env"
+            args:
+              chdir: "{{ webpub_path }}/station-api/"
+
+          - name: HERMES API - copy  .env from template
+            become: true
+            command: "cp .env.example .env"
+            args:
+              chdir: "{{ webpub_path }}/station-api/"
+
+          - name: HERMES API - gen app key
+            shell: "date | openssl passwd -6 -stdin "
+            register: app_key
+          
+          - name: HERMES API - setting .env APP_KEY
+            ansible.builtin.lineinfile:
+              path: "{{ webapi_path }}.env"
+              regexp: '^APP_KEY='
+              line: "APP_KEY= {{ app_key.stdout }}"
+
+          - name: HERMES API - setting .env HERMES_INBOX with {{ inbox_path }}
+            ansible.builtin.lineinfile:
+              path: "{{ webapi_path }}.env"
+              regexp: '^HERMES_INBOX='
+              line: "HERMES_INBOX={{ inbox_path }}"
+
+          - name: HERMES API - setting .env HERMES_INBOX with {{ ubitx_client }}
+            ansible.builtin.lineinfile:
+              path: "{{ webapi_path}}.env"
+              regexp: '^HERMES_TOOL='
+              line: "HERMES_TOOL={{ ubitx_client }}"
+
+          - name: HERMES API - setting .env DB_CONNECTION with sqlite3
+            ansible.builtin.lineinfile:
+              path: "{{ webapi_path }}.env"
+              regexp: '^DB_CONNECTION='
+              line: "DB_CONNECTION=sqlite"
+          
+          - name: HERMES API - create database TODO 
+            command: echo TODO
+            args:
+              chdir: "{{ webapi_path }}"
+            
+          - name: HERMES API - create user admin TODO 
+            command: echo TODO
+            args:
+              chdir: "{{ webpub_path }}/station-api/"

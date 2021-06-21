@@ -1,0 +1,29 @@
+[Unit]
+Description=vnc server
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=hermes
+Group=hermes
+WorkingDirectory=/home/hermes
+#PIDFile=/root/.vnc/%H:1.pid
+#ExecStartPre=/usr/bin/vncserver -kill :1 > /dev/null 2> /dev/null
+#ExecStart=/usr/bin/tigervncserver :1 -depth 24 -geometry 1280x800 -localhost no
+ExecStart=/usr/bin/vncserver :1 -depth 16 -geometry 1024x800 -localhost no
+ExecStop=/usr/bin/vncserver -kill :1
+
+#Type=simple
+#ExecStart=/usr/bin/vncserver -localhost no -geometry 1024x768 -depth 16
+#ExecStop=/usr/bin/killall -s QUIT Xtigervnc
+#IgnoreSIGPIPE=no
+#StandardOutput=null
+#StandardError=null
+#StandardOutput=syslog
+#StandardError=syslog
+#Restart=always
+#TimeoutSec=30
+#ExecStartPre=/bin/sleep 1
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+
+    - name: Services install - mysql enable
+      become: true
+      ansible.builtin.service:
+        name: mariadb
+        enabled: yes
+
+    - name: Services install - postfix enable TODO
+      become: true
+      ansible.builtin.service:

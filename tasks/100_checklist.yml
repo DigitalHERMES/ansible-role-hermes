@@ -1,0 +1,18 @@
+---
+    - name: Network - install ISPconfig TODO
+      ansible.builtin.debug:
+        #msg: 'setup api ispconfig as {{ apiadmin}} / {{ apipass }} ' 
+        msg: 'install ispconfig ' 
+        
+    - name: setup ispconfig 
+      ansible.builtin.debug:
+        msg: 'install ispconfig ' 
+
+    - name: setup checklist TODO 
+      ansible.builtin.debug:
+        msg: 'TODO  checklist' 
+
+    - name: setup services TODO 
+      ansible.builtin.debug:
+        msg: 'TODO  services' 
+
