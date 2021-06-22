@@ -10,11 +10,14 @@
         name:
           - php-fpm
           - php-cli
-          - php-mysql
           - php-curl
+          - php-gd
           - php-mbstring
-          - php-xml 
+          - php-mysql
+          - php-pear
           - php-soap
+          - php-sqlite3
+          - php-xml 
           - composer   
 
     - name: Web Setup - PHP - Set date.timezone for FPM
@@ -58,6 +61,27 @@
         dest: /etc/php/7.3/fpm/php.ini
         regexp: ";extension=mbstring"
         line: "extension=mbstring"
+
+    - name: Web Setup - PHP -  enabling pear extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=pear"
+        line: "extension=pear"
+
+    - name: Web Setup - PHP -  enabling gd extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=gd"
+        line: "extension=gd"
+
+    - name: Web Setup - PHP -  enabling sqlite3 extension
+      become: true
+      lineinfile:
+        dest: /etc/php/7.3/fpm/php.ini
+        regexp: ";extension=sqlite3"
+        line: "extension=sqlite3"
 
     - name: Web Setup - PHP  - enabling service
       become: true
