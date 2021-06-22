@@ -1,0 +1,64 @@
+---
+    - name: Mail - roundcube download and unarchive
+      become: true
+      unarchive:
+        src: 'https://github.com/roundcube/roundcubemail/releases/download/1.4.11/roundcubemail-1.4.11-complete.tar.gz'
+        dest: '{{ build_path }}'
+        owner: ispapps
+        group: www-data
+        remote_src: yes
+
+
+    - name: Mail - roundcube config
+      become: true
+      copy:
+        src:  "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php.sample"
+        dest: "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php"
+        owner: ispapps
+        group: www-data
+        mode: '0744'
+        remote_src: yes
+        backup: yes
+
+    - name: Mail - roundcube mysql create database  roundcube
+      become: true
+      community.mysql.mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: roundcubemail
+        state: present      
+
+
+    - name: Mail - roundcube mysql create database user
+      become: true
+      community.mysql.mysql_user:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: roundcube
+        password: Cm3cmal
+        priv: 'roundcubemail.*:ALL'
+        state: present
+
+    - name: Mail - roundcube  Restore database ignoring errors
+      become: true
+      community.mysql.mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: roundcubemail
+        state: import
+        target: "{{ build_path }}/roundcubemail-1.4.11/SQL/mysql.initial.sql"
+        force: yes
+
+    - name: Hermes web gui - setting global_constants.ts
+      become: true
+      ansible.builtin.lineinfile:
+        path: "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php"
+        state: present
+        regexp: "^$config['db_dsnw']"
+        #line: "$config['db_dsnw'] = 'sqlite:////tmp/roundcube.db';"
+        line: "$config['db_dsnw'] = 'mysql://roundcube:Cm3cmal@localhost/roundcubemail';"
+
+    - name: Mail - roundcube link to www 
+      ansible.builtin.file:
+        src: "{{ build_path }}/roundcubemail-1.4.11"
+        dest: "{{ webpub_path }}/html/mail"
+        owner: ispapps
+        group: www-data
+        state: link
