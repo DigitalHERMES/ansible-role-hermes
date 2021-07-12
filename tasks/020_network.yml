@@ -22,10 +22,18 @@
               mode: '0744'
               backup: no
 
+          - name: Network - wifi setup - service hostpad
+            become: true
+            ansible.builtin.service:
+              name: openvpn-client@{{ hostname }}
+              enabled: yes
+              state: started
+
+
           - name: Network - wifi setup - wifi settings - antenna and pm
             become: true
             copy:
-              src: "conf/wifi.conf"
+              src: "conf/modprobe.d/wifi.conf"
               dest: "/etc/modprobe.d"
               owner: root
               group: root
@@ -51,18 +59,25 @@
             ansible.builtin.service:
               name: dnsmasq
               enabled: yes
+              state: started
 
           - name: Network - wifi setup - copying dnsmasq.conf file
             become: true
             copy:
-              src: "conf/dnsmasq.conf"
-              dest: "/etc/"
+              src: "conf/hostapd.conf"
+              dest: "/etc/hostapd/"
               owner: root
               group: root
               mode: '0744'
               backup: yes
-          
-          
+
+          - name: Network - wifi setup - service hostpad
+            become: true
+            ansible.builtin.service:
+              name: hostapd
+              enabled: yes
+              state: started
+
           - name: Network - setting files TODO
             command: "echo test"
             #ansible.builtin.lineinfile:
