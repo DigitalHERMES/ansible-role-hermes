@@ -1,0 +1,7 @@
+#!/bin/sh
+vncconfig -iconic &
+
+/usr/bin/xterm -bg gray -fg green -e uuardopd -r vara -c PU4GNU -a 127.0.0.1 -p 8300 -o icom -s /dev/ttyUSB0
+/usr/bin/xterm -bg black -fg green -e wine VARA/VARA.exe &
+/usr/bin/wmaker 
+#xrdb $HOME/.Xresources
