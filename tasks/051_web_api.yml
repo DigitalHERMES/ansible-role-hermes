@@ -29,7 +29,6 @@
             state: link
 
         - name: HERMES API - composer install
-          become: true
           command: "composer install"
           args:
             chdir: "{{ webpub_path }}/station-api"

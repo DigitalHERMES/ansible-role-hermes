@@ -20,17 +20,45 @@
             name:
               - wine
               - wine32
-              - libwine:i386
               - wine64
+              - winetricks
               - libwine
+              - libwine:i386
               - fonts-wine
 
-        #- name: Service - nginx setup
-          #become: true
-          #copy:
-            #src: conf/vara
-            #dest: /home/hermes/vara
-            #owner: www-data
-            #group: www-data
-            #mode: '0577'
-            #backup: yes
+        - name: VARA Install - vara files
+          copy:
+            src: conf/VARA
+            dest: "/home/{{ ansible_user }}/VARA"
+            owner: "{{ ansible_user }}"
+            group: hermes
+            mode: '0577'
+            backup: yes
+
+        - name: VARA Install - setting callsign
+          lineinfile:
+            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            regexp: "Callsign Licence 0="
+            line: "Callsign Licence 0={{ vara_callsign }}"
+
+
+        - name: VARA Install - setting license
+          lineinfile:
+            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            regexp: "Registration Code="
+            line: "Registration Code={{ vara_license }}"
+
+
+        - name: VARA Install - setting retries to 5
+          lineinfile:
+            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            regexp: "Retries="
+            line: "Retries=5"
+
+        - name: VARA Install - setting ALC Level to -3 
+          lineinfile:
+            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            regexp: "ALC Drive Level="
+            line: "ALC Drive Level=-3"
+
+

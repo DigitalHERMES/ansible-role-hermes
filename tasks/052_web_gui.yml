@@ -39,16 +39,10 @@
           args:
             chdir: "{{ build_path }}/angular/"
 
-        - name: HERMES web gui - test angular
-          become: true
-          command: "ls {{ build_path }}/angular/dist/hermes/ "
-          args:
-            chdir: "{{ build_path }}/angular/"
-
-        - name: HERMES web gui - copy files TODO
+        - name: HERMES web gui
           become: true
           copy:
-            src:  "{{ build_path }}/angular/dist/hermes/*"
+            src:  "{{ build_path }}/angular/dist/hermes/"
             dest: "{{ webpub_path }}/www/"
             owner: ispapps
             group: www-data

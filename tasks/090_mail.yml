@@ -36,9 +36,6 @@
         src: 'https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz'
         dest: '{{ build_path }}'
         remote_src: yes
-    - name: ISPconfig  shell setup TODO
-      command: echo {{ password_api }}
-    - name: ISPconfig  api setup TODO
-      command: echo {{ password_api }}
 
-
+    - name: Mail - ISPconfig  shell setup TODO
+      command: echo {{ password_api }}

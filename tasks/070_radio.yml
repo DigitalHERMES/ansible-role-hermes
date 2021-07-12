@@ -15,5 +15,6 @@
 
     - name: Radio Setup - ubitx firmware writer
       command: "make upload"
+      ignore_errors: yes
       args:
         chdir: "{{ build_path }}/ubitxv6/"

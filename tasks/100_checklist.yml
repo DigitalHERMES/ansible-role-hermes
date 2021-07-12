@@ -11,8 +11,3 @@
     - name: setup checklist TODO 
       ansible.builtin.debug:
         msg: 'TODO  checklist' 
-
-    - name: setup services TODO 
-      ansible.builtin.debug:
-        msg: 'TODO  services' 
-
