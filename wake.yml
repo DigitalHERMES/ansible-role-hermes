@@ -1,0 +1,12 @@
+---
+  - tasks
+    - name: Send a magic Wake-on-LAN packet to k2
+      community.general.wakeonlan:
+        mac: '2a:37:6f:02:01:76'
+        #broadcast: 192.0.1.23
+        #elegate_to: localhost
+
+        #- community.general.wakeonlan:
+        #mac: 00:00:5E:00:53:66
+        #port: 9
+        #delegate_to: localhost

@@ -19,8 +19,10 @@
     - include: tasks/040_uuardop.yml
     - include: tasks/041_vara.yml
     - include: tasks/050_nginx.yml
+    - include: tasks/060_lpcnet.yml
     - include: tasks/051_web_api.yml
     - include: tasks/052_web_gui.yml
     - include: tasks/080_services.yml
     - include: tasks/090_mail.yml
+    - include: tasks/091_roundcube.yml
     - include: tasks/100_checklist.yml
