@@ -7,46 +7,7 @@
       apt:
         name:
           - uucp 
-          - texinfo
 
-    - name: UUCP Setup - download Rhizomatica uucp 
-      git:
-        repo: "git://github.com/DigitalHERMES/uucp.git"
-        clone: yes
-        dest: "{{ build_path }}/uucp/"
-        version: HEAD
-
-    - name: UUCP Setup - configure
-      command: ./configure
-      args:
-        chdir: "{{ build_path }}/uucp/"
-
-    - name: UUCP Setup - prepare Makefile (remove texinfo) TODO - fix lineinfile
-      command: sed -i '/^INFO_DEPS/ s/./#&/' Makefile 
-      args:
-        chdir: "{{ build_path }}/uucp/"
-
-    - name: UUCP Setup - generate packages (TODO)
-      command: echo "TODO"
-
-    #- name: Web Setup - PHP - Set date.timezone for FPM
-      #become: true
-      #lineinfile:
-        #dest: /etc/php/7.3/fpm/php.ini
-        #regexp: "date.timezone ="
-        #line: "date.timezone = UTC"
-        
-    - name: UUCP Setup - build
-      command: make 
-      args:
-        chdir: "{{ build_path }}/uucp/"
-
-    - name: UUCP Setup - install
-      become: true
-      command: make install
-      args:
-        chdir: "{{ build_path }}/uucp/"
-        
     - name: UUCP - copy template configuration files
       become: true
       copy:
