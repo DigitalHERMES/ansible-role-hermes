@@ -66,8 +66,8 @@
                   - python3-pymysql
                   - rxvt
                   - sudo 
-                  - vim-nox
-                  - vnc4server
+                  - tigervnc-standalone-server
+                  - vim-nox 
                   - wireless-regdb
                   - wireless-tools
                   - wmaker
@@ -85,6 +85,16 @@
               become: true
               copy:
                 src: "conf/modprobe.d/intel_hda.conf"
+                dest: "/etc/modprobe.d"
+                owner: root
+                group: root
+                mode: '0744'
+                backup: yes
+              
+            - name: System Base - intel-hda module settings 
+              become: true
+              copy:
+                src: "conf/vnc/"
                 dest: "/etc/modprobe.d"
                 owner: root
                 group: root
