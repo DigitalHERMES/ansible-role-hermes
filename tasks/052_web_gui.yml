@@ -7,47 +7,51 @@
             #clone: yes
             #dest: "{{ build_path }}/angular"
             #version: HEAD
-        - name: HERMES web gui angular linux packages
+        - name: HERMES web gui - angular linux packages
           apt:
             install_recommends: yes
             state: present
             name:
               - nodejs
               - npm
-        - name: HERMES web gui install node modules 
+
+        - name: Hermes web gui - setting global_constants.ts
+          become: true
+          ansible.builtin.lineinfile:
+            path: "{{ build_path }}/angular/src/app/global-constants.ts"
+            state: present
+            regexp: "^   public static apiURL"
+            line: "   public static apiURL = '/api';"
+            #validate: /usr/sbin/visudo -cf %s
+
+        - name: HERMES web gui -  install node modules 
           command: "npm i"
           args:
             chdir: "{{ build_path }}/angular/"
+        
         #- name: HERMES web gui install node modules 2
           #become: true
           #npm:
             #path: "{{ build_path }}/angular/"
             #state: latest
-        - name: HERMES web gui build 
+        - name: HERMES web gui - build 
           command: "npm run build"
           args:
             chdir: "{{ build_path }}/angular/"
 
-        - name: HERMES web gui test angular
+        - name: HERMES web gui - test angular
           become: true
           command: "ls {{ build_path }}/angular/dist/hermes/ "
           args:
             chdir: "{{ build_path }}/angular/"
 
-        - name: HERMES web gui install angular english
+        - name: HERMES web gui - copy files TODO
           become: true
-          command: "cp -a dist/hermes/en-US {{ webpub_path }}/html"
-          args:
-            chdir: "{{ build_path }}/angular/"
-
-        - name: HERMES web gui install angular spanish
-          become: true
-          command: "cp -a dist/hermes/es {{ webpub_path }}/html"
-          args:
-            chdir: "{{ build_path }}/angular/"
-
-        - name: HERMES web gui install angular spanish
-          become: true
-          command: "cp -a dist/hermes/pt {{ webpub_path }}/html"
-          args:
-            chdir: "{{ build_path }}/angular/"
+          copy:
+            src:  "{{ build_path }}/angular/dist/hermes/*"
+            dest: "{{ webpub_path }}/www/"
+            owner: ispapps
+            group: www-data
+            mode: '0744'
+            remote_src: yes
+            backup: yes
