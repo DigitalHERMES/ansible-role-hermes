@@ -20,9 +20,39 @@
               owner: root
               group: root
               mode: '0744'
+              backup: no
+
+          - name: Network - wifi setup - wifi settings - antenna and pm
+            become: true
+            copy:
+              src: "conf/wifi.conf"
+              dest: "/etc/modprobe.d"
+              owner: root
+              group: root
+              mode: '0744'
               backup: yes
 
-          - name: Network - wifi setup- copying dnsmasq.conf file
+          - name: Network - wifi setup - depmod
+            become: true
+            command: "depmod -a"
+
+          - name: Network - wifi setup - copying dnsmasq.conf file
+            become: true
+            copy:
+              src: "conf/dnsmasq.conf"
+              dest: "/etc/"
+              owner: root
+              group: root
+              mode: '0744'
+              backup: yes
+
+          - name: Network - wifi setup - service dnsmasq
+            become: true
+            ansible.builtin.service:
+              name: dnsmasq
+              enabled: yes
+
+          - name: Network - wifi setup - copying dnsmasq.conf file
             become: true
             copy:
               src: "conf/dnsmasq.conf"

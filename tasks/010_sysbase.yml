@@ -79,4 +79,13 @@
                 regexp: "%sudo   ALL"
                 line: "%sudo   ALL=(ALL:ALL) NOPASSWD:ALL"
 
-             
+            - name: System Base - intel-hda module settings 
+              become: true
+              copy:
+                src: "conf/intel_hda.conf"
+                dest: "/etc/modprobe.d"
+                owner: root
+                group: root
+                mode: '0744'
+                backup: yes
+              
