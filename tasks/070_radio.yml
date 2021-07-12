@@ -1,0 +1,19 @@
+- name: Radio setup 
+  become_user: root
+  block:
+    - name: Radio Setup - clone firmware from git main
+      git:
+        repo: "git://github.com/DigitalHERMES/ubitxv6.git"
+        clone: yes
+        dest: "{{ build_path }}/ubitxv6/"
+        version: HEAD
+
+    - name: Radio Setup - ubitx firmware build - make
+      command: "make"
+      args:
+        chdir: "{{ build_path }}/ubitxv6/"
+
+    - name: Radio Setup - ubitx firmware writer
+      command: "make upload"
+      args:
+        chdir: "{{ build_path }}/ubitxv6/"

@@ -39,38 +39,40 @@
                 install_recommends: no
                 state: present
                 name:
-                  - autoconf
                   - alsa-tools
                   - alsa-utils
+                  - arduino-mk
+                  - autoconf
                   - bash-completion
-                  - build-essential
                   - bluez-tools
+                  - build-essential
                   - curl
+                  - dnsmasq
                   - emacs-nox
-                  - python3
-                  - python3-pymysql
-                  - pip
-                  - sudo 
-                  - vim-nox
+                  - git
+                  - hostapd
+                  - htop
+                  - iw
+                  - jq
+                  - libtool
                   - memtest86
                   - memtest86+
                   - mosquitto
+                  - net-tools 
                   - openvpn
-                  - iw
+                  - patch
+                  - pip
+                  - python3
+                  - python3-pymysql
+                  - rxvt
+                  - sudo 
+                  - vim-nox
+                  - vnc4server
                   - wireless-regdb
                   - wireless-tools
-                  - htop
-                  - net-tools 
-                  - wpasupplicant
-                  - git
-                  - jq
-                  - patch
-                  - xterm
                   - wmaker
-                  - rxvt
-                  - vnc4server
-                  - hostapd
-                  - dnsmasq
+                  - wpasupplicant
+                  - xterm
 
             - name: System Base - sudoers no password
               become: true
@@ -82,7 +84,7 @@
             - name: System Base - intel-hda module settings 
               become: true
               copy:
-                src: "conf/intel_hda.conf"
+                src: "conf/modprobe.d/intel_hda.conf"
                 dest: "/etc/modprobe.d"
                 owner: root
                 group: root
