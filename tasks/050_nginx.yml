@@ -23,70 +23,70 @@
     - name: Web Setup - PHP - Set date.timezone for FPM
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: "date.timezone ="
         line: "date.timezone = UTC"
 
     - name: Web Setup - PHP -  enabling mysql extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=pdo_mysql"
         line: "extension=pdo_mysql"
 
     - name: Web Setup - PHP -  enabling sqlite extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=sqlite3"
         line: "extension=sqlite3"
 
     - name: Web Setup - PHP -  enabling soap extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=soap"
         line: "extension=soap"
 
     - name: Web Setup - PHP -  enabling mbstring extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=mbstring"
         line: "extension=mbstring"
 
     - name: Web Setup - PHP -  enabling mbstring extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=mbstring"
         line: "extension=mbstring"
 
     - name: Web Setup - PHP -  enabling pear extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=pear"
         line: "extension=pear"
 
     - name: Web Setup - PHP -  enabling gd extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=gd"
         line: "extension=gd"
 
     - name: Web Setup - PHP -  enabling sqlite3 extension
       become: true
       lineinfile:
-        dest: /etc/php/7.3/fpm/php.ini
+        dest: /etc/php/7.4/fpm/php.ini
         regexp: ";extension=sqlite3"
         line: "extension=sqlite3"
 
     - name: Web Setup - PHP  - enabling service
       become: true
       ansible.builtin.service:
-        name: php7.3-fpm
+        name: php7.4-fpm
         enabled: yes
 
 
