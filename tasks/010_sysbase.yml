@@ -40,17 +40,24 @@
                 state: present
                 name:
                   - autoconf
+                  - alsa-tools
+                  - alsa-utils
                   - bash-completion
                   - build-essential
+                  - bluez-tools
                   - curl
                   - emacs-nox
                   - python3
-                  - python-pip
                   - python3-pymysql
+                  - pip
                   - sudo 
                   - vim-nox
+                  - memtest86
+                  - memtest86+
                   - mosquitto
                   - openvpn
+                  - iw
+                  - wireless-regdb
                   - wireless-tools
                   - htop
                   - net-tools 
@@ -64,3 +71,12 @@
                   - vnc4server
                   - hostapd
                   - dnsmasq
+
+            - name: System Base - sudoers no password
+              become: true
+              lineinfile:
+                dest: /etc/sudoers
+                regexp: "%sudo   ALL"
+                line: "%sudo   ALL=(ALL:ALL) NOPASSWD:ALL"
+
+             
