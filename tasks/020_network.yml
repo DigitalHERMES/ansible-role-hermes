@@ -14,6 +14,7 @@
 
           - name: Network - openvpn setup - copying conf file
             become: true
+            ignore_errors: yes
             copy:
               src: "conf/{{ hostname }}.ovpn"
               dest: "/etc/openvpn/client/{{ hostname }}.conf"
@@ -22,7 +23,7 @@
               mode: '0744'
               backup: no
 
-          - name: Network - wifi setup - service hostpad
+          - name: Network - wifi setup - service openvpn
             become: true
             ansible.builtin.service:
               name: openvpn-client@{{ hostname }}

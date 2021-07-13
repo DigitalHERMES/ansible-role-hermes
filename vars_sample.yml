@@ -14,3 +14,5 @@
     install_uuardop_path: /tmp/build
     hostname: ansible_hostname
     www_group: www-data
+    vara_callsign: 
+    vara_license:

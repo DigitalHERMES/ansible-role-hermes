@@ -2,7 +2,6 @@
       when: ansible_facts['distribution'] == 'Debian' and install_wine
       become: true
       become_user: root
-      ignore_errors: yes
       block:
         - name: VARA Install - add 32bit arch
           become: true
@@ -27,6 +26,7 @@
               - fonts-wine
 
         - name: VARA Install - vara files
+          ignore_errors: yes
           copy:
             src: conf/VARA
             dest: "/home/{{ ansible_user }}/VARA"

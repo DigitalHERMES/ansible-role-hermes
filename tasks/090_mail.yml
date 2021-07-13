@@ -38,4 +38,5 @@
         remote_src: yes
 
     - name: Mail - ISPconfig  shell setup TODO
+      ignore_errors: yes
       command: echo {{ password_api }}
