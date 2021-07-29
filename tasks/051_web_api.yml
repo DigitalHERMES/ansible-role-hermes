@@ -1,7 +1,5 @@
     - name: HERMES station-api backend software
-
       block:
-
         - name: HERMES API - Download HERMES station-api from github
           become: true
           git:
@@ -87,26 +85,42 @@
             regexp: '^DB_CONNECTION='
             line: "DB_CONNECTION=mysql"
 
+
+        - name: HERMES API - setting .env DB_HOST  with localhost
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#DB_HOST='
+            line: "DB_HOST=127.0.0.1"
+
+        - name: HERMES API - setting .env DB_PORT with 3306
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#DB_PORT'
+            line: "DB_PORT=3306"
+
+
         - name: HERMES API - setting .env DB_DATABASE 
           when: not api_env.stat.exists
           ansible.builtin.lineinfile:
             path: "{{ webapi_path }}/.env"
-            regexp: '^DB_DATABASE='
+            regexp: '^#DB_DATABASE='
             line: "DB_DATABASE={{ hermes_db }}"
 
         - name: HERMES API - setting .env DB_USERNAME
           when: not api_env.stat.exists
           ansible.builtin.lineinfile:
             path: "{{ webapi_path }}/.env"
-            regexp: '^DB_USERNAME='
+            regexp: '^#DB_USERNAME='
             line: "DB_USERNAME={{ hermes_db_user }}"
 
         - name: HERMES API - setting .env DB_PASSWORD
           when: not api_env.stat.exists
           ansible.builtin.lineinfile:
             path: "{{ webapi_path }}/.env"
-            regexp: '^DB_DB_PASSWORD='
-            line: "DB_DB_PASSWORD={{ hermes_db_password }}"
+            regexp: '^#DB_PASSWORD='
+            line: "DB_PASSWORD={{ hermes_db_password }}"
 
         - name: HERMES API - create database
           become: true
