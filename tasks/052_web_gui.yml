@@ -1,13 +1,15 @@
     - name: HERMES web gui angular frontend software
       block:
-        #- name: Download HERMES web gui angular from github
-          #become: true
-          #git:
-            #repo: "git://github.com/DigitalHERMES/angular.git"
-            #clone: yes
-            #dest: "{{ build_path }}/angular"
-            #version: HEAD
+        - name: Download HERMES web gui angular from github
+          git:
+            repo: "git://github.com/DigitalHERMES/angular.git"
+            clone: yes
+            dest: "{{ build_path }}/angular"
+            version: HEAD
+            force: yes
+
         - name: HERMES web gui - angular linux packages
+          become: true
           apt:
             install_recommends: yes
             state: present
@@ -39,12 +41,12 @@
           args:
             chdir: "{{ build_path }}/angular/"
 
-        - name: HERMES web gui
+        - name: HERMES web gui - install  files
           become: true
           copy:
             src:  "{{ build_path }}/angular/dist/hermes/"
-            dest: "{{ webpub_path }}/www/"
-            owner: ispapps
+            dest: "{{ webpub_path }}/html"
+            owner: hermes
             group: www-data
             mode: '0744'
             remote_src: yes

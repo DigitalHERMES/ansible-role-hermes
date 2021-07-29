@@ -25,11 +25,16 @@
               - libwine:i386
               - fonts-wine
 
+        - name: VARA Install - test for vara install
+          stat:
+             path: "/home/{{ ansible_user }}/VARA"
+          register: vara_exists
+        
         - name: VARA Install - vara files
-          ignore_errors: yes
+          when: not vara_exists.stat.exists
           copy:
             src: conf/VARA
-            dest: "/home/{{ ansible_user }}/VARA"
+            dest: "/home/{{ ansible_user }}/"
             owner: "{{ ansible_user }}"
             group: hermes
             mode: '0577'
@@ -37,27 +42,27 @@
 
         - name: VARA Install - setting callsign
           lineinfile:
-            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "Callsign Licence 0="
+            state: present
             line: "Callsign Licence 0={{ vara_callsign }}"
-
 
         - name: VARA Install - setting license
           lineinfile:
-            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "Registration Code="
             line: "Registration Code={{ vara_license }}"
 
 
         - name: VARA Install - setting retries to 5
           lineinfile:
-            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "Retries="
             line: "Retries=5"
 
         - name: VARA Install - setting ALC Level to -3 
           lineinfile:
-            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
+            path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "ALC Drive Level="
             line: "ALC Drive Level=-3"
 

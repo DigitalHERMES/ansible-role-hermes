@@ -14,14 +14,14 @@
         state: started
 
     - name: Services install - copy ubitx service
-        become: true
-        copy:
-          src: "conf/services/ubitx.service"
-          dest: "/etc/systemd/system/"
-          owner: root
-          group: root
-          mode: '0766'
-          backup: yes
+      become: true
+      copy:
+        src: "conf/services/ubitx.service"
+        dest: "/etc/systemd/system/"
+        owner: root
+        group: root
+        mode: '0766'
+        backup: yes
 
     - name: Services install - ubitx service enable
       become: true
@@ -31,14 +31,14 @@
         state: started
  
     - name: Services install - copy hmp service
-        become: true
-        copy:
-          src: "conf/services/ubitx.service"
-          dest: "/etc/systemd/system/"
-          owner: root
-          group: root
-          mode: '0766'
-          backup: yes
+      become: true
+      copy:
+        src: "conf/services/ubitx.service"
+        dest: "/etc/systemd/system/"
+        owner: root
+        group: root
+        mode: '0766'
+        backup: yes
 
     - name: Services install - hmp service enable
       become: true

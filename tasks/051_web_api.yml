@@ -47,46 +47,94 @@
             args:
               chdir: "{{ webpub_path }}/station-api/"
 
-          - name: HERMES API - copy  .env from template
-            become: true
-            command: "cp .env.example .env"
-            args:
-              chdir: "{{ webpub_path }}/station-api/"
+        - name: HERMES API - copy  .env from template
+          when: not api_env.stat.exists
+          become: true
+          command: "cp .env.example .env"
+          args:
+            chdir: "{{ webpub_path }}/station-api/"
 
-          - name: HERMES API - gen app key
-            shell: "date | openssl passwd -6 -stdin "
-            register: app_key
-          
-          - name: HERMES API - setting .env APP_KEY
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}.env"
-              regexp: '^APP_KEY='
-              line: "APP_KEY= {{ app_key.stdout }}"
+        - name: HERMES API - gen app key
+          when: not api_env.stat.exists
+          shell: "date | openssl passwd -6 -stdin "
+          register: app_key
+        
+        - name: HERMES API - setting .env APP_KEY
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^APP_KEY='
+            line: "APP_KEY= {{ app_key.stdout }}"
 
-          - name: HERMES API - setting .env HERMES_INBOX with {{ inbox_path }}
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}.env"
-              regexp: '^HERMES_INBOX='
-              line: "HERMES_INBOX={{ inbox_path }}"
+        - name: HERMES API - setting .env HERMES_INBOX with {{ inbox_path }}
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^HERMES_INBOX='
+            line: "HERMES_INBOX={{ inbox_path }}"
 
-          - name: HERMES API - setting .env HERMES_INBOX with {{ ubitx_client }}
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path}}.env"
-              regexp: '^HERMES_TOOL='
-              line: "HERMES_TOOL={{ ubitx_client }}"
+        - name: HERMES API - setting .env HERMES_INBOX with {{ ubitx_client }}
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path}}/.env"
+            regexp: '^HERMES_TOOL='
+            line: "HERMES_TOOL={{ ubitx_client }}"
 
-          - name: HERMES API - setting .env DB_CONNECTION with sqlite3
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}.env"
-              regexp: '^DB_CONNECTION='
-              line: "DB_CONNECTION=sqlite"
-          
-          - name: HERMES API - create database TODO 
-            command: echo TODO
-            args:
-              chdir: "{{ webapi_path }}"
-            
-          - name: HERMES API - create user admin TODO 
-            command: echo TODO
-            args:
-              chdir: "{{ webpub_path }}/station-api/"
+        - name: HERMES API - setting .env DB_CONNECTION with mysql
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^DB_CONNECTION='
+            line: "DB_CONNECTION=mysql"
+
+        - name: HERMES API - setting .env DB_DATABASE 
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^DB_DATABASE='
+            line: "DB_DATABASE={{ hermes_db }}"
+
+        - name: HERMES API - setting .env DB_USERNAME
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^DB_USERNAME='
+            line: "DB_USERNAME={{ hermes_db_user }}"
+
+        - name: HERMES API - setting .env DB_PASSWORD
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^DB_DB_PASSWORD='
+            line: "DB_DB_PASSWORD={{ hermes_db_password }}"
+
+        - name: HERMES API - create database
+          become: true
+          community.mysql.mysql_db:
+            login_unix_socket: /var/run/mysqld/mysqld.sock
+            name: hermes
+            state: present      
+
+        - name: HERMES API - create database user
+          become: true
+          community.mysql.mysql_user:
+            login_unix_socket: /var/run/mysqld/mysqld.sock
+            name: "{{ hermes_db_user }}"
+            password: "{{ hermes_db_password }}"
+            priv: "{{ hermes_db }}.*:ALL"
+            state: present
+
+        - name: HERMES API - create database tables
+          command: "php artisan migrate:refresh"
+          args:
+            chdir: "{{ webpub_path }}/station-api/"
+                
+        - name: HERMES API - populate database tables
+          command: "php artisan db:seed"
+          args:
+            chdir: "{{ webpub_path }}/station-api/"
+                
+        - name: HERMES API - create user admin TODO 
+          command: echo TODO
+          args:
+            chdir: "{{ webpub_path }}/station-api/"

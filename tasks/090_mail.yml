@@ -17,7 +17,7 @@
           - binutils
           - mariadb-server
           - openssl
-          - getmail4
+          - getmail
           - rkhunter
           - binutils
           - dovecot-imapd
@@ -29,7 +29,7 @@
           - clamav-freshclam
           - clamav
           - clamav-daemon
-          - clamav-unofficial-sigs
+          - clamav-unofficial-sigo
 
     - name:  Mail - ISPconfig download and extract tarball
       unarchive:
@@ -40,3 +40,10 @@
     - name: Mail - ISPconfig  shell setup TODO
       ignore_errors: yes
       command: echo {{ password_api }}
+
+    - name: Mail - ISPconfig patch debian100.conf.php 
+      become: true
+      ansible.builtin.replace:
+        path: "{{ build_path }}/ispconfig3_install/install/dist/conf/debian100.conf.php"
+        regexp: "7.3"
+        replace: "7.4"

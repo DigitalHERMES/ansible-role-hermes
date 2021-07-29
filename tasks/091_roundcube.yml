@@ -4,7 +4,7 @@
       unarchive:
         src: 'https://github.com/roundcube/roundcubemail/releases/download/1.4.11/roundcubemail-1.4.11-complete.tar.gz'
         dest: '{{ build_path }}'
-        owner: ispapps
+        owner: hermes
         group: www-data
         remote_src: yes
 
@@ -14,7 +14,7 @@
       copy:
         src:  "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php.sample"
         dest: "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php"
-        owner: ispapps
+        owner: hermes
         group: www-data
         mode: '0744'
         remote_src: yes
@@ -59,6 +59,6 @@
       ansible.builtin.file:
         src: "{{ build_path }}/roundcubemail-1.4.11"
         dest: "{{ webpub_path }}/html/mail"
-        owner: ispapps
+        owner: hermes
         group: www-data
         state: link

@@ -6,14 +6,9 @@
           state: directory
           mode: '0750'
 
-      - name: VNC System Base - copy passwd  TODO Check
-        copy:
-          src: "conf/vnc/passwd"
-          dest: "/home/{{ ansible_user }}/.vnc/passwd"
-          owner: "{{ ansible_user }}"
-          group: hermes
-          mode: '0766'
-          backup: yes
+      - name: VNC System base - generatepasswd 
+        become: true
+        command: "echo hermes | vncpasswd -f  > ~/.vnc/passwd"
 
       - name: VNC System Base - copy xstartup
         copy:
@@ -34,7 +29,7 @@
           mode: '0766'
           backup: yes
 
-      - name: VNC System Base -  vnc
+      - name: VNC System Base -  service enable 
         become: true
         ansible.builtin.service:
           name: vnc

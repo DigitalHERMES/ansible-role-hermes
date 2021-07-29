@@ -2,7 +2,7 @@
       block:
         - name: System base - Verify if user exists
           become: true
-          command: echo grep {{ ansible_user_id }} /etc/passwd
+          command: grep {{ ansible_user_id }} /etc/passwd
           register: user
 
 

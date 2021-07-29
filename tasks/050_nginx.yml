@@ -55,13 +55,6 @@
         regexp: ";extension=mbstring"
         line: "extension=mbstring"
 
-    - name: Web Setup - PHP -  enabling mbstring extension
-      become: true
-      lineinfile:
-        dest: /etc/php/7.4/fpm/php.ini
-        regexp: ";extension=mbstring"
-        line: "extension=mbstring"
-
     - name: Web Setup - PHP -  enabling pear extension
       become: true
       lineinfile:
@@ -139,8 +132,8 @@
         name: nginx
         enabled: yes
 
-    - name: Web Setup - NGINX - restart service
-      become: true
-      ansible.builtin.service:
-        name: nginx
-        state: restarted
+    #- name: Web Setup - NGINX - restart service
+      # become: true
+      # ansible.builtin.service:
+      #   name: nginx
+      #   state: restarted
