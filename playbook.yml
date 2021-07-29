@@ -23,8 +23,8 @@
     - include: tasks/052_web_gui.yml
     - include: tasks/060_lpcnet.yml
     - include: tasks/070_radio.yml
-    - include: tasks/080_services.yml
     - include: tasks/081_vnc.yml
     - include: tasks/090_mail.yml
     - include: tasks/091_roundcube.yml
+    - include: tasks/080_services.yml
     - include: tasks/100_checklist.yml

@@ -16,3 +16,6 @@
     www_group: www-data
     vara_callsign: 
     vara_license:
+    hermes_db: hermes
+    hermes_db_user: hermes
+    hermes_db_password: db_hermes
