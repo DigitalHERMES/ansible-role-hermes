@@ -127,7 +127,7 @@
           community.mysql.mysql_db:
             login_unix_socket: /var/run/mysqld/mysqld.sock
             name: hermes
-            state: present      
+            state: present
 
         - name: HERMES API - create database user
           become: true
@@ -152,3 +152,14 @@
           command: echo TODO
           args:
             chdir: "{{ webpub_path }}/station-api/"
+
+        - name: Services install - copy hmp service
+          become: true
+          copy:
+            src: "conf/services/ubitx.service"
+            dest: "/etc/systemd/system/"
+            owner: root
+            group: root
+            mode: '0766'
+            backup: yes
+
