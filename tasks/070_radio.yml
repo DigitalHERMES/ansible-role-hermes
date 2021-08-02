@@ -14,6 +14,7 @@
         chdir: "{{ build_path }}/ubitxv6/"
 
     - name: Radio Setup - ubitx firmware build - make
+      become: true
       command: "make install"
       args:
         chdir: "{{ build_path }}/ubitxv6/"
