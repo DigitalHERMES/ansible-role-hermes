@@ -1,16 +1,33 @@
     - name: VNC service 
       block:
-      - name: Create a directory if it does not exist
+      - name: VNC service - Installing debian packages 
+        become: true
+        apt:
+          install_recommends: no
+          state: present
+          name:
+            - tigervnc-standalone-server
+      - name: VNC service - Create a user path if it does not exist
         ansible.builtin.file:
           path: "/home/{{ ansible_user }}/.vnc/"
           state: directory
           mode: '0750'
 
-      - name: VNC System base - generatepasswd 
-        become: true
-        command: "echo hermes | vncpasswd -f  > ~/.vnc/passwd"
+      - name: VNC service - generatepasswd 
+        shell: "echo hermes | vncpasswd -f"
+        register: vncpass
+      
+      - name: VNC service - debug pass
+        debug: 
+          msg= "{{ vncpass.stdout }}"
 
-      - name: VNC System Base - copy xstartup
+      - name: VNC service - passwd to file
+        copy:
+          content: "{{ vncpass.stdout }}"
+          dest: "/home/{{ ansible_user }}/.vnc/passwd"
+          mode: '0600'
+
+      - name: VNC service - copy xstartup
         copy:
           src: "conf/vnc/xstartup"
           dest: "/home/{{ ansible_user }}/.vnc/xstartup"
@@ -19,7 +36,7 @@
           mode: '0766'
           backup: yes
 
-      - name: VNC System Base - copy vnc service
+      - name: VNC service - copy vnc service
         become: true
         copy:
           src: "conf/services/vnc.service"
@@ -29,11 +46,9 @@
           mode: '0766'
           backup: yes
 
-      - name: VNC System Base -  service enable 
+      - name: VNC service -  service enable 
         become: true
         ansible.builtin.service:
           name: vnc
           enabled: yes
           state: started
-                
-              
