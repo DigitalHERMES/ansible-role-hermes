@@ -18,3 +18,10 @@
       command: make install
       args:
         chdir: "{{ build_path }}/rhizo-uuardop/"
+
+    - name: UUARDOP - service enable
+      become: true
+      ansible.builtin.service:
+        name: uuardop
+        enabled: yes
+        state: started
