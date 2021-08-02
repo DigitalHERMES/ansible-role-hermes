@@ -19,3 +19,20 @@
         group: uucp
         mode: '0577'
         backup: yes
+
+    - name: UUCP - setting nodename 
+      become: true
+      ansible.builtin.lineinfile:
+        path: "/etc/uucp/config"
+        state: present
+        regexp: "^nodename"
+        #line: "$config['db_dsnw'] = 'sqlite:////tmp/roundcube.db';"
+        line: "nodename {{ hostname }}"
+
+    - name: UUCP - setting pubdir
+      become: true
+      ansible.builtin.lineinfile:
+        path: "/etc/uucp/config"
+        state: present
+        regexp: "^pubdir"
+        line: "pubdir {{ inbox_path }}"
