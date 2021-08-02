@@ -13,8 +13,20 @@
       args:
         chdir: "{{ build_path }}/ubitxv6/"
 
+    - name: Radio Setup - ubitx firmware build - make
+      command: "make install"
+      args:
+        chdir: "{{ build_path }}/ubitxv6/"
+
     - name: Radio Setup - ubitx firmware writer
       command: "make upload"
       ignore_errors: yes
       args:
         chdir: "{{ build_path }}/ubitxv6/"
+
+    - name: Radio Setup - ubitx service enable
+      become: true
+      ansible.builtin.service:
+        name: ubitx
+        enabled: yes
+        state: started
