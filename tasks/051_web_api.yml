@@ -7,6 +7,7 @@
             state: present
             name:
               - mariadb-server
+              - inotify-tools
 
         - name: HERMES API - Services install - mysql enable
           become: true
@@ -115,7 +116,6 @@
             regexp: '^#DB_PORT'
             line: "DB_PORT=3306"
 
-
         - name: HERMES API - setting .env DB_DATABASE 
           when: not api_env.stat.exists
           ansible.builtin.lineinfile:
@@ -136,6 +136,20 @@
             path: "{{ webapi_path }}/.env"
             regexp: '^#DB_PASSWORD='
             line: "DB_PASSWORD={{ hermes_db_password }}"
+
+        - name: HERMES API - setting .env EMAILAPI_LOC
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#HERMES_EMAILAPI_LOC='
+            line: "HERMES_EMAILAPI_LOC = https://localhost:8080/remote/index.php"
+
+        - name: HERMES API - setting .env EMAILAPI_LOC
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#HERMES_EMAILAPI_URI='
+            line: "HERMES_EMAILAPI_URI = https://localhost:8080/remote"
 
         - name: HERMES API - create database
           become: true
@@ -168,13 +182,19 @@
           args:
             chdir: "{{ webpub_path }}/station-api/"
 
-        - name: Services install - copy hmp service
+        - name: HERMES API - copy hmp system service
           become: true
           copy:
-            src: "conf/services/ubitx.service"
+            src: "conf/services/hmp.service"
             dest: "/etc/systemd/system/"
             owner: root
             group: root
             mode: '0766'
             backup: yes
+
+        - name: HERMES API - enable hmp service
+          become: true
+          ansible.builtin.service:
+            name: hmp
+            enabled: yes
 

@@ -91,15 +91,6 @@
         name:
           - nginx
 
-    - name: Web Setup - NGINX -  public folder permissions 
-      become: true
-      ansible.builtin.file:
-        path: "{{ webpub_path }}/html" 
-        state: directory
-        recurse: yes
-        owner: "{{ ansible_user }}"
-        group: "{{ www_group }}"
-    
     - name: Web Setup - NGINX setup site hermes
       become: true
       copy:
@@ -114,10 +105,11 @@
     - name: Web Setup - NGINX public folder permissions
       become: true
       file:
+        path: "{{ webpub_path }}/html" 
         path: /var/www/html
         recurse: yes
-        owner: www-data
-        group: www-data
+        owner: "{{ ansible_user }}"
+        group: "{{ www_group }}"
         mode: '0775'
         
         
