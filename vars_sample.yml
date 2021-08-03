@@ -4,7 +4,6 @@
   hosts: hermes
   vars:
     build_path: /home/hermes/install
-
     webpub_path: /var/www
     webapi_path: "{{ webpub_path }}/station-api"
     inbox_path: "{{ webapi_path }}/storage/app/inbox"

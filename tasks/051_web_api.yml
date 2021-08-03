@@ -1,5 +1,20 @@
     - name: HERMES station-api backend software
       block:
+        - name: HERMES API - install debian packages 
+          become: true
+          apt:
+            install_recommends: yes
+            state: present
+            name:
+              - mariadb-server
+
+        - name: HERMES API - Services install - mysql enable
+          become: true
+          ansible.builtin.service:
+            name: mariadb
+            enabled: yes
+            state: started
+
         - name: HERMES API - Download HERMES station-api from github
           become: true
           git:

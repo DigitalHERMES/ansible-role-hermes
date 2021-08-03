@@ -29,17 +29,13 @@
           - clamav-freshclam
           - clamav
           - clamav-daemon
-          - clamav-unofficial-sigo
+          - clamav-unofficial-sigs
 
-    - name:  Mail - ISPconfig download and extract tarball
-      unarchive:
-        src: 'https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz'
-        dest: '{{ build_path }}'
-        remote_src: yes
-
-    - name: Mail - ISPconfig  shell setup TODO
-      ignore_errors: yes
-      command: echo {{ password_api }}
+    #- name:  Mail - ISPconfig download and extract tarball
+      #unarchive:
+        #src: 'https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz'
+        #dest: '{{ build_path }}'
+        #remote_src: yes
 
     - name: Mail - ISPconfig patch debian100.conf.php 
       become: true
@@ -47,3 +43,20 @@
         path: "{{ build_path }}/ispconfig3_install/install/dist/conf/debian100.conf.php"
         regexp: "7.3"
         replace: "7.4"
+
+    - name: Mail - copy autoinstall template on remote host
+      template:
+        src: "./conf/ispconfig.ini.j2"
+        dest: "{{ build_path }}/ispconfig3_install/install/autoinstall.ini"
+
+    - name: Mail - check if ISPConfig is already installed
+      stat:
+        path: /usr/local/ispconfig
+      register: ispconfig_installed
+
+    - name: Mail -  Start ISPConfig Installation
+      become: true
+      command: "php -q install.php --autoinstall=autoinstall.ini"
+      args:
+        chdir: "{{ build_path }}/ispconfig3_install/install/"
+      when: not ispconfig_installed.stat.exists
