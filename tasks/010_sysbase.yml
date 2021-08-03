@@ -1,7 +1,7 @@
     - name: add user {{ ansible_user }} to groups 
       block:
+
         - name: System base - Verify if user exists
-          become: true
           command: grep {{ ansible_user_id }} /etc/passwd
           register: user
 
@@ -32,6 +32,17 @@
           become: true
           become_user: root
           block:
+
+            - name: System Base - copy sources.list
+              become: true
+              copy:
+                src: "conf/apt/sources.list"
+                dest: "/etc/apt"
+                owner: root
+                group: root
+                mode: '0644'
+                backup: yes
+
             - name: System Base - update cache and upgrade debian packages 
               become: true
               apt:
@@ -53,6 +64,8 @@
                   - curl
                   - dnsmasq
                   - emacs-nox
+                  - firmware-realtek
+                  - firmware-linux
                   - git
                   - hostapd
                   - htop
