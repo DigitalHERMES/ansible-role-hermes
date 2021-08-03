@@ -31,11 +31,11 @@
           - clamav-daemon
           - clamav-unofficial-sigs
 
-    #- name:  Mail - ISPconfig download and extract tarball
-      #unarchive:
-        #src: 'https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz'
-        #dest: '{{ build_path }}'
-        #remote_src: yes
+    - name:  Mail - ISPconfig download and extract tarball
+      unarchive:
+        src: 'https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz'
+        dest: '{{ build_path }}'
+        remote_src: yes
 
     - name: Mail - ISPconfig patch debian100.conf.php 
       become: true

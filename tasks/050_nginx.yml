@@ -100,7 +100,7 @@
         owner: "{{ ansible_user }}"
         group: "{{ www_group }}"
     
-    - name: Web Setup - NGINX setup
+    - name: Web Setup - NGINX setup site hermes
       become: true
       copy:
         src: conf/nginx_hermes.conf 
@@ -110,6 +110,16 @@
         group: www-data
         mode: '0577'
         backup: yes
+
+    - name: Web Setup - NGINX public folder permissions
+      become: true
+      file:
+        path: /var/www/html
+        recurse: yes
+        owner: www-data
+        group: www-data
+        mode: '0775'
+        
         
     - name: Web Setup - NGINX - check for absent debian nginx default link
       become: true
@@ -125,6 +135,11 @@
         owner: www-data
         group: www-data
         state: link
+
+    - name: Web Setup - NGINX - gen keys
+      become: true
+      command:
+        openssl req -x509 -nodes -days 1095 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=EQ/ST=a/L=a/O=Rhizomatica, Inc./OU=hermes/CN=hermes.radio"
 
     - name: Web Setup - NGINX - enable service
       become: true

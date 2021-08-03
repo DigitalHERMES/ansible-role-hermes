@@ -28,19 +28,24 @@ join_multiserver_setup=n
 mysql_master_hostname=localhost
 mysql_master_root_password=""
 configure_mail=y
-configure_dns=n
+configure_jailkit=n
 configure_ftp=n
+configure_dns=n
 configure_nginx=y
+configure_apache=n
 configure_firewall=n
 configure_webserver=y
-configure_services=y
 install_ispconfig_web_interface=y
 
 [update]
 do_backup=y
+mysql_root_password=""
+mysql_master_hostname=localhost
+mysql_master_root_user="root"
+mysql_master_root_password=""
+mysql_master_database=dbispconfi
 reconfigure_permissions_in_master_database=y
 reconfigure_services=y
 ispconfig_port=9090
 create_new_ispconfig_ssl_cert=y
 reconfigure_crontab=yes
-reconfigure_services=yes
