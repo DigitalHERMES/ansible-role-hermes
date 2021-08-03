@@ -30,7 +30,6 @@
               enabled: yes
               state: started
 
-
           - name: Network - wifi setup - wifi settings - antenna and pm
             become: true
             copy:
@@ -77,11 +76,5 @@
             ansible.builtin.service:
               name: hostapd
               enabled: yes
+              masked: no
               state: started
-
-          - name: Network - setting files TODO
-            command: "echo test"
-            #ansible.builtin.lineinfile:
-              #path: "{{ webpub_path }}/station-api/.env"
-              #regexp: '^HERMES_INBOX='
-              #line: "HERMES_INBOX={{ inbox_path }}"

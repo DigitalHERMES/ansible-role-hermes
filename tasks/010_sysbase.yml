@@ -31,12 +31,16 @@
           when: ansible_facts['distribution'] == 'Debian'
           become: true
           become_user: root
-          ignore_errors: yes
           block:
+            - name: System Base - update cache and upgrade debian packages 
+              become: true
+              apt:
+                update_cache: yes
+                upgrade: true
             - name: System Base - Installing debian packages 
               become: true
               apt:
-                install_recommends: no
+                install_recommends: yes
                 state: present
                 name:
                   - alsa-tools

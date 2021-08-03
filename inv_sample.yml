@@ -8,7 +8,6 @@ hermes:
       inbox_path: "{{ webapi_path }}/storage/app/inbox"
       install_wine: true
       ubitx_client: "/usr/bin/ubitx_client"
-      # TODO
       install_uuardop_path: /tmp/build
       hostname: kurupira2
       www_group: www-data

@@ -14,7 +14,6 @@ content:
     # check this !
     install_system_packages: true
     install_wine: true
-    # TODO
     install_uuardop_path: /tmp/build
     build_path: /home/hermes/install
     hostname: ansible_hostname

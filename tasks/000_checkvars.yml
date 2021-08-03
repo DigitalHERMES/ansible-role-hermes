@@ -1,0 +1,51 @@
+    - name: Check if build_path is given in playbook
+      debug:
+        msg: "{{ build_path }}"
+
+    - name: Check if webpub_path is given in playbook
+      debug:
+        msg: "{{ webpub_path }}"
+
+    - name: Check if webapi_path is given in playbook
+      debug:
+        msg: "{{ webapi_path }}"
+
+    - name: Check if inbox_path is given in playbook
+      debug:
+        msg: "{{ inbox_path }}"
+
+    - name: Check if install_wine is given in playbook
+      debug:
+        msg: "{{ install_wine }}"
+
+    - name: Check if ubitx_client is given in playbook
+      debug:
+        msg: "{{ ubitx_client }}"
+
+    - name: Check if install_uuardop_path is given in playbook
+      debug:
+        msg: "{{ install_uuardop_path }}"
+
+    - name: Check if hostname is given in playbook
+      debug:
+        msg: "{{ hostname }}"
+
+    - name: Check if www_group is given in playbook
+      debug:
+        msg: "{{ www_group }}"
+
+    - name: Check if vara_callsign is given in playbook
+      debug:
+        msg: "{{ vara_callsign }}"
+
+    - name: Check if vara_license is given in playbook
+      debug:
+        msg: "{{ vara_license }}"
+
+    - name: Check if hermes_db is given in playbook
+      debug:
+        msg: "{{ hermes_db }}"
+
+    - name: Check if hermes_db_user is given in playbook
+      debug:
+        msg: "{{ hermes_db_user }}"

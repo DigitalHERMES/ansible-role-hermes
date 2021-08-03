@@ -2,16 +2,9 @@
 - name: Hermes Station
   hosts: hermes
 
-  #vars_prompt:
-    #- name: apiadmin
-      #prompt: Hermes ansible - What is your user for api admin?
-      #private: no
-    #- name: apipass
-      #prompt: Hermes ansible - What is your password for api  admin ?
-    #- name: host
-      #prompt: Hermes ansible - What is the hostname?
 
   tasks: 
+    - include: tasks/000_checkvars.yml
     - include: tasks/010_sysbase.yml
     - include: tasks/020_network.yml
     - include: tasks/030_uucp.yml
