@@ -54,11 +54,18 @@
         regexp: "^ExecStart=-/usr/sbin/in.uucpd"
         line: "ExecStart=-/usr/sbin/uucico -l"
 
-    - name: UUCP - restart service
-       become: true
-       ansible.builtin.service:
-         name: uucp@
-         state: restarted
-         enabled: yes
+    - name: UUCP - restart uucp
+      become: true
+      ansible.builtin.service:
+        name: uucp@
+        state: restarted
+        enabled: yes
+
+    - name: UUCP - restart uucp.socket
+      become: true
+      ansible.builtin.service:
+        name: uucp.socket
+        state: restarted
+        enabled: yes
 
 

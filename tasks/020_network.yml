@@ -6,7 +6,7 @@
             become: true
             copy:
               src: conf/interfaces.d/
-              dest: /etc/network
+              dest: /etc/network/interfaces.d/
               owner: root
               group: root
               mode: '0744'
