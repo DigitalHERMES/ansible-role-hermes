@@ -40,5 +40,9 @@
 #dialer hayes
 #speed-range 2400 9600
 
+port HFP
+type pipe
+command /usr/bin/uuport -c \Z
+
 port TCP
 type tcp

@@ -27,7 +27,16 @@
         state: present
         regexp: "^nodename"
         #line: "$config['db_dsnw'] = 'sqlite:////tmp/roundcube.db';"
-        line: "nodename {{ hostname }}"
+        line: "nodename {{ vara_callsign }}"
+
+    - name: UUCP - setting local sys
+      become: true
+      ansible.builtin.lineinfile:
+        path: "/etc/uucp/config"
+        state: present
+        regexp: "^system local"
+        #line: "$config['db_dsnw'] = 'sqlite:////tmp/roundcube.db';"
+        line: "system {{ vara_callsign }}"
 
     - name: UUCP - setting pubdir
       become: true
@@ -36,3 +45,20 @@
         state: present
         regexp: "^pubdir"
         line: "pubdir {{ inbox_path }}"
+
+    - name: UUCP - setting wrapper to uucico -l
+      become: true
+      ansible.builtin.lineinfile:
+        path: "/lib/systemd/system/uucp@.service"
+        state: present
+        regexp: "^ExecStart=-/usr/sbin/in.uucpd"
+        line: "ExecStart=-/usr/sbin/uucico -l"
+
+    - name: UUCP - restart service
+       become: true
+       ansible.builtin.service:
+         name: uucp@
+         state: restarted
+         enabled: yes
+
+

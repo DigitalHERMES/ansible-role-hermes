@@ -1,15 +1,15 @@
-nodename trambolho
+nodename radio-prefix
 
-spool /usr/spool/uucp
+spool /var/spool/uucp
 
-pubdir /usr/spool/uucppublic
+pubdir /var/www/station-api/storage/app/inbox
 
-logfile /usr/spool/uucp/Log
+logfile /var/spool/uucp/Log
 portfile /etc/uucp/port
 sysfile /etc/uucp/sys
 
-statfile /usr/spool/uucp/Stats
-debugfile /usr/spool/uucp/Debug
+statfile /var/spool/uucp/Stats
+debugfile /var/spool/uucp/Debug
 
 debug all
 

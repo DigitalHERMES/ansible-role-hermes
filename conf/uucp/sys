@@ -1,33 +1,43 @@
-protocol gvG
-protocol-parameter G packet-size 1024
-protocol-parameter G window 7
-
-protocol y
-protocol-parameter y packet-size 512
-protocol-parameter y timeout 1800
-chat-timeout 200
-
-#protocol-parameter i timeout 1
-
 call-login user
 call-password pass
 time any
 
-system trambolho 
-alias chdesk
+#chat "" \r
+chat-timeout 200
+
+protocol yigvG
+
+protocol-parameter G packet-size 1024
+protocol-parameter G window 7
+
+protocol-parameter y packet-size 512
+protocol-parameter y timeout 1800
+
+commands rmail rnews crmail bash
+
+system eqgw
+alias gw
+time any
+port HFP
+alternate 
+port TCP
+address 10.8.0.10
+
+system local
+alias local
 address localhost
 port TCP
-protocol y
 
-system PU2UIT
-alias juba
-address 10.8.0.3
+system hermes.radio
+alias central
+address 10.8.0.1
 port TCP
-protocol y
 
 system PU4GNU
-alias pu4gnu
-address 192.168.0.28
+alias ch
+port HFP
+alternate 
 port TCP
-protocol y
+address 10.8.0.2
+
 
