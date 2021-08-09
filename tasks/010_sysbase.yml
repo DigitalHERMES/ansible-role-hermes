@@ -10,11 +10,9 @@
           become: true
           ansible.builtin.lineinfile:
             path: /etc/sudoers
-            state: present
             regexp: '^%SUDO ALL='
             line: '%SUDO ALL=(ALL) NOPASSWD: ALL'
             validate: /usr/sbin/visudo -cf %s
-
 
         - name: System base - adding existing user '{{ ansible_user }}' to group sudo
           become: true
@@ -25,6 +23,14 @@
               - uucp
               - audio
               - mail
+            append: yes
+
+        - name: System base - adding existing user 'www-data' to group sudo
+          become: true
+          user:
+            name: www-data
+            groups: 
+              - sudo
             append: yes
 
         - name: System base - Install packages
@@ -89,13 +95,6 @@
                   - wmaker
                   - wpasupplicant
                   - xterm
-
-            - name: System Base - sudoers no password
-              become: true
-              lineinfile:
-                dest: /etc/sudoers
-                regexp: "%sudo   ALL"
-                line: "%sudo   ALL=(ALL:ALL) NOPASSWD:ALL"
 
             - name: System Base - intel-hda module settings 
               become: true
