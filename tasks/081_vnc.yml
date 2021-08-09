@@ -50,5 +50,6 @@
         become: true
         ansible.builtin.service:
           name: vnc
+          daemon_reload: yes
           enabled: yes
           state: started

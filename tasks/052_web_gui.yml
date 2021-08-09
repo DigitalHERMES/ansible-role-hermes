@@ -51,3 +51,12 @@
             mode: '0744'
             remote_src: yes
             backup: yes
+
+        - name: HERMES web gui- setting permissions html
+          become: true
+          ansible.builtin.file:
+            path: "{{ webpub_path }}/html"
+            mode: '0766'
+            owner: "{{ ansible_user }}"
+            group: "{{ www_group }}"
+         

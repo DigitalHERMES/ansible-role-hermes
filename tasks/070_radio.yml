@@ -8,26 +8,27 @@
         dest: "{{ build_path }}/ubitxv6/"
         version: HEAD
 
-    - name: Radio Setup - ubitx firmware build - make
+    - name: Radio Setup - ubitxv6 build
       command: "make"
       args:
         chdir: "{{ build_path }}/ubitxv6/"
 
-    - name: Radio Setup - ubitx firmware build - make
+    - name: Radio Setup - ubitxv6  install 
       become: true
       command: "make install"
       args:
         chdir: "{{ build_path }}/ubitxv6/"
 
-    - name: Radio Setup - ubitx firmware writer
-      command: "make upload"
-      ignore_errors: yes
+    - name: Radio Setup - ubitxv6 radio firmware update 
+      command: "make ispload"
+      ignore_errors: true
       args:
         chdir: "{{ build_path }}/ubitxv6/"
 
-    - name: Radio Setup - ubitx service enable
+    - name: Radio Setup - ubitx daemon-reload and service enable
       become: true
       ansible.builtin.service:
         name: ubitx
+        daemon_reload: yes
         enabled: yes
         state: started
