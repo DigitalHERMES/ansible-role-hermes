@@ -60,3 +60,26 @@
       args:
         chdir: "{{ build_path }}/ispconfig3_install/install/"
       when: not ispconfig_installed.stat.exists
+
+    - name: Mail - set default_transport to uucp:gw
+      become: true
+      ansible.builtin.lineinfile:
+        path: "/etc/postfix/main.cf"
+        state: present
+        regexp: "^relayhost"
+        line: "default_transport = uucp:gw"
+
+    - name: Mail - set no run uucico after uucp command
+      become: true
+      ansible.builtin.lineinfile:
+        path: "/etc/postfix/master.cf"
+        state: present
+        regexp: "^  flags=Fqhu user=uucp argv=uux -n -z -a$sender - $nexthop!rmail ($recipient)"
+        line: "^  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
+
+    - name: Mail - restart postfix 
+      become: true
+      ansible.builtin.service:
+        name: postfix
+        state: restarted
+        enabled: yes
