@@ -32,7 +32,7 @@
             recurse: yes
             owner: hermes
             group: www-data
-            mode: '0775'
+            mode: '0776'
 
         - name: HERMES API - Create a symbolic link for public html
           ansible.builtin.file:

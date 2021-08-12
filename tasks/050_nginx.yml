@@ -99,7 +99,7 @@
         dest: /etc/nginx/sites-available/hermes.conf
         owner: www-data
         group: www-data
-        mode: '0577'
+        mode: '0755'
         backup: yes
 
     - name: Web Setup - NGINX public folder permissions

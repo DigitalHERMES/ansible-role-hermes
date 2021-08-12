@@ -1,0 +1,7 @@
+
+
+
+- name: Sending an e-mail using the remote machine, not the Ansible controller node
+  community.general.mail:
+    host: localhost    port: 25     to: hermes     subject: Ansible-report
+    body: System {{ ansible_hostname }} has been successfully provisioned.

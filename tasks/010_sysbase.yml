@@ -5,7 +5,6 @@
           command: grep {{ ansible_user_id }} /etc/passwd
           register: user
 
-
         - name: System base - Validate the sudoers file before saving
           become: true
           ansible.builtin.lineinfile:

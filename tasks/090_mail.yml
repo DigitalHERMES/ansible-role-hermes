@@ -11,6 +11,7 @@
           - postfix
           - postfix-mysql
           - postfix-doc
+          - postgrey
           - spamassassin
           - ntp
           - mariadb-client
