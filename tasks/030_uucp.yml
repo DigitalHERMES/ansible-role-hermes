@@ -12,7 +12,6 @@
       become: true
       copy:
         src: conf/uucp/
-        #dest: /etc/uucp/
         dest: /etc/uucp/
         directory_mode: true
         owner: uucp
@@ -23,24 +22,25 @@
     - name: UUCP - setting nodename 
       become: true
       ansible.builtin.lineinfile:
+        backrefs: yes
         path: "/etc/uucp/config"
         state: present
         regexp: "^nodename"
-        #line: "$config['db_dsnw'] = 'sqlite:////tmp/roundcube.db';"
         line: "nodename {{ vara_callsign }}"
 
     - name: UUCP - setting local sys
       become: true
       ansible.builtin.lineinfile:
-        path: "/etc/uucp/config"
+        backrefs: yes
+        path: "/etc/uucp/sys"
         state: present
         regexp: "^system local"
-        #line: "$config['db_dsnw'] = 'sqlite:////tmp/roundcube.db';"
         line: "system {{ vara_callsign }}"
 
     - name: UUCP - setting pubdir
       become: true
       ansible.builtin.lineinfile:
+        backrefs: yes
         path: "/etc/uucp/config"
         state: present
         regexp: "^pubdir"
@@ -49,6 +49,7 @@
     - name: UUCP - setting wrapper to uucico -l
       become: true
       ansible.builtin.lineinfile:
+        backrefs: yes
         path: "/lib/systemd/system/uucp@.service"
         state: present
         regexp: "^ExecStart=-/usr/sbin/in.uucpd"
@@ -60,5 +61,3 @@
         name: uucp.socket
         state: restarted
         enabled: yes
-
-

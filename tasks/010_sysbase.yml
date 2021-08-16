@@ -8,6 +8,7 @@
         - name: System base - Validate the sudoers file before saving
           become: true
           ansible.builtin.lineinfile:
+            backrefs: yes
             path: /etc/sudoers
             regexp: '^%SUDO ALL='
             line: '%SUDO ALL=(ALL) NOPASSWD: ALL'
@@ -114,4 +115,3 @@
                 group: root
                 mode: '0744'
                 backup: yes
-              
