@@ -49,6 +49,7 @@
       template:
         src: "./conf/ispconfig.ini.j2"
         dest: "{{ build_path }}/ispconfig3_install/install/autoinstall.ini"
+        mode: '0754'
 
     - name: Mail - check if ISPConfig is already installed
       stat:
@@ -66,17 +67,38 @@
       become: true
       ansible.builtin.lineinfile:
         path: "/etc/postfix/main.cf"
+        backrefs: yes
         state: present
         regexp: "^relayhost"
         line: "default_transport = uucp:gw"
 
+    - name: Mail - disable filters
+      become: true
+      ansible.builtin.lineinfile:
+        backrefs: yes
+        path: "/etc/postfix/main.cf"
+        state: present
+        regexp: "^content_filter*"
+        #regexp: "^content_filter = lmtp:[127.0.0.1]:10024"
+        line: "#content_filter = lmtp:[127.0.0.1]:10024"
+
+    - name: Mail - comment receive_override 
+      become: true
+      ansible.builtin.lineinfile:
+        backrefs: yes
+        path: "/etc/postfix/main.cf"
+        state: present
+        regexp: "^receive_override_options = no_address_mappings"
+        line: "#receive_override_options = no_address_mappings"
+
     - name: Mail - set no run uucico after uucp command
       become: true
       ansible.builtin.lineinfile:
+        backrefs: yes
         path: "/etc/postfix/master.cf"
         state: present
-        regexp: "^  flags=Fqhu user=uucp argv=uux -n -z -a$sender - $nexthop!rmail ($recipient)"
-        line: "^  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
+        regexp: "^  flags=Fqhu user=uucp*"
+        line: "  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
 
     - name: Mail - restart postfix 
       become: true
