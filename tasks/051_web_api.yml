@@ -141,15 +141,43 @@
           when: not api_env.stat.exists
           ansible.builtin.lineinfile:
             path: "{{ webapi_path }}/.env"
-            regexp: '^#HERMES_EMAILAPI_LOC='
+            regexp: '^#HERMES_EMAILAPI_LOC'
             line: "HERMES_EMAILAPI_LOC = https://localhost:8080/remote/index.php"
 
-        - name: HERMES API - setting .env EMAILAPI_LOC
+        - name: HERMES API - setting .env EMAILAPI_URI
           when: not api_env.stat.exists
           ansible.builtin.lineinfile:
             path: "{{ webapi_path }}/.env"
-            regexp: '^#HERMES_EMAILAPI_URI='
+            regexp: '^#HERMES_EMAILAPI_URI*'
             line: "HERMES_EMAILAPI_URI = https://localhost:8080/remote"
+            
+        - name: HERMES API - setting .env  api_user
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#HERMES_EMAILAPI_USER*'
+            line: "HERMES_EMAILAPI_USER = {{ api_user }} "
+
+        - name: HERMES API - setting .env  HERMES_EMAILAPI_PASS
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#HERMES_EMAILAPI_PASS*'
+            line: "HERMES_EMAILAPI_PASS= {{ api_pass }}"
+
+        - name: HERMES API - setting .env HERMES_DOMAIN
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#HERMES_DOMAIN*'
+            line: "HERMES_DOMAIN = {{ hermes_domain }}"
+
+        - name: HERMES API - setting .env HERMES_NAME
+          when: not api_env.stat.exists
+          ansible.builtin.lineinfile:
+            path: "{{ webapi_path }}/.env"
+            regexp: '^#HERMES_NAME'
+            line: "HERMES_EMAILAPI_URI = {{ hostname }}"
 
         - name: HERMES API - create database
           become: true

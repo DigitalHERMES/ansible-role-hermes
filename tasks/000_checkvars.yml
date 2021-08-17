@@ -49,3 +49,19 @@
     - name: Check if hermes_db_user is given in playbook
       debug:
         msg: "{{ hermes_db_user }}"
+
+    - name: Check if hermes_domain is given in playbook
+      debug:
+        msg: "{{ hermes_domain }}"
+
+    - name: Check if hostname is given in playbook
+      debug:
+        msg: "{{ hostname }}"
+
+    - name: Check if isp_user is given in playbook
+      debug:
+        msg: "{{ isp_user }}"
+
+    - name: Check if isp_pass is given in playbook
+      debug:
+        msg: "{{ isp_pass }}"

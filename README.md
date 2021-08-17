@@ -8,8 +8,8 @@ content:
 ´´´hermes ansible_port=22 ansible_host=192.168.0.21 ansible_user=hermes ´´
 
 ## /etc/ansible/host_vars/hermes
-    password_api: very_secret_key 
-    password_admin: caduceu
+    isp_user: very_secret_key 
+    isp_pass: caduceu
     webpub_path: /var/www
     # check this !
     install_system_packages: true
