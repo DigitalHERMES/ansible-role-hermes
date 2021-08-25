@@ -15,29 +15,160 @@ protocol-parameter y timeout 1800
 
 commands rmail rnews crmail bash
 
-system eqgw
-alias gw
-time any
-port HFP
-alternate 
-port TCP
-address 10.8.0.10
-
-system local
-alias local
-address localhost
-port TCP
-
 system hermes.radio
 alias central
 address 10.8.0.1
 port TCP
 
-system PU4GNU
-alias ch
+system B0DE-T
+alias 
+port HFP
+alternate 
+port TCP
+address 10.8.0.8
+
+system B0DE-R
+alias B0DER
+port HFP
+alternate 
+port TCP
+address 10.8.0.9
+
+system B0DE
+alias ponte
+port HFP
+alternate 
+port TCP
+address 10.8.0.10
+
+system B0DE-1
+alias B0DE1
+port HFP
+alternate 
+port TCP
+address 10.8.0.11
+
+system B0DE-2
+alias B0DE2
+port HFP
+alternate 
+port TCP
+address 10.8.0.12
+
+system B0DE-3
+alias B0DE3
+port HFP
+alternate 
+port TCP
+address 10.8.0.13
+
+system B0DE-4
+alias B0DE4
+port HFP
+alternate 
+port TCP
+address 10.8.0.14
+
+system B0DE-5
+alias B0DE5
+port HFP
+alternate 
+port TCP
+address 10.8.0.15
+
+system B0DE-6
+alias B0DE6
+port HFP
+alternate 
+port TCP
+address 10.8.0.16
+
+system B0DE-7
+alias B0DE7
+port HFP
+alternate 
+port TCP
+address 10.8.0.17
+
+system B0DE-8
+alias B0DE8
+port HFP
+alternate 
+port TCP
+address 10.8.0.18
+
+system B0DE-9
+alias B0DE9
+port HFP
+alternate 
+port TCP
+address 10.8.0.19
+
+system B0DE-10
+alias B0DE10
+port HFP
+alternate 
+port TCP
+address 10.8.0.20
+
+system B0DE-11
+alias B0DE11
+port HFP
+alternate 
+port TCP
+address 10.8.0.21
+
+system B0DE-12
+alias B0DE12
+port HFP
+alternate 
+port TCP
+address 10.8.0.22
+
+system B0DE-13
+alias B0DE13
+port HFP
+alternate 
+port TCP
+address 10.8.0.23
+
+system B0DE-14
+alias B0DE14
+port HFP
+alternate 
+port TCP
+address 10.8.0.24
+
+system B0DE-15
+alias B0DE15
+port HFP
+alternate 
+address 10.8.0.25
+
+system hermes.radio
+alias centralred
+port HFP
+alternate 
+port TCP
+address 10.8.0.1
+
+system AE4ML-2
+alias kurupira2
+port HFP
+alternate 
+port TCP
+address 10.8.0.4
+
+system AE4ML-4 
+alias kurupira4
 port HFP
 alternate 
 port TCP
 address 10.8.0.2
 
-
+system AE4ML-6
+alias kurupira6
+port HFP
+alternate 
+port TCP
+address 10.8.0.3
