@@ -1,4 +1,4 @@
-- name: LPCNet seutp
+- name: LPCNet setup
   become_user: root
   block:
     - name: LPCNet Setup - clone from git main

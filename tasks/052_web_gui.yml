@@ -20,10 +20,21 @@
         - name: Hermes web gui - setting global_constants.ts
           become: true
           ansible.builtin.lineinfile:
+            backrefs: yes
             path: "{{ build_path }}/angular/src/app/global-constants.ts"
             state: present
             regexp: "^   public static apiURL"
             line: "   public static apiURL = '/api';"
+            #validate: /usr/sbin/visudo -cf %s
+            
+        - name: Hermes web gui - setting global_constants.ts hostname
+          become: true
+          ansible.builtin.lineinfile:
+            backrefs: yes
+            path: "{{ build_path }}/angular/src/app/global-constants.ts"
+            state: present
+            regexp: "^    public static stationName = 'local';"
+            line: "    public static stationName = '{{ vara_callsign }}';"
             #validate: /usr/sbin/visudo -cf %s
 
         - name: HERMES web gui -  install node modules 
@@ -51,3 +62,12 @@
             mode: '0766'
             remote_src: yes
             backup: yes
+
+        - name: HERMES API reforce Web Setup - NGINX public folder permissions
+          become: true
+          file:
+            path: "{{ webpub_path }}/html" 
+            recurse: yes
+            owner: "{{ ansible_user }}"
+            group: "{{ www_group }}"
+            mode: '0775'

@@ -1,0 +1,19 @@
+    - name: VARA remove
+      when: ansible_facts['distribution'] == 'Debian' and install_wine
+      become: true
+      become_user: root
+      block: 
+
+        - name: VARA Install - test for vara install
+          file:
+            path: "/home/{{ ansible_user }}/VARA"
+            state: absent
+
+        - name: VARA Install - vara files
+          copy:
+            src: conf/VARA
+            dest: "/home/{{ ansible_user }}/"
+            owner: "{{ ansible_user }}"
+            group: hermes
+            mode: '0775'
+            backup: yes

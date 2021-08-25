@@ -16,7 +16,7 @@
             become: true
             ignore_errors: yes
             copy:
-              src: "conf/{{ hostname }}.ovpn"
+              src: "conf/vpn/{{ hostname }}.ovpn"
               dest: "/etc/openvpn/client/{{ hostname }}.conf"
               owner: root
               group: root

@@ -18,5 +18,5 @@ hermes:
       hermes_db_user: hermes
       hermes_db_password: db_hermes
       api_user: apiadmin
-      api_pass: caduceu
+      api_pass: admincaduceu
 

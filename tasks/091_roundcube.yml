@@ -46,7 +46,7 @@
         target: "{{ build_path }}/roundcubemail-1.4.11/SQL/mysql.initial.sql"
         force: yes
 
-    - name: Hermes web gui - setting global_constants.ts
+    - name: Mail - roundcube mysql config
       become: true
       ansible.builtin.lineinfile:
         path: "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php"

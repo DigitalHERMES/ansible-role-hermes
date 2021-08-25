@@ -32,7 +32,7 @@
             recurse: yes
             owner: hermes
             group: www-data
-            mode: '0776'
+            mode: '0775'
 
         - name: HERMES API - Create a symbolic link for public html
           ansible.builtin.file:
@@ -41,6 +41,7 @@
             owner: hermes
             group: www-data
             state: link
+
 
         - name: HERMES API - composer install
           command: "composer install"
@@ -156,14 +157,14 @@
           ansible.builtin.lineinfile:
             path: "{{ webapi_path }}/.env"
             regexp: '^#HERMES_EMAILAPI_USER*'
-            line: "HERMES_EMAILAPI_USER = {{ api_user }} "
+            line: "HERMES_EMAILAPI_USER = {{ isp_user }} "
 
         - name: HERMES API - setting .env  HERMES_EMAILAPI_PASS
           when: not api_env.stat.exists
           ansible.builtin.lineinfile:
             path: "{{ webapi_path }}/.env"
             regexp: '^#HERMES_EMAILAPI_PASS*'
-            line: "HERMES_EMAILAPI_PASS= {{ api_pass }}"
+            line: "HERMES_EMAILAPI_PASS= {{ isp_pass }}"
 
         - name: HERMES API - setting .env HERMES_DOMAIN
           when: not api_env.stat.exists

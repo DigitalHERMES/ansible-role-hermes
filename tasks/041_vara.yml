@@ -37,7 +37,7 @@
             dest: "/home/{{ ansible_user }}/"
             owner: "{{ ansible_user }}"
             group: hermes
-            mode: '0577'
+            mode: '0775'
             backup: yes
 
         - name: VARA Install - setting callsign
