@@ -91,6 +91,15 @@
         regexp: "^receive_override_options = no_address_mappings"
         line: "#receive_override_options = no_address_mappings"
 
+    - name: Mail - allow all domains
+      become: true
+      ansible.builtin.lineinfile:
+        backrefs: yes
+        path: "/etc/postfix/main.cf"
+        state: present
+        regexp: "^smtpd_recipient_restrictions*"
+        line:  "smtpd_recipient_restrictions = permit_mynetworks, reject_unlisted_recipient, check_recipient_access proxy:mysql:/etc/postfix/mysql-verify_recipients.cf, permit_sasl_authenticated, reject_non_fqdn_recipient, reject_unauth_destination, check_recipient_access proxy:mysql:/etc/postfix/mysql-virtual_recipient.cf, check_policy_service unix:private/quota-status"
+
     - name: Mail - set no run uucico after uucp command
       become: true
       ansible.builtin.lineinfile:
@@ -99,6 +108,24 @@
         state: present
         regexp: "^  flags=Fqhu user=uucp*"
         line: "  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
+
+    - name: Mail -set no run filter on master.cf TODO 10025->10024
+      become: true
+      ansible.builtin.lineinfile:
+        backrefs: yes
+        path: "/etc/postfix/master.cf"
+        state: present
+        regexp: "^  flags=Fqhu user=uucp*"
+        line: "  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
+
+    - name: Mail - tag_as_foreign.re 10025-> 10024 TODO
+      become: true
+      ansible.builtin.lineinfile:
+        backrefs: yes
+        path: "/etc/postfix/tag_as_foreign.re"
+        state: present
+        regexp: "^/^/ FILTER*"
+        line: "/^/ FILTER lmtp:[127.0.0.1]:10024"
 
     - name: Mail - disable clamav-daemon service
       become: true

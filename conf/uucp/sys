@@ -13,22 +13,17 @@ protocol-parameter G window 7
 protocol-parameter y packet-size 512
 protocol-parameter y timeout 1800
 
-commands rmail rnews crmail bash
-
-system hermes.radio
-alias central
-address 10.8.0.1
-port TCP
+commands rmail rnews crmail bash uuup sudo
 
 system B0DE-T
-alias 
+alias act
 port HFP
 alternate 
 port TCP
 address 10.8.0.8
 
 system B0DE-R
-alias B0DER
+alias acr
 port HFP
 alternate 
 port TCP
@@ -147,8 +142,6 @@ address 10.8.0.25
 
 system hermes.radio
 alias centralred
-port HFP
-alternate 
 port TCP
 address 10.8.0.1
 

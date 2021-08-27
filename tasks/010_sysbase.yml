@@ -10,7 +10,7 @@
           ansible.builtin.lineinfile:
             backrefs: yes
             path: /etc/sudoers
-            regexp: '^%SUDO ALL='
+            regexp: '^%sudo*'
             line: '%SUDO ALL=(ALL) NOPASSWD: ALL'
             validate: /usr/sbin/visudo -cf %s
 
@@ -32,6 +32,15 @@
             groups: 
               - sudo
             append: yes
+
+        - name: System base - adding existing user 'uucp' to group sudo
+          become: true
+          user:
+            name: uucp
+            groups: 
+              - sudo
+            append: yes
+
 
         - name: System base - Install packages
           when: ansible_facts['distribution'] == 'Debian'
