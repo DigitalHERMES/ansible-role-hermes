@@ -109,16 +109,7 @@
         regexp: "^  flags=Fqhu user=uucp*"
         line: "  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
 
-    - name: Mail -set no run filter on master.cf TODO 10025->10024
-      become: true
-      ansible.builtin.lineinfile:
-        backrefs: yes
-        path: "/etc/postfix/master.cf"
-        state: present
-        regexp: "^  flags=Fqhu user=uucp*"
-        line: "  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
-
-    - name: Mail - tag_as_foreign.re 10025-> 10024 TODO
+    - name: Mail - tag_as_foreign.re 10025-> 10024
       become: true
       ansible.builtin.lineinfile:
         backrefs: yes

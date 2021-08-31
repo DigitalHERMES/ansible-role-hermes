@@ -71,6 +71,12 @@
               mode: '0744'
               backup: yes
 
+          - name: Network - wifi setup - unmask hostapd
+            become: true
+            ansible.builtin.service:
+              name: hostapd
+              masked: no
+
           - name: Network - wifi setup - service hostpad
             become: true
             ansible.builtin.service:
