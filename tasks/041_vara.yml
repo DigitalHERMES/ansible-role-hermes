@@ -31,7 +31,7 @@
           register: vara_exists
         
         - name: VARA Install - vara files
-          when: not vara_exists.stat.exists
+          #when: not vara_exists.stat.exists
           copy:
             src: conf/VARA
             dest: "/home/{{ ansible_user }}/"
@@ -60,10 +60,10 @@
             regexp: "Retries="
             line: "Retries=5"
 
-        - name: VARA Install - setting ALC Level to -3 
+        - name: VARA Install - setting ALC Level to -6 dB 
           lineinfile:
             path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "ALC Drive Level="
-            line: "ALC Drive Level=-3"
+            line: "ALC Drive Level=-6"
 
 
