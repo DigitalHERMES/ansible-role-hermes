@@ -5,8 +5,9 @@
       git:
         repo: "git://github.com/DigitalHERMES/ubitxv6.git"
         clone: yes
+        force: yes
         dest: "{{ build_path }}/ubitxv6/"
-        version: HEAD
+        version: origin/master 
 
     - name: Radio Setup - ubitxv6 build
       command: "make"
@@ -23,7 +24,7 @@
       command: "make ispload"
       ignore_errors: true
       args:
-        chdir: "{{ build_path }}/ubitxv6/"
+        chdir: "{{ build_path }}/ubitxv6/firmware"
 
     - name: Radio Setup - ubitx daemon-reload and service enable
       become: true
