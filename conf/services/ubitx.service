@@ -1,14 +1,15 @@
 [Unit]
-Description=Ubitx controller Daemon
+Description=uBitx controller daemon
 
 [Service]
-Type=forking
-#PIDFile=/var/run/ubitx/pid
-ExecStart=/usr/bin/ubitx_controller -s /dev/ttyUSB0 -r ubitx &
-ExecStop=/usr/bin/killall -9 ubitx_controller
-Restart=on-failure
-LimitRTPRIO=1000
-LimitNICE=-10
+Type=exec
+ExecStart=/usr/bin/ubitx_controller -s /dev/ttyUSB0 -r ubitx
+KillSignal=SIGTERM
+IgnoreSIGPIPE=no
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+TimeoutSec=3
 
 [Install]
 WantedBy=multi-user.target

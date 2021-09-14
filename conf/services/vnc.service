@@ -11,8 +11,9 @@ WorkingDirectory=/home/hermes
 #ExecStartPre=/usr/bin/vncserver -kill :1 > /dev/null 2> /dev/null
 #ExecStart=/usr/bin/tigervncserver :1 -depth 24 -geometry 1280x800 -localhost no
 ExecStart=/usr/bin/vncserver :1 -depth 16 -geometry 1024x800 -localhost no
-ExecStop=/usr/bin/vncserver -kill :1
-
+# ExecStop=/bin/sh -c 'killall/usr/bin/vncserver -kill %i > /dev/null 2>&1 || :'
+# ExecStop=/usr/bin/vncserver -kill :1
+KillSignal=SIGKILL
 #Type=simple
 #ExecStart=/usr/bin/vncserver -localhost no -geometry 1024x768 -depth 16
 #ExecStop=/usr/bin/killall -s QUIT Xtigervnc
