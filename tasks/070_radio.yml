@@ -1,5 +1,4 @@
 - name: Radio setup 
-  become_user: root
   block:
     - name: Radio Setup - clone firmware from git main
       git:
@@ -21,6 +20,7 @@
         chdir: "{{ build_path }}/ubitxv6/"
 
     - name: Radio Setup - ubitxv6 radio firmware update 
+      become: true
       command: "make ispload"
       ignore_errors: true
       args:
