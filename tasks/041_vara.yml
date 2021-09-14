@@ -31,14 +31,14 @@
           register: vara_exists
         
         - name: VARA Install - vara files
-          #when: not vara_exists.stat.exists
+          when: not vara_exists.stat.exists
           copy:
             src: conf/VARA
             dest: "/home/{{ ansible_user }}/"
             owner: "{{ ansible_user }}"
             group: hermes
             mode: '0775'
-            backup: yes
+            backup: no
 
         - name: VARA Install - setting callsign
           lineinfile:

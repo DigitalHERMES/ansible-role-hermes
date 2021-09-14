@@ -59,7 +59,7 @@
             group: www-data
             mode: '0766'
             remote_src: yes
-            backup: yes
+            backup: no
 
         - name: HERMES API reforce Web Setup - NGINX public folder permissions
           become: true

@@ -212,7 +212,7 @@
             owner: root
             group: root
             mode: '0766'
-            backup: yes
+            backup: no
 
         - name: HERMES API - enable hmp service
           become: true
