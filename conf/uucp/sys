@@ -13,6 +13,11 @@ protocol-parameter G window 7
 protocol-parameter y packet-size 512
 protocol-parameter y timeout 1800
 
+protocol-parameter i timeout 1
+protocol-parameter i retries 3
+
+forward *
+
 commands rmail rnews crmail bash uuup sudo
 
 system B0DE-T

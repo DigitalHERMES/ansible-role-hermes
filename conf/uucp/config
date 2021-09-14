@@ -11,7 +11,7 @@ sysfile /etc/uucp/sys
 statfile /var/spool/uucp/Stats
 debugfile /var/spool/uucp/Debug
 
-debug all
+#debug all
 
 # programs run at the same time with the following command.  The
 # default is to have no maximum.
