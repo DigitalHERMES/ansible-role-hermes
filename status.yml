@@ -1,0 +1,7 @@
+---
+- name: Hermes Station
+  hosts: hermes
+
+  tasks: 
+    #- include: tasks/000_checkvars.yml
+    - include: tasks/a_status.yml

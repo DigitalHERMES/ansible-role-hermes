@@ -1,0 +1,78 @@
+- name: Radio status
+  block:
+    - name: Radio ubitx get frequency
+      command: "ubitx_client -c get_frequency"
+      args:
+        chdir: "{{ build_path }}/ubitxv6/"
+      register: ubitx_frequency
+      #failed_when: "'ERROR' in ubitx_frequency.stdout_lines"
+
+    - name: isp status
+      wait_for: host=localhost port=8080
+      register: isp_status
+
+    - name: isp print
+      debug: var=isp_status
+
+    - name: webserver localhost status 
+      wait_for: host=localhost port=443
+      register: webserver_local_status 
+
+    - name: webserver wifi status 
+      wait_for: host=10.0.0.1 port=443
+      register: webserver_local_status 
+
+    - name: Radio Ubitx print frequency
+      when: ubitx_frequency
+      debug: var=ubitx_frequency.stdout_lines
+
+    - name: service http
+      ansible.builtin.service:
+        name: nginx
+        state: started
+
+    - name: service ubitx
+      ansible.builtin.service:
+        name: ubitx
+        state: started
+
+    - name: service hmp
+      ansible.builtin.service:
+        name: hmp
+        state: started
+
+# UUCP
+
+    - name: service uucp socket
+      ansible.builtin.service:
+        name: uucp.socket
+        state: started
+
+    - name: uucp local status 
+      wait_for: host=localhost port=540
+      register: webserver_local_status 
+
+    - name: service uuardop
+      ansible.builtin.service:
+        name: uuardopd
+        state: started
+
+
+
+
+    - name: get status
+      uri:
+        validate_certs: no
+        return_content: yes
+        url: https://localhost/api/sys/status
+      register: apistatus
+
+    - name: print apistatus
+      #failed_when: "'false' in apistatus.content.status"
+      #failed_when: "'ERROR' in ubitx_frequency.stdout_lines"
+      debug: var=apistatus.content
+
+    - name: TODO check nodename
+      debug: 
+        msg:
+         - "teste"

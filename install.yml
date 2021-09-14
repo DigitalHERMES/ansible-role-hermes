@@ -1,6 +1,6 @@
 ---
 - name: Hermes Station
-  hosts: hermes
+  hosts: hermes_install
 
 
   tasks: 
