@@ -5,19 +5,38 @@
 
   tasks: 
     - include: tasks/000_checkvars.yml
+      tags: vars
     - include: tasks/010_sysbase.yml
+      tags: base
     - include: tasks/020_network.yml
+      tags: net
     - include: tasks/030_uucp.yml
+      tags: uucp
     - include: tasks/031_uucomp.yml
+      tags: uucomp
     - include: tasks/040_uuardop.yml
+      tags: uuardop
     - include: tasks/041_vara.yml
+      tags: vara
     - include: tasks/050_nginx.yml
+      tags: nginx
     - include: tasks/051_web_api.yml
+      tags: api
     - include: tasks/052_web_gui.yml
+      tags: gui
     - include: tasks/060_lpcnet.yml
+      tags: lpcnet
     - include: tasks/070_radio.yml
+      tags: radio 
     - include: tasks/081_vnc.yml
+      tags: vnc
     - include: tasks/090_mail.yml
+      tags: mail
     - include: tasks/091_roundcube.yml
+      tags: roundcube
     - include: tasks/080_services.yml
+      tags: services
     - include: tasks/100_checklist.yml
+      tags: checklist
+    - include: tasks/a_status.yml
+      tags: status
