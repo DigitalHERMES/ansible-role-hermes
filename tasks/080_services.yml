@@ -1,7 +1,94 @@
+# check for Services
+- name: "Services"
+  become: true
+  block:
+    - name: service mariadb is started?
+      ansible.builtin.service:
+        name: mariadb
+        enabled: yes
+        state: started
 
-    - name: Services install - postfix enable 
+    - name: service http is started?
+      ansible.builtin.service:
+        name: nginx
+        enabled: yes
+        state: started
+
+    - name: service hostapd is started?
+      ansible.builtin.service:
+        name: hostapd
+        enabled: yes
+        state: started
+
+    - name: service dnsmasq is started?
+      ansible.builtin.service:
+        name: dnsmasq
+        enabled: yes
+        state: started
+
+    - name: service ubitx is started?
+      ansible.builtin.service:
+        name: ubitx
+        enabled: yes
+        state: started
+
+    - name: service hmp is started?
+      ansible.builtin.service:
+        name: hmp
+        enabled: yes
+        state: started
+
+    - name: service uucp socket is started?
+      ansible.builtin.service:
+        name: uucp.socket
+        enabled: yes
+        state: started
+
+    - name: service uuardop is started?
+      ansible.builtin.service:
+        name: uuardopd
+        enabled: yes
+        state: started
+
+    - name: Service postfix is started?
       become: true
       ansible.builtin.service:
         name: postfix
+        enabled: yes
+        state: started
+
+    - name: Service dovecot enable 
+      become: true
+      ansible.builtin.service:
+        name: dovecot
+        enabled: yes
+        state: started
+
+
+    - name: Service clamav is started 
+      become: true
+      ansible.builtin.service:
+        name: clamav-daemon
+        enabled: yes
+        state: started
+
+    - name: Service clamav-freshclam enable 
+      become: true
+      ansible.builtin.service:
+        name: clamav-freshclam
+        enabled: yes
+        state: started
+
+    - name: Service amavis enable 
+      become: true
+      ansible.builtin.service:
+        name: amavis
+        enabled: yes
+        state: started
+
+    - name: Service postgrey enable 
+      become: true
+      ansible.builtin.service:
+        name: postgrey
         enabled: yes
         state: started

@@ -4,4 +4,5 @@
 
   tasks: 
     #- include: tasks/000_checkvars.yml
+    - include: tasks/080_services.yml
     - include: tasks/a_status.yml

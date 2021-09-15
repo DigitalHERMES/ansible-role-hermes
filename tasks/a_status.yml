@@ -1,4 +1,4 @@
-- name: Radio status
+- name: general status
   block:
     - name: Radio ubitx get frequency
       command: "ubitx_client -c get_frequency"
@@ -8,8 +8,6 @@
     - name: isp admin
       wait_for: host=localhost port=8080
       register: isp_status
-      #failed_when: "'started' ! in ubitx_frequency.stdout_lines"
-      #failed_when:  isp_status.stdout_lines != 'started'
       failed_when:  isp_status.state != 'started'
 
     - name: webserver localhost status 
@@ -20,44 +18,11 @@
       wait_for: host=10.0.0.1 port=443
       timeout: 1
       register: webserver_local_status 
-
-# Radio Ubitx print frequency
-
-    - name: Radio Ubitx print frequency
-      when: ubitx_frequency
-      debug: var=ubitx_frequency.stdout_lines
-
-    - name: service http
-      ansible.builtin.service:
-        name: nginx
-        state: started
-
-# check for Services
-
-    - name: service ubitx is started?
-      ansible.builtin.service:
-        name: ubitx
-        state: started
-
-    - name: service hmp is started?
-      ansible.builtin.service:
-        name: hmp
-        state: started
-
-
-    - name: service uucp socket is started?
-      ansible.builtin.service:
-        name: uucp.socket
-        state: started
+      ignore_errors: yes
 
     - name: uucp local status  is started?
       wait_for: host=localhost port=540
       register: webserver_local_status 
-
-    - name: service uuardop is started?
-      ansible.builtin.service:
-        name: uuardopd
-        state: started
 
     - name: get json api/sys/status from station-api on localhost
       ansible.builtin.uri:
@@ -77,24 +42,21 @@
       failed_when: apistatus.json.nodename != nodename.stdout
 
     - name: check if uucp is version  >1.07
-      tags:  
-        - dev
       ansible.builtin.shell: /sbin/uucico -v | grep uucico | cut -d " " -f 4
       register: uucp_version
       failed_when: uucp_version.stdout|float < 1.07
 
-
     - name: uucp handshake for alias gw
-      tags:  
-        - dev
       ansible.builtin.command: /sbin/uucico -S gw
+      timeout: 5
+      ignore_errors: yes
 
     - name: uucp handshake for alias local
-      tags:  
-        - dev
       ansible.builtin.command: /sbin/uucico -S local
+      timeout: 5
+      ignore_errors: yes
 
-    - name: uucp handshake for local
-      tags:  
-        - dev
-      ansible.builtin.command: /sbin/uucico -S 'gw!hermes.radio'
+    #- name: uucp handshake for local
+      #tags:  
+        #- dev
+      #ansible.builtin.command: /sbin/uucico -S 'gw!hermes.radio'
