@@ -2,17 +2,15 @@
   block:
     - name: Radio ubitx get frequency
       command: "ubitx_client -c get_frequency"
-      args:
-        chdir: "{{ build_path }}/ubitxv6/"
       register: ubitx_frequency
       #failed_when: "'ERROR' in ubitx_frequency.stdout_lines"
 
-    - name: isp status
+    - name: isp admin
       wait_for: host=localhost port=8080
       register: isp_status
-
-    - name: isp print
-      debug: var=isp_status
+      #failed_when: "'started' ! in ubitx_frequency.stdout_lines"
+      #failed_when:  isp_status.stdout_lines != 'started'
+      failed_when:  isp_status.state != 'started'
 
     - name: webserver localhost status 
       wait_for: host=localhost port=443
@@ -20,7 +18,10 @@
 
     - name: webserver wifi status 
       wait_for: host=10.0.0.1 port=443
+      timeout: 1
       register: webserver_local_status 
+
+# Radio Ubitx print frequency
 
     - name: Radio Ubitx print frequency
       when: ubitx_frequency
@@ -31,48 +32,69 @@
         name: nginx
         state: started
 
-    - name: service ubitx
+# check for Services
+
+    - name: service ubitx is started?
       ansible.builtin.service:
         name: ubitx
         state: started
 
-    - name: service hmp
+    - name: service hmp is started?
       ansible.builtin.service:
         name: hmp
         state: started
 
-# UUCP
 
-    - name: service uucp socket
+    - name: service uucp socket is started?
       ansible.builtin.service:
         name: uucp.socket
         state: started
 
-    - name: uucp local status 
+    - name: uucp local status  is started?
       wait_for: host=localhost port=540
       register: webserver_local_status 
 
-    - name: service uuardop
+    - name: service uuardop is started?
       ansible.builtin.service:
         name: uuardopd
         state: started
 
-
-
-
-    - name: get status
-      uri:
+    - name: get json api/sys/status from station-api on localhost
+      ansible.builtin.uri:
         validate_certs: no
-        return_content: yes
         url: https://localhost/api/sys/status
       register: apistatus
+      #failed_when: apistatus.json.status == false
 
-    - name: print apistatus
-      #failed_when: "'false' in apistatus.content.status"
-      #failed_when: "'ERROR' in ubitx_frequency.stdout_lines"
-      debug: var=apistatus.content
+    - name: check if domainname from /etc/mailname matches api domain
+      ansible.builtin.command: cat /etc/mailname
+      register: etcmailname
+      failed_when: apistatus.json.domain != etcmailname.stdout
 
-    - name: TODO check nodename
-      debug: 
-        msg:
-         - "teste"
+    - name: check if nodename from uucp matches api 
+      ansible.builtin.shell: cat /etc/uucp/config | grep nodename | cut -d " " -f 2
+      register: nodename
+      failed_when: apistatus.json.nodename != nodename.stdout
+
+    - name: check if uucp is version  >1.07
+      tags:  
+        - dev
+      ansible.builtin.shell: /sbin/uucico -v | grep uucico | cut -d " " -f 4
+      register: uucp_version
+      failed_when: uucp_version.stdout|float < 1.07
+
+
+    - name: uucp handshake for alias gw
+      tags:  
+        - dev
+      ansible.builtin.command: /sbin/uucico -S gw
+
+    - name: uucp handshake for alias local
+      tags:  
+        - dev
+      ansible.builtin.command: /sbin/uucico -S local
+
+    - name: uucp handshake for local
+      tags:  
+        - dev
+      ansible.builtin.command: /sbin/uucico -S 'gw!hermes.radio'
