@@ -105,6 +105,14 @@
                   - wpasupplicant
                   - xterm
 
+            - name: Set timezone and hwclock to UTC
+              become: true
+              tags:  
+                - dev
+              community.general.timezone:
+                name: UTC
+                hwclock: UTC
+
             - name: System Base - intel-hda module settings 
               become: true
               copy:
