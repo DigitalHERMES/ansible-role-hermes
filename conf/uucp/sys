@@ -145,8 +145,8 @@ port HFP
 alternate 
 address 10.8.0.25
 
-system hermes.radio
-alias centralred
+system hermes
+alias central
 port TCP
 address 10.8.0.1
 
