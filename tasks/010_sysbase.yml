@@ -87,6 +87,7 @@
                   - iw
                   - jq
                   - libtool
+                  - libb64-dev
                   - memtest86
                   - memtest86+
                   - mosquitto
