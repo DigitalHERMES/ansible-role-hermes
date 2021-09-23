@@ -19,17 +19,24 @@
       args:
         chdir: "{{ build_path }}/ubitxv6/"
 
+    - name: Radio Setup - ubitx daemon-reload and stop service ubitx
+      become: true
+      ansible.builtin.service:
+        name: ubitx
+        daemon_reload: yes
+        enabled: yes
+        state: stopped
+
     - name: Radio Setup - ubitxv6 radio firmware update 
       become: true
       command: "make ispload"
-      ignore_errors: true
       args:
         chdir: "{{ build_path }}/ubitxv6/firmware"
+      failed_when: no_match
 
     - name: Radio Setup - ubitx daemon-reload and service enable
       become: true
       ansible.builtin.service:
         name: ubitx
-        daemon_reload: yes
         enabled: yes
         state: started
