@@ -28,6 +28,8 @@
       tags: lpcnet
     - include: tasks/070_radio.yml
       tags: radio 
+    - include: tasks/071_radiotone.yml
+      tags: radio 
     - include: tasks/081_vnc.yml
       tags: vnc
     - include: tasks/090_mail.yml

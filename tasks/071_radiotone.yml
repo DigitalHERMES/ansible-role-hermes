@@ -1,0 +1,21 @@
+- name: alsatonic setup 
+  block:
+    - name: alsatonic Setup - clone firmware from git main
+      git:
+        repo: "git://github.com/DigitalHERMES/alsatonic.git"
+        clone: yes
+        force: yes
+        dest: "{{ build_path }}/alsatonic/"
+        version: origin/master 
+
+    - name: alsatonic Setup - build
+      command: "make"
+      args:
+        chdir: "{{ build_path }}/alsatonic/"
+
+    - name: alsatonic Setup - install 
+      become: true
+      command: "make install"
+      args:
+        chdir: "{{ build_path }}/alsatonic/"
+
