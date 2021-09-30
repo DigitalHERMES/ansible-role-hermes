@@ -127,8 +127,8 @@
             - name: System Base - copy volume settings 
               become: true
               copy:
-                src: "conf/modprobe.d/intel_hda.conf"
-                dest: "/etc/modprobe.d"
+                src: "conf/asound.state"
+                dest: "var/lib/alsa/asound.state"
                 owner: root
                 group: root
                 mode: '0744'
@@ -137,6 +137,5 @@
             - name: System Base - alsactl restore
               become: true
               command: "alsactl restore"
-              register: alsactl_restore
               changed_when: False
 
