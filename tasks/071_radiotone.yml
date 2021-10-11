@@ -6,8 +6,8 @@
         install_recommends: yes
         state: present
         name:
-        - libb64-dev
         - libasound2-dev
+
     - name: alsatonic Setup - clone firmware from git main
       git:
         repo: "git://github.com/DigitalHERMES/alsatonic.git"

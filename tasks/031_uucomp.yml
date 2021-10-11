@@ -5,12 +5,20 @@
         repo: "git://github.com/DigitalHERMES/uucomp.git"
         clone: yes
         dest: "{{ build_path }}/uucomp/"
-        version: master
+        version: main 
   
     - name: UUCOMP Setup - make  clean
       command: "make clean"
       args:
         chdir: "{{ build_path }}/uucomp/"
+    
+    - name: UUCOOMP Setup - Installing debian packages 
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+        - libb64-dev
 
     - name: UUCOMP crontab - install  deb package hermes-codecs
       become: true
