@@ -5,17 +5,30 @@
         repo: "git://github.com/DigitalHERMES/uucomp.git"
         clone: yes
         dest: "{{ build_path }}/uucomp/"
-        version: HEAD
+        version: master
   
     - name: UUCOMP Setup - make  clean
       command: "make clean"
       args:
-        chdir: "{{ build_path }}/uucomp/uucomp-rz1/"
+        chdir: "{{ build_path }}/uucomp/"
+
+    - name: UUCOMP crontab - install  deb package hermes-codecs
+      become: true
+      command:  "dpkg -i contrib/hermes-codecs_1.0-2_all.deb"
+      args:
+        chdir: "{{ build_path }}/uucomp/"
 
     - name: UUCOMP Setup - make 
       command: "make"
       args:
-        chdir: "{{ build_path }}/uucomp/uucomp-rz1/"
+        chdir: "{{ build_path }}/uucomp/"
+
+    - name: UUCOMP Setup - make  install
+      become: true
+      command: "make install"
+      args:
+        chdir: "{{ build_path }}/uucomp/"
+
 
     - name: UUCOMP crontab - clean uucomp every 5 minutes
       become: true

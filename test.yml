@@ -5,10 +5,10 @@
   tasks: 
     #- include: tasks/000_checkvars.yml
     #- include: tasks/010_sysbase.yml
-    - include: tasks/011_fstab.yml
+    #- include: tasks/011_fstab.yml
     #- include: tasks/020_network.yml
     #- include: tasks/030_uucp.yml
-    #- include: tasks/031_uucomp.yml
+    - include: tasks/031_uucomp.yml
     #- include: tasks/040_uuardop.yml
     #- include: tasks/042_varaupd.yml
     #- include: tasks/041_vara.yml
