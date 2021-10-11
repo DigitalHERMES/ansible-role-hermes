@@ -1,0 +1,10 @@
+    - name: fstab settings
+      block:
+      - name: set options and remount root file system
+        become: yes
+        ansible.posix.mount:
+          path: /
+          fstype: btrfs
+          opts: compress=zstd,defaults,subvol=@roofs
+          state: remounted
+          backup: yes

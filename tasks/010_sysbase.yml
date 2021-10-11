@@ -138,4 +138,3 @@
               become: true
               command: "alsactl restore"
               changed_when: False
-

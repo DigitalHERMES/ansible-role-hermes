@@ -8,6 +8,8 @@
       tags: vars
     - include: tasks/010_sysbase.yml
       tags: base
+    - include: tasks/011_fstab.yml
+      tags: fstab
     - include: tasks/020_network.yml
       tags: net
     - include: tasks/030_uucp.yml

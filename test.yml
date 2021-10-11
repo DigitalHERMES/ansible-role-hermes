@@ -5,6 +5,7 @@
   tasks: 
     #- include: tasks/000_checkvars.yml
     #- include: tasks/010_sysbase.yml
+    - include: tasks/011_fstab.yml
     #- include: tasks/020_network.yml
     #- include: tasks/030_uucp.yml
     #- include: tasks/031_uucomp.yml
@@ -18,7 +19,7 @@
     #- include: tasks/060_lpcnet.yml
     #TODO test upload
     #- include: tasks/070_radio.yml
-    - include: tasks/071_radiotone.yml
+    #- include: tasks/071_radiotone.yml
     #- include: tasks/081_vnc.yml
     #- include: tasks/090_mail.yml
     #- include: tasks/091_roundcube.yml
