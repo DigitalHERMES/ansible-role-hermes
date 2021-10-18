@@ -204,6 +204,14 @@
           args:
             chdir: "{{ webpub_path }}/station-api/"
 
+        - name: HEMES API - create path .gnupg for www-data
+          file: 
+            path: "{{ webpub_path }}/.gnupg"
+            owner: "www-data"
+            group: "www-data"
+            state: directory
+            mode: "0700"
+
         - name: HERMES API - copy hmp system service
           become: true
           copy:

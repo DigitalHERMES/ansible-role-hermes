@@ -20,7 +20,7 @@
         name:
         - libb64-dev
 
-    - name: UUCOMP crontab - install  deb package hermes-codecs
+    - name: UUCOMP Setup - install  deb package hermes-codecs
       become: true
       command:  "dpkg -i contrib/hermes-codecs_1.0-2_all.deb"
       args:
