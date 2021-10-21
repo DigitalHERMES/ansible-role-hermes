@@ -1,4 +1,35 @@
-- name: uucpcomp seutp
+- name: uucomp depends - LPCNet setup
+  become_user: root
+  block:
+    - name: LPCNet Setup - clone from git main
+      git:
+        repo: "git://github.com/mozilla/LPCNet.git"
+        clone: yes
+        dest: "{{ build_path }}/lpcnet/"
+        version: HEAD
+
+    - name: LPCNet Setup - autogen.sh
+      command: "./autogen.sh"
+      args:
+        chdir: "{{ build_path }}/lpcnet/"
+
+    - name: LPCNet Setup - configure 
+      command: "./configure --prefix=/usr"
+      args:
+        chdir: "{{ build_path }}/lpcnet/"
+
+    - name: LPCNet Setup - make
+      command: "make"
+      args:
+        chdir: "{{ build_path }}/lpcnet/"
+
+    - name: LPCNet Setup - make install
+      become: true
+      command: "make install"
+      args:
+        chdir: "{{ build_path }}/lpcnet/"
+
+- name: uucpcomp setup
   block:
     - name: UUCOMP Setup - clone from git main
       git:
@@ -19,6 +50,9 @@
         state: present
         name:
         - libb64-dev
+        - ffmpeg
+        - libmagic-dev
+        - imagemagick 
 
     - name: UUCOMP Setup - install  deb package hermes-codecs
       become: true
@@ -38,7 +72,7 @@
         chdir: "{{ build_path }}/uucomp/"
 
 
-    - name: UUCOMP crontab - clean uucomp every 5 minutes
+    - name: UUCOMP crontab - run uucomp every 5 minutes
       become: true
       cron: 
         name: "uucomp 5 minutes"
@@ -50,4 +84,4 @@
         name: "uucomp 5 minutes"
         user: root
         minute: "5"
-        job: "uucomp"
+        job: "compress.sh"

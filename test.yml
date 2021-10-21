@@ -16,8 +16,7 @@
     #- include: tasks/050_nginx.yml
     #- include: tasks/051_web_api.yml
     #- include: tasks/052_web_gui.yml
-    #- include: tasks/060_lpcnet.yml
-    #TODO test upload
+    # TODO test upload
     #- include: tasks/070_radio.yml
     #- include: tasks/071_radiotone.yml
     #- include: tasks/081_vnc.yml

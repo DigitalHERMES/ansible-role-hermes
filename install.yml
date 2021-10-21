@@ -15,7 +15,7 @@
     - include: tasks/030_uucp.yml
       tags: uucp
     - include: tasks/031_uucomp.yml
-      tags: uucomp
+      tags: uucomp lpcnet
     - include: tasks/040_uuardop.yml
       tags: uuardop
     - include: tasks/041_vara.yml
@@ -26,8 +26,6 @@
       tags: api
     - include: tasks/052_web_gui.yml
       tags: gui
-    - include: tasks/060_lpcnet.yml
-      tags: lpcnet
     - include: tasks/070_radio.yml
       tags: radio 
     - include: tasks/071_radiotone.yml
