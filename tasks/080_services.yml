@@ -65,19 +65,19 @@
         state: started
 
 
-    - name: Service clamav is started 
+    - name: Service clamav disable
       become: true
       ansible.builtin.service:
         name: clamav-daemon
-        enabled: yes
-        state: started
+        enabled: no
+        state: stopped
 
-    - name: Service clamav-freshclam enable 
+    - name: Service clamav-freshclam disable
       become: true
       ansible.builtin.service:
         name: clamav-freshclam
-        enabled: yes
-        state: started
+        enabled: no
+        state: stopped
 
     - name: Service amavis enable 
       become: true
