@@ -20,6 +20,12 @@
           - php-xml 
           - composer   
 
+    - name: remove LPCNET install path
+      file: 
+        state: absent
+        path: "{{ build_path }}/lpcnet"
+        force: yes
+
     - name: Web Setup - PHP - Set date.timezone for FPM
       become: true
       lineinfile:
