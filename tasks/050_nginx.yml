@@ -84,6 +84,22 @@
         regexp: ";extension=sqlite3"
         line: "extension=sqlite3"
 
+    - name: Web Setup - PHP -  enabling max size of 100MB
+      become: true
+      lineinfile:
+        backrefs: yes
+        dest: /etc/php/7.4/fpm/php.ini
+        regexp: "^post_max_size"
+        line: "post_max_size = 100M"
+
+    - name: Web Setup - PHP -  enabling upload max size of 100MB
+      become: true
+      lineinfile:
+        backrefs: yes
+        dest: /etc/php/7.4/fpm/php.ini
+        regexp: "^upload_max_filesize"
+        line: "upload_max_filesize= 100M"
+
     - name: Web Setup - PHP  - enabling service
       become: true
       ansible.builtin.service:
