@@ -32,7 +32,6 @@
       command: "make ispload"
       args:
         chdir: "{{ build_path }}/ubitxv6/firmware"
-      failed_when: no_match
 
     - name: Radio Setup - ubitx daemon-reload and service enable
       become: true
