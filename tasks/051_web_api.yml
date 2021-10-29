@@ -205,6 +205,7 @@
             chdir: "{{ webpub_path }}/station-api/"
 
         - name: HEMES API - create path .gnupg for www-data
+          become: true
           file: 
             path: "{{ webpub_path }}/.gnupg"
             owner: "www-data"
