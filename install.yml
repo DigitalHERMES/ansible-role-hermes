@@ -26,6 +26,8 @@
       tags: api
     - include: tasks/052_web_gui.yml
       tags: gui
+    - include: tasks/053_web_downloads.yml
+      tags: downloads deltachat
     - include: tasks/070_radio.yml
       tags: radio 
     - include: tasks/071_radiotone.yml

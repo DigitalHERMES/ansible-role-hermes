@@ -1,0 +1,46 @@
+    - name: HERMES web extra downloads
+    
+      block:
+        - name: create download path
+          become: yes
+          file: 
+            path: "{{ webgui_path }}/downloads/"
+            owner: "{{ ansible_user }}"
+            group: "{{ www_group }}"
+            state: directory
+
+        - name: Download deltachat app file for android (apk)
+          get_url: 
+            url: "https://download.delta.chat/desktop/v1.22.2/deltachat-desktop_1.22.2_amd64.deb"
+            dest: "{{ webgui_path }}/downloads/deltachat-desktop_1.22.2_amd64.deb"
+
+        - name: Simbolic link to deltachat file for android
+          file:
+            src: "{{ webgui_path }}/downloads/deltachat-desktop_1.22.2_amd64.deb"
+            dest: "{{ webgui_path }}/downloads/deltachat.deb"
+            # group: "{{ www_group }}"
+            state: link
+
+        - name: Download deltachat app file for macosx (dmg)
+          get_url: 
+            url: "https://download.delta.chat/desktop/v1.22.2/DeltaChat-1.22.2.dmg"
+            dest: "{{ webgui_path }}/downloads/DeltaChat-1.22.2.dmg"
+
+        - name: Simbolic link to deltachat file for macosix 
+          file:
+            src: "{{ webgui_path }}/downloads/DeltaChat-1.22.2.dmg"
+            dest: "{{ webgui_path }}/downloads/deltachat.dmg"
+            # group: "{{ www_group }}"
+            state: link
+
+        - name: Download deltachat app file for windows (exe)
+          get_url:
+            url: "https://download.delta.chat/desktop/v1.22.2/DeltaChat%20Setup%201.22.2.exe"
+            dest: "{{ webgui_path }}/downloads/DeltaChat_Setup-1.22.2.exe"
+
+        - name: Simbolic link to deltachat file for windows (exe)
+          file:
+            src: "{{ webgui_path }}/downloads/DeltaChat_Setup-1.22.2.exe"
+            dest: "{{ webgui_path }}/downloads/deltachat.exe"
+            # group: "{{ www_group }}"
+            state: link
