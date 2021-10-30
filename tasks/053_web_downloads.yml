@@ -9,38 +9,51 @@
             group: "{{ www_group }}"
             state: directory
 
-        - name: Download deltachat app file for android (apk)
+        - name: Download deltachat app file for Debian GNU Linux (deb)
           get_url: 
             url: "https://download.delta.chat/desktop/v1.22.2/deltachat-desktop_1.22.2_amd64.deb"
+            checksum: "sha512:8024da0aa5d439680dcc83e31166abb636ea2a5b788aaa94d69bc6a5bd17cfd22420f06c34d18f5c041d6540b9f582b4b8f1751c37f60d14b6e657fd38f77c20"
             dest: "{{ webgui_path }}/downloads/deltachat-desktop_1.22.2_amd64.deb"
 
-        - name: Simbolic link to deltachat file for android
+        - name: Symbolic link to deltachat file for Debian GNU Linux (deb)) 
           file:
-            src: "{{ webgui_path }}/downloads/deltachat-desktop_1.22.2_amd64.deb"
+            src: "deltachat-desktop_1.22.2_amd64.deb"
             dest: "{{ webgui_path }}/downloads/deltachat.deb"
-            # group: "{{ www_group }}"
             state: link
 
         - name: Download deltachat app file for macosx (dmg)
           get_url: 
             url: "https://download.delta.chat/desktop/v1.22.2/DeltaChat-1.22.2.dmg"
+            checksum: "sha512:d6ad57becb47e5a649b23b7e2ce2a0c21131ed2d95dd0eabb25e47ba6b0f3fa4219455fdb0eb40bb016a80c5c8d9164810dba5478c7c2a47ebfd609a617046fe"
             dest: "{{ webgui_path }}/downloads/DeltaChat-1.22.2.dmg"
 
-        - name: Simbolic link to deltachat file for macosix 
+
+        - name: Symbolic link to deltachat file for macosx (dmg)) 
           file:
-            src: "{{ webgui_path }}/downloads/DeltaChat-1.22.2.dmg"
+            src: "DeltaChat-1.22.2.dmg"
             dest: "{{ webgui_path }}/downloads/deltachat.dmg"
-            # group: "{{ www_group }}"
             state: link
 
         - name: Download deltachat app file for windows (exe)
           get_url:
             url: "https://download.delta.chat/desktop/v1.22.2/DeltaChat%20Setup%201.22.2.exe"
+            checksum: "sha512:a3d25134b94f36d6880b1f6efb632ed00f8bf5a2088f4ab7f6733fe69ae816c752919ed90868172d97e99791e63d31695beb26594eebc18a8680d700128cfa02"
             dest: "{{ webgui_path }}/downloads/DeltaChat_Setup-1.22.2.exe"
 
-        - name: Simbolic link to deltachat file for windows (exe)
+        - name: Symbolic link to deltachat file for windows (exe)
           file:
-            src: "{{ webgui_path }}/downloads/DeltaChat_Setup-1.22.2.exe"
+            src: "DeltaChat_Setup-1.22.2.exe"
             dest: "{{ webgui_path }}/downloads/deltachat.exe"
-            # group: "{{ www_group }}"
+            state: link
+
+        - name: Download deltachat app file for android (apk)
+          get_url:
+            url: "https://download.delta.chat/android/deltachat-gplay-release-1.22.1.apk"
+            checksum: "sha512:ad06f5b4c1c25536e91a189918f2ba448694a0d19953e04b45ad12722895262bb3839803b30432803f9aa34abc072b3c2f9da55445fe65a5da1ed17e2cb48c59"
+            dest: "{{ webgui_path }}/downloads/deltachat-gplay-release-1.22.1.apk"
+
+        - name: Symbolic link to deltachat file for android (apk)
+          file:
+            src: "deltachat-gplay-release-1.22.1.apk"
+            dest: "{{ webgui_path }}/downloads/deltachat.apk"
             state: link

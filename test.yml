@@ -1,9 +1,10 @@
 ---
 - name: Hermes Station
   hosts: hermes
-
+  gather_facts: no
   tasks: 
-    - include: tasks/000_checkvars.yml
+    - setup:
+      #- include: tasks/000_checkvars.yml
       #- include: tasks/010_sysbase.yml
     #- include: tasks/011_fstab.yml
     #- include: tasks/020_network.yml
