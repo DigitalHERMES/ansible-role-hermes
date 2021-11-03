@@ -8,6 +8,8 @@
             name:
               - mariadb-server
               - inotify-tools
+              - lm-sensors
+              - jq
 
         - name: HERMES API - Services install - mysql enable
           become: true
