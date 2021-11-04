@@ -5,7 +5,7 @@
             repo: "git://github.com/DigitalHERMES/angular.git"
             clone: yes
             dest: "{{ build_path }}/angular"
-            version: HEAD
+            version: "darkmode"
             force: yes
 
         - name: HERMES web gui - angular linux packages
@@ -34,6 +34,12 @@
             state: present
             regexp: "^    public static stationName = 'local';"
             line: "    public static stationName = '{{ vara_callsign }}';"
+
+        - name: HERMES web gui -  update node modules 
+          command: "npm update --force"
+          args:
+            chdir: "{{ build_path }}/angular/"
+        
 
         - name: HERMES web gui -  install node modules 
           command: "npm i"

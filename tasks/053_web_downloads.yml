@@ -27,7 +27,6 @@
             checksum: "sha512:d6ad57becb47e5a649b23b7e2ce2a0c21131ed2d95dd0eabb25e47ba6b0f3fa4219455fdb0eb40bb016a80c5c8d9164810dba5478c7c2a47ebfd609a617046fe"
             dest: "{{ webgui_path }}/downloads/DeltaChat-1.22.2.dmg"
 
-
         - name: Symbolic link to deltachat file for macosx (dmg)) 
           file:
             src: "DeltaChat-1.22.2.dmg"
