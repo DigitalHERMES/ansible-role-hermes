@@ -42,6 +42,7 @@
 
         - name: VARA Install - setting callsign
           lineinfile:
+            backrefs: yes
             path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "Callsign Licence 0="
             state: present
@@ -49,6 +50,7 @@
 
         - name: VARA Install - setting license
           lineinfile:
+            backrefs: yes
             path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "Registration Code="
             line: "Registration Code={{ vara_license }}"
@@ -56,14 +58,14 @@
 
         - name: VARA Install - setting retries to 5
           lineinfile:
+            backrefs: yes
             path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "Retries="
             line: "Retries=5"
 
         - name: VARA Install - setting ALC Level to -6 dB 
           lineinfile:
+            backrefs: yes
             path: "/home/{{ ansible_user }}/VARA/VARA.ini"
             regexp: "ALC Drive Level="
             line: "ALC Drive Level=-6"
-
-
