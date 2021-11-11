@@ -46,6 +46,16 @@
         regexp: "^pubdir"
         line: "pubdir {{ inbox_path }}"
 
+    - name: UUCP - create inbox path pubdir 
+      become: yes
+      file: 
+        path: "{{ inbox_path }}/"
+        owner: "{{ ansible_user }}"
+        group: "{{ www_group }}"
+        mode: 777
+        state: directory
+
+
     - name: UUCP - setting wrapper to uucico -l
       become: true
       ansible.builtin.lineinfile:
