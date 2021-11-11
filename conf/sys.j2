@@ -8,13 +8,13 @@ call-password pass
 forward *
 commands rmail rnews crmail bash uucp uuadm
 
-protocol yigvG
-protocol-parameter G window 7
-protocol-parameter y packet-size 512
-protocol-parameter y timeout 1800
-
+protocol i
 protocol-parameter i timeout 1
 protocol-parameter i retries 3
+
+protocol y
+protocol-parameter y packet-size 512
+protocol-parameter y timeout 1800
 
 system B0DE
  {% if vara_callsign == 'B0DE' %}

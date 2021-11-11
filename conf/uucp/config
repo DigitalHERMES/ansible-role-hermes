@@ -4,12 +4,10 @@ spool /var/spool/uucp
 
 pubdir /var/www/station-api/storage/app/inbox
 
-logfile /var/spool/uucp/Log
 portfile /etc/uucp/port
 sysfile /etc/uucp/sys
 
 statfile /var/spool/uucp/Stats
-debugfile /var/spool/uucp/Debug
 
 #debug all
 

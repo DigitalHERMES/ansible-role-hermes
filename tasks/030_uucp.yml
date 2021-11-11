@@ -1,7 +1,5 @@
 - name: uucp
-  become_user: root
   block:
-
     - name: UUCP Setup - Install uucp system package
       become: true
       apt:
@@ -28,17 +26,16 @@
         regexp: "^nodename"
         line: "nodename {{ vara_callsign }}"
 
-    - name: UUCP - setting local sys
-      become: true
-      ansible.builtin.lineinfile:
-        backrefs: yes
-        path: "/etc/uucp/sys"
-        state: present
-        regexp: "^system local"
-        line: "system {{ vara_callsign }}"
+    - name: UUCP - process template j2  for sys on remote host
+      become: yes
+      template:
+        src: "./conf/sys.j2"
+        dest: "/etc/uucp/sys"
+        mode: '0754'
+        backup: yes
 
     - name: UUCP - setting pubdir
-      become: true
+      become: yes
       ansible.builtin.lineinfile:
         backrefs: yes
         path: "/etc/uucp/config"
@@ -52,9 +49,8 @@
         path: "{{ inbox_path }}/"
         owner: "{{ ansible_user }}"
         group: "{{ www_group }}"
-        mode: 777
+        mode: '0777'
         state: directory
-
 
     - name: UUCP - setting wrapper to uucico -l
       become: true
