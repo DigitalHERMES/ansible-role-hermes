@@ -1,0 +1,9 @@
+---
+- name: UUCP sys
+  become_user: root
+  block:
+    - name: UUCP - process template j2  for sys on remote host
+      template:
+        src: "./conf/sys.j2"
+        dest: "/tmp/sys"
+        mode: '0754'
