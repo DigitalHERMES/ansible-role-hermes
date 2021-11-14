@@ -1,0 +1,36 @@
+APP_NAME=hermes-api
+APP_ENV=local
+APP_KEY={{ app_key.stdout }}
+APP_DEBUG=true
+APP_URL=http://localhost
+APP_TIMEZONE=UTC
+
+LOG_CHANNEL=stack
+LOG_SLACK_WEBHOOK_URL=
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE={{ hermes_db }}
+DB_USERNAME={{ hermes_db_user }}
+DB_PASSWORD={{ hermes_db_password }}
+
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+
+MAX_FILE_SIZE=128000000
+HERMES_MAX_FILE=20480
+HERMES_MAX_SPOOL=71680
+
+HERMES_TOOL={{ ubitx_client }}
+HERMES_DOMAIN={{ hermes_domain }}
+HERMES_NAME={{ hostname }}
+HERMES_PATH=/hermes/
+HERMES_INBOX={{ inbox_path }}
+HERMES_OUTBOX=outbox/
+HERMES_UUCP=/usr/spool/uucp/
+HERMES_UUCP_IN=/usr/spool/uucppublic/
+HERMES_EMAILAPI_USER = {{ isp_user }}
+HERMES_EMAILAPI_PASS = {{ isp_pass }}
+HERMES_EMAILAPI_LOC = https://localhost:8080/remote/index.php
+HERMES_EMAILAPI_URI = https://localhost:808080880/remote
