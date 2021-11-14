@@ -44,16 +44,13 @@
             group: www-data
             state: link
 
-
         - name: HERMES API - composer install
           command: "composer install"
           args:
             chdir: "{{ webpub_path }}/station-api"
 
         - name: HERMES API - gen app key for use in template
-          when: not api_env.stat.exists
-          shell: "date | openssl passwd -6 -stdin "
-          group: www-data
+          shell: "date | openssl passwd -6 -stdin"
           register: app_key
 
         - name: HERMES API - process template j2  for env on remote host
