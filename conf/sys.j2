@@ -20,7 +20,7 @@ system B0DE
  {% if vara_callsign == 'B0DE' %}
 alias local
 {% else %}
-alias ac
+alias gw
  {% endif %}
 port HFP
 alternate 
@@ -72,3 +72,10 @@ port TCP
 protocol i
 address 10.8.0.29
 chat "" \d\d\r\c ogin: \d\L word: \P
+
+system PU4GNU
+alias k4
+port HFP
+protocol y
+chat "" \r
+address 10.8.0.2
