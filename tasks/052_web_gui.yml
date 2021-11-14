@@ -5,7 +5,7 @@
             repo: "git://github.com/DigitalHERMES/angular.git"
             clone: yes
             dest: "{{ build_path }}/angular"
-            version: "darkmode"
+            version: "master"
             force: yes
 
         - name: HERMES web gui - angular linux packages
@@ -17,29 +17,10 @@
               - nodejs
               - npm
 
-        - name: Hermes web gui - setting global_constants.ts
-          become: true
-          ansible.builtin.lineinfile:
-            backrefs: yes
-            path: "{{ build_path }}/angular/src/app/global-constants.ts"
-            state: present
-            regexp: "^   public static apiURL"
-            line: "   public static apiURL = '/api';"
-            
-        - name: Hermes web gui - setting global_constants.ts hostname
-          become: true
-          ansible.builtin.lineinfile:
-            backrefs: yes
-            path: "{{ build_path }}/angular/src/app/global-constants.ts"
-            state: present
-            regexp: "^    public static stationName = 'local';"
-            line: "    public static stationName = '{{ vara_callsign }}';"
-
         - name: HERMES web gui -  update node modules 
           command: "npm update --force"
           args:
             chdir: "{{ build_path }}/angular/"
-        
 
         - name: HERMES web gui -  install node modules 
           command: "npm i"
