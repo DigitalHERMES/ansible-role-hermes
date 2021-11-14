@@ -40,17 +40,10 @@
       args:
         chdir: "{{ build_path }}/uucomp/"
 
-
-    - name: UUCOMP crontab - run uucomp every 5 minutes
-      become: true
-      cron: 
-        name: "uucomp 5 minutes"
-        state: absent
-
-    - name: UUCOMP crontab - run uucomp every 5 minutes
+    - name: UUCOMP crontab - run uucompress every 5 minutes
       become: true
       cron: 
         name: "uucomp 5 minutes"
         user: root
         minute: "5"
-        job: "compress.sh"
+        job: "/usr/bin/compress.sh"
