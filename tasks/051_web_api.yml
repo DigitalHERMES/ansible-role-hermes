@@ -50,130 +50,20 @@
           args:
             chdir: "{{ webpub_path }}/station-api"
 
-        - name: HERMES API - check for .env
-          stat:
-            path: "{{ webpub_path }}/station-api/.env"
-          register: api_env
-
-        - name: HERMES API - .env exist?
+        - name: HERMES API - gen app key for use in template
           when: not api_env.stat.exists
-          block: 
-          - name: HERMES API - copy .env from .env.example 
-            become: true
-            command: "cp .env.example .env"
-            args:
-              chdir: "{{ webpub_path }}/station-api/"
+          shell: "date | openssl passwd -6 -stdin "
+          group: www-data
+          register: app_key
 
-          - name: HERMES API - gen app key
-            when: not api_env.stat.exists
-            shell: "date | openssl passwd -6 -stdin "
-            register: app_key
-          
-          - name: HERMES API - setting .env APP_KEY
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^APP_KEY='
-              line: "APP_KEY= {{ app_key.stdout }}"
-
-          - name: HERMES API - setting .env HERMES_INBOX with {{ inbox_path }}
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^HERMES_INBOX='
-              line: "HERMES_INBOX={{ inbox_path }}"
-
-          - name: HERMES API - setting .env HERMES_INBOX with {{ ubitx_client }}
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path}}/.env"
-              regexp: '^HERMES_TOOL='
-              line: "HERMES_TOOL={{ ubitx_client }}"
-
-          - name: HERMES API - setting .env DB_CONNECTION with mysql
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^DB_CONNECTION='
-              line: "DB_CONNECTION=mysql"
-
-
-          - name: HERMES API - setting .env DB_HOST  with localhost
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#DB_HOST='
-              line: "DB_HOST=127.0.0.1"
-
-          - name: HERMES API - setting .env DB_PORT with 3306
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#DB_PORT'
-              line: "DB_PORT=3306"
-
-          - name: HERMES API - setting .env DB_DATABASE 
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#DB_DATABASE='
-              line: "DB_DATABASE={{ hermes_db }}"
-
-          - name: HERMES API - setting .env DB_USERNAME
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#DB_USERNAME='
-              line: "DB_USERNAME={{ hermes_db_user }}"
-
-          - name: HERMES API - setting .env DB_PASSWORD
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#DB_PASSWORD='
-              line: "DB_PASSWORD={{ hermes_db_password }}"
-
-          - name: HERMES API - setting .env EMAILAPI_LOC
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#HERMES_EMAILAPI_LOC'
-              line: "HERMES_EMAILAPI_LOC = https://localhost:8080/remote/index.php"
-
-          - name: HERMES API - setting .env EMAILAPI_URI
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#HERMES_EMAILAPI_URI*'
-              line: "HERMES_EMAILAPI_URI = https://localhost:8080/remote"
-              
-          - name: HERMES API - setting .env  api_user
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#HERMES_EMAILAPI_USER*'
-              line: "HERMES_EMAILAPI_USER = {{ isp_user }} "
-
-          - name: HERMES API - setting .env  HERMES_EMAILAPI_PASS
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#HERMES_EMAILAPI_PASS*'
-              line: "HERMES_EMAILAPI_PASS = {{ isp_pass }}"
-
-          - name: HERMES API - setting .env HERMES_DOMAIN
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#HERMES_DOMAIN*'
-              line: "HERMES_DOMAIN = {{ hermes_domain }}"
-
-          - name: HERMES API - setting .env HERMES_NAME
-            when: not api_env.stat.exists
-            ansible.builtin.lineinfile:
-              path: "{{ webapi_path }}/.env"
-              regexp: '^#HERMES_NAME'
-              line: "HERMES_EMAILAPI_URI = {{ hostname }}"
+        - name: HERMES API - process template j2  for env on remote host
+          become: yes
+          template:
+            src: "./conf/api_env.j2"
+            dest: "{{ webpub_path }}/station-api/.env"
+            group: www-data
+            mode: '0744'
+            backup: yes
 
         - name: HERMES API - create database
           become: true
