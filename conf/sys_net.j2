@@ -1,6 +1,6 @@
 time any
 
-chat "" \r
+chat "" \d\d\r\c ogin: \d\L word: \P
 chat-timeout 200
 call-login user
 call-password pass
@@ -12,21 +12,15 @@ protocol i
 protocol-parameter i timeout 1
 protocol-parameter i retries 3
 
-protocol y
-protocol-parameter y packet-size 512
-protocol-parameter y timeout 1800
 
 system B0DE
- {% if vara_callsign == 'B0DE' %}
+{% if vara_callsign == 'B0DE' %}
 alias local
 {% else %}
 alias gw
- {% endif %}
-port HFP
-alternate 
+{% endif %}
 port TCP
 address 10.8.0.10
-chat "" \d\d\r\c ogin: \d\L word: \P
 
 {% for n in range(1,15) %}
 system B0DE-{{ n }}
@@ -35,13 +29,10 @@ alias local
 {% else %}
 alias ac{{ n }}
 {% endif %}
-port HFP
-protocol y
-alternate 
 port TCP
 address 10.8.0.{{ n+10 }}
-chat "" \d\d\r\c ogin: \d\L word: \P
 {% endfor %}
+
 
 system hermes
 {% if vara_callsign == 'B0DE' %}
@@ -51,31 +42,23 @@ alias central
 {% endif %}
 alias central
 port TCP
-chat "" \d\d\r\c ogin: \d\L word: \P
 address 10.8.0.1
-
 
 system B0DE-T
 alias act
-port HFP
-protocol y
-chat "" \r
-alternate 
 port TCP
-protocol i
 address 10.8.0.28
-chat "" \d\d\r\c ogin: \d\L word: \P
 
 system B0DE-R
 alias acr
-port HFP
-protocol y
-chat "" \r
 alternate 
 port TCP
 protocol i
 address 10.8.0.29
-chat "" \d\d\r\c ogin: \d\L word: \P
+
+protocol y
+protocol-parameter y packet-size 512
+protocol-parameter y timeout 3600
 
 system PU4GNU
 alias k4
