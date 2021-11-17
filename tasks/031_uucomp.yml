@@ -40,7 +40,7 @@
       args:
         chdir: "{{ build_path }}/uucomp/"
 
-    - name: UUCOMP crontab - remove uucompress
+    - name: UUCOMP crontab - remove uucomp 
       become: true
       cron: 
         name: "uucomp 5 minutes"
