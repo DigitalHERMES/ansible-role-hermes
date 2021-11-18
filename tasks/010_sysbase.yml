@@ -85,6 +85,7 @@
                   - hostapd
                   - htop
                   - iw
+                  - iwatch
                   - jq
                   - libtool
                   - libb64-dev
@@ -136,3 +137,19 @@
               become: true
               command: "alsactl restore"
               changed_when: True
+            
+            - name: System Base - copy iwatch.conf file
+              become: true
+              copy:
+                src: "conf/iwatch.conf"
+                dest: "/etc/iwatch/iwatch.conf"
+                owner: root
+                group: root
+                mode: '0744'
+            
+            - name: System Base - enable iwatch service  
+              become: true
+              service:
+                name: iwatch
+                enabled: yes
+                state: restarted
