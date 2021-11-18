@@ -112,9 +112,16 @@
             mode: '0766'
             backup: no
 
-        - name: HERMES API - enable hmp service
+        - name: HERMES API - disable hmp service
           become: true
           ansible.builtin.service:
             name: hmp
-            enabled: yes
+            enabled: false
+            state: stopped
+        
+        - name: HERMES API - remove hmp service file
+          become: true
+          file:
+            path: "/etc/systemd/system/hmp.service"
+            state: absent
 
