@@ -1,0 +1,28 @@
+- name: final countdown
+  block:
+
+    - name: Radio - set frequency
+      become: true
+      command: "ubitx_client -c set_frequency -a 5085000"
+
+    - name: Radio - set mode
+      become: true
+      command: "ubitx_client -c set_mode -a USB"
+
+    - name: Radio - set defaults
+      become: true
+      command: "ubitx_client -c set_radio_defaults"
+    
+    - name: uucp command add sudo
+      become: true
+      ansible.builtin.lineinfile:
+        path: /etc/uucp/sys
+        regexp: ^commands=*
+        line: commands rmail rnews crmail bash uucp uuadm ubitx_client sudo
+        backrefs: yes
+    
+    - name: Remove file cron daily uucp
+      become: true
+      ansible.builtin.file:
+        path: /etc/cron.daily/uucp
+        state: absent
