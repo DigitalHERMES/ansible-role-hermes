@@ -32,7 +32,7 @@
         backrefs: yes
         dest: /etc/php/7.4/fpm/php.ini
         regexp: "date.timezone ="
-        line: "date.timezone = UTC"
+        line: "date.timezone = EST"
 
     - name: Web Setup - PHP -  enabling mysql extension
       become: true
