@@ -28,6 +28,11 @@ HERMES_NAME={{ hostname }}
 HERMES_PATH=/hermes/
 HERMES_INBOX={{ inbox_path }}
 HERMES_OUTBOX=outbox/
+{% if vara_callsign == 'B0DE' %}
+HERMES_ROUTE=hermes
+{% else %}
+HERMES_ROUTE=gw!hermes
+{% endif %}
 HERMES_UUCP=/usr/spool/uucp/
 HERMES_UUCP_IN=/usr/spool/uucppublic/
 HERMES_EMAILAPI_USER = {{ isp_user }}
