@@ -4,43 +4,102 @@
 
 
   tasks: 
-    - include: tasks/000_checkvars.yml
+    - name: check for vars
+      include_tasks:
+        file: tasks/000_checkvars.yml
       tags: vars
-    - include: tasks/010_sysbase.yml
+
+    - name: system base permissions and packages
+      include_tasks:
+        file: tasks/010_sysbase.yml
       tags: base
-    - include: tasks/011_fstab.yml
+
+    - name: fstab tweaks
+      include_tasks:
+        file: tasks/011_fstab.yml
       tags: fstab
-    - include: tasks/020_network.yml
+
+    - name: system network, hostapd and dnsmasq
+      include_tasks:
+        file: tasks/020_network.yml
       tags: net
-    - include: tasks/030_uucp.yml
+
+    - name: install uucp
+      include_tasks:
+        file: tasks/030_uucp.yml
       tags: uucp
-    - include: tasks/031_uucomp.yml
+
+    - name: install uucomp
+      include_tasks:
+        file: tasks/031_uucomp.yml
       tags: uucomp lpcnet
-    - include: tasks/040_uuardop.yml
+
+    - name: install uuardop
+      include_tasks:
+        file: tasks/040_uuardop.yml
       tags: uuardop
-    - include: tasks/041_vara.yml
+      
+    - name: install vara and wine
+      include_tasks:
+        file: tasks/041_vara.yml
       tags: vara
-    - include: tasks/050_nginx.yml
+
+    - name: install nginx
+      include_tasks:
+        file: tasks/050_nginx.yml
       tags: nginx
-    - include: tasks/051_web_api.yml
+    
+    - name: install php, composer and web-api (station-api)
+      include_tasks:
+        file: tasks/051_web_api.yml
       tags: api
-    - include: tasks/052_web_gui.yml
+
+    - name: install angular web-app interface
+      include_tasks:
+        file: tasks/052_web_gui.yml
       tags: gui
-    - include: tasks/053_web_downloads.yml
+
+    - name: download deltachat file packages
+      include_tasks:
+        file: tasks/053_web_downloads.yml
       tags: downloads deltachat
-    - include: tasks/070_radio.yml
+
+    - name: install ubitx and update firmware
+      include_tasks: 
+        file: tasks/070_radio.yml
       tags: radio 
-    - include: tasks/071_radiotone.yml
+
+    - name: install alsatonic
+      include_tasks:
+        file: tasks/071_radiotone.yml
       tags: radio 
-    - include: tasks/081_vnc.yml
+
+    - name: install vnc
+      include_tasks: 
+        file: tasks/081_vnc.yml
       tags: vnc
-    - include: tasks/090_mail.yml
+
+    - name: ispconfig mail
+      include_tasks:
+        file: tasks/090_mail.yml
       tags: mail
-    - include: tasks/091_roundcube.yml
+
+    - name: install roundcube
+      include_tasks:
+        file: tasks/091_roundcube.yml
       tags: roundcube
-    - include: tasks/080_services.yml
+
+    - name: check services
+      include_tasks: 
+        file: tasks/080_services.yml
       tags: services
-    - include: tasks/100_checklist.yml
+
+    - name: final checklist 
+      include_tasks:
+        file: tasks/100_checklist.yml
       tags: checklist
-    - include: tasks/a_status.yml
+
+    - name: QA tests
+      include_tasks:
+        file: tasks/qa_status.yml
       tags: status
