@@ -43,14 +43,14 @@
         regexp: "^pubdir"
         line: "pubdir {{ inbox_path }}"
 
-    - name: UUCP - create inbox path pubdir 
-      become: yes
-      file: 
-        path: "{{ inbox_path }}/"
-        owner: "{{ ansible_user }}"
-        group: "{{ www_group }}"
-        mode: '0777'
-        state: directory
+    #- name: UUCP - create inbox path pubdir 
+      #become: yes
+      #file: 
+        #path: "{{ inbox_path }}/"
+        #owner: "{{ ansible_user }}"
+        #group: "{{ www_group }}"
+        #mode: '0777'
+        #state: directory
 
     - name: UUCP - setting wrapper to uucico -l
       become: true
@@ -60,6 +60,12 @@
         state: present
         regexp: "^ExecStart=-/usr/sbin/in.uucpd"
         line: "ExecStart=-/usr/sbin/uucico -l"
+
+    - name: UUCP  - Remove system uucp cron daily 
+      become: true
+      ansible.builtin.file:
+        path: /etc/cron.daily/uucp
+        state: absent
 
     - name: UUCP - restart uucp.socket
       become: true

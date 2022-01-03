@@ -1,4 +1,4 @@
-- name: final countdown
+- name: Radio  settings 
   block:
 
     - name: Radio - set frequency
@@ -13,8 +13,3 @@
       become: true
       command: "ubitx_client -c set_radio_defaults"
     
-    - name: Remove file cron daily uucp
-      become: true
-      ansible.builtin.file:
-        path: /etc/cron.daily/uucp
-        state: absent
