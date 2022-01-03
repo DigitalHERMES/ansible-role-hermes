@@ -11,11 +11,11 @@
       failed_when:  isp_status.state != 'started'
 
     - name: webserver localhost status 
-      wait_for: host=localhost port=443
+      wait_for: host=localhost port=80
       register: webserver_local_status 
 
     - name: webserver wifi status 
-      wait_for: host=10.0.0.1 port=443
+      wait_for: host=10.0.0.1 port=80
       timeout: 1
       register: webserver_local_status 
       ignore_errors: yes
@@ -27,7 +27,7 @@
     - name: get json api/sys/status from station-api on localhost
       ansible.builtin.uri:
         validate_certs: no
-        url: https://localhost/api/sys/status
+        url: http://localhost/api/sys/status
       register: apistatus
       #failed_when: apistatus.json.status == false
 
