@@ -25,6 +25,7 @@
             clone: yes
             dest: "{{ webpub_path }}/station-api"
             version: HEAD
+            update: yes
             force: yes
 
         - name: HERMES API - setting permissions station
@@ -93,6 +94,15 @@
           args:
             chdir: "{{ webpub_path }}/station-api/"
 
+        - name: UUCP - create inbox path pubdir 
+          become: yes
+          file: 
+            path: "{{ inbox_path }}/"
+            owner: "{{ ansible_user }}"
+            group: "{{ www_group }}"
+            mode: '0777'
+            state: directory
+
         - name: HEMES API - create path .gnupg for www-data
           become: true
           file: 
@@ -102,10 +112,10 @@
             state: directory
             mode: "0700"
 
-        - name: HERMES API - disable hmp service
-          become: true
-          ansible.builtin.service:
-            name: hmp
-            enabled: false
-            state: stopped
+        # - name: HERMES API - disable hmp service
+        #   become: true
+        #   ansible.builtin.service:
+        #     name: hmp
+        #     enabled: false
+        #     state: stopped
         
