@@ -45,7 +45,7 @@
         regexp: "7.3"
         replace: "7.4"
 
-    - name: Mail - copy autoinstall template on remote host
+    - name: Mail - generate ispconfig.ini template on remote host
       template:
         src: "./conf/ispconfig.ini.j2"
         dest: "{{ build_path }}/ispconfig3_install/install/autoinstall.ini"
@@ -56,11 +56,19 @@
         path: /usr/local/ispconfig
       register: ispconfig_installed
 
-    - name: Mail -  Start ISPConfig Installation
-      become: true
-      command: "php -q install.php --autoinstall=autoinstall.ini"
-      args:
-        chdir: "{{ build_path }}/ispconfig3_install/install/"
+    #- name: Mail -  Start ISPConfig Installation
+      #become: true
+      #command: "php -q install.php --autoinstall=autoinstall.ini"
+      #args:
+        #chdir: "{{ build_path }}/ispconfig3_install/install/"
+      #when: not ispconfig_installed.stat.exists
+    
+    - block:
+      - name: Mail - manual installation
+        debug:
+          msg: Do the manual installation of ispconfig 
+
+      - meta: end_play
       when: not ispconfig_installed.stat.exists
 
     - name: Mail - set default_transport to uucp:gw
