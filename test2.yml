@@ -1,6 +1,6 @@
 ---
 - name: Hermes Station
-  hosts: kurupira 
+  hosts: hermes
 
   tasks: 
     - name: check for vars

@@ -1,0 +1,6 @@
+bide:
+  hosts:
+    b1de0:
+      hermes_domain: ka1.hermes.radio
+      ansible_host: 192.168.0.70
+      hostname: b1de0

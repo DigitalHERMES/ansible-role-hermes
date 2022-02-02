@@ -28,7 +28,7 @@
             update: yes
             force: yes
 
-        - name: HERMES API - setting permissions station
+        - name: HERMES API - setting permissions
           become: true
           ansible.builtin.file:
             path: "{{ webpub_path }}/station-api"

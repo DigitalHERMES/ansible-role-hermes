@@ -1,6 +1,7 @@
 ---
 - name: Hermes Station
-  hosts: kurupira 
+  hosts: achuar
+
 
   tasks: 
     - name: check for vars
@@ -13,10 +14,10 @@
         file: tasks/010_sysbase.yml
       tags: base
 
-    #- name: fstab tweaks
-      #include_tasks:
-        #file: tasks/011_fstab.yml
-      #tags: fstab
+    - name: fstab tweaks
+      include_tasks:
+        file: tasks/011_fstab.yml
+      tags: fstab
 
     - name: system network, hostapd and dnsmasq
       include_tasks:
@@ -40,7 +41,7 @@
       
     - name: install vara and wine
       include_tasks:
-        file: tasks/042_varaupd.yml
+        file: tasks/041_vara.yml
       tags: vara
 
     - name: install nginx
