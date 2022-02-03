@@ -2,41 +2,51 @@ achuar:
   hosts:
     b0de0:
       hermes_domain: ac.hermes.radio
+      hermes_callsign: B0DE
       ansible_host: 10.8.0.10 #vpn
       hostname: b0de
     b0de1:
       ansible_host: 10.8.0.11
+      hermes_callsign: B0DE-1
       hermes_domain: ac1.hermes.radio
       hostname: b0de1 
     b0de3:
       hermes_domain: ac3.hermes.radio
+      hermes_callsign: B0DE-2
       ansible_host: 10.8.0.13
       hostname: b0de3
     b0de4:
       hermes_domain: ac4.hermes.radio
+      hermes_callsign: B0DE-3
       ansible_host: 10.8.0.14
       hostname: b0de4
     b0de5:
       hermes_domain: ac5.hermes.radio
+      hermes_callsign: B0DE-4
       ansible_host: 10.8.0.15
       hostname: b0de5
     b0de6:
       hermes_domain: ac6.hermes.radio
+      hermes_callsign: B0DE-5
       ansible_host: 10.8.0.16
       hostname: b0de6
     b0de7:
       hermes_domain: ac7.hermes.radio
+      hermes_callsign: B0DE-6
       ansible_host: 10.8.0.17
       hostname: b0de7
     b0de8:
       hermes_domain: ac8.hermes.radio
+      hermes_callsign: B0DE-7
       ansible_host: 10.8.0.18
       hostname: b0de8
     b0de9:
       hermes_domain: ac9.hermes.radio
+      hermes_callsign: B0DE-8
       ansible_host: 10.8.0.19 
       hostname: b0de9
     b0de10:
-      hermes_domain: ac9.hermes.radio
+      hermes_domain: ac10.hermes.radio
+      hermes_callsign: B0DE-10
       ansible_host: 10.8.0.20
       hostname: b0de

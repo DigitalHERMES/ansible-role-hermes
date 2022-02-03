@@ -14,7 +14,7 @@ ansible_python_interpreter: /usr/bin/python3
 ansible_user: hermes
 isp_user: apiadmin
 isp_pass: hermescaduceu
-vara_callsign: B0DE0
+vara_callsign: B0DE
 vara_license: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           34346438326465333034646565623736386138333233336464663762356137323430396132303430

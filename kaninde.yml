@@ -1,5 +1,5 @@
 ---
-- name: Hermes Station
+- name: Kaninde Station
   hosts: kurupira 
 
   tasks: 

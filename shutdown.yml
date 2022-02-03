@@ -1,8 +1,0 @@
----
-- name: Hermes Station
-  hosts: hermes
-
-  tasks: 
-    - name: Unconditionally reboot the machine with all defaults
-      become: true
-      community.general.shutdown:
