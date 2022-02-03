@@ -1,20 +1,20 @@
-# hermes-install
+## ansible-role-hermes
+ansible-roles to install a hermes system in a Debian 11 (bullseye)
 
+## Playbooks
+The playbooks are on root folder and is directly related with the networks associated:
+- achuar
+- kaninde
+- kurupira
 
-# inventory / host vars
+## Basic instructions
+- To run some tags
+'''ansible-playbook kurupira.yml -i inventory --tags "web-api,web-gui"'''
 
-## /etc/ansible/hosts 
-content:
-´´´hermes ansible_port=22 ansible_host=192.168.0.21 ansible_user=hermes ´´
+- To run all without some tags:
+'''ansible-playbook kurupira.yml -i inventory --skip-tags "vara"'''
 
-## /etc/ansible/host_vars/hermes
-    isp_user: very_secret_key 
-    isp_pass: caduceu
-    webpub_path: /var/www
-    # check this !
-    install_system_packages: true
-    install_wine: true
-    install_uuardop_path: /tmp/build
-    build_path: /home/hermes/install
-    hostname: ansible_hostname
-    www_group: www-data
+## To use encrypted vars on inventory or group_vars
+
+'''ansible-playbook kurupira.yml -i inventory --ask-vault-pass'''
+
