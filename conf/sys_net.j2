@@ -13,7 +13,7 @@ protocol-parameter i timeout 1
 protocol-parameter i retries 3
 
 system B0DE
-{% if vara_callsign == 'B0DE' %}
+{% if hermes_callsign == 'B0DE' %}
 alias local
 {% else %}
 alias gw
@@ -23,7 +23,7 @@ address 10.8.0.10
 
 {% for n in range(1,15) %}
 system B0DE-{{ n }}
-{% if vara_callsign == 'B0DE-'+ n|string   %}
+{% if hermes_callsign == 'B0DE-'+ n|string   %}
 alias local
 {% else %}
 alias ac{{ n }}
@@ -34,7 +34,7 @@ address 10.8.0.{{ n+10 }}
 
 
 system hermes
-{% if vara_callsign == 'B0DE' %}
+{% if hermes_callsign == 'B0DE' %}
 alias gw
 {% else %}
 alias central
@@ -58,10 +58,3 @@ address 10.8.0.29
 protocol y
 protocol-parameter y packet-size 512
 protocol-parameter y timeout 3600
-
-system PU4GNU
-alias k4
-port HFP
-protocol y
-chat "" \r
-address 10.8.0.2

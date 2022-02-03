@@ -54,6 +54,10 @@
       debug:
         msg: "{{ hermes_domain }}"
 
+    - name: Check if hermes_callsign is given in playbook
+      debug:
+        msg: "{{ hermes_callsign }}"
+
     - name: Check if hostname is given in playbook
       debug:
         msg: "{{ hostname }}"

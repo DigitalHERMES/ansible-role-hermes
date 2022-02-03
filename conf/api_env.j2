@@ -28,7 +28,7 @@ HERMES_NAME={{ hostname }}
 HERMES_PATH=/hermes/
 HERMES_INBOX={{ inbox_path }}
 HERMES_OUTBOX=outbox/
-{% if vara_callsign == 'B0DE' %}
+{% if hermes_callsign == 'B0DE' %}
 HERMES_ROUTE=hermes
 {% else %}
 HERMES_ROUTE=gw!hermes
