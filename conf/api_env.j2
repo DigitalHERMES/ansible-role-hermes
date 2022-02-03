@@ -24,11 +24,12 @@ HERMES_MAX_SPOOL=71680
 
 HERMES_TOOL={{ ubitx_client }}
 HERMES_DOMAIN={{ hermes_domain }}
-HERMES_NAME={{ hostname }}
+HERMES_NAME={{ inventory_hostname }}
 HERMES_PATH=/hermes/
 HERMES_INBOX={{ inbox_path }}
 HERMES_OUTBOX=outbox/
-{% if hermes_callsign == 'B0DE' %}
+{% if hermes_callsign == 'B0DE' or hermes_callsign == 'B0DI'  %} //TODO increase for other networks
+HERMES_GATEWAY=true
 HERMES_ROUTE=hermes
 {% else %}
 HERMES_ROUTE=gw!hermes
