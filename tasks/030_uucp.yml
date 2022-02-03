@@ -24,7 +24,7 @@
         path: "/etc/uucp/config"
         state: present
         regexp: "^nodename"
-        line: "nodename {{ vara_callsign }}"
+        line: "nodename {{ hermes_callsign }}"
 
     - name: UUCP - process template j2  for sys on remote host
       become: yes
