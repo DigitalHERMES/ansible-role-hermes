@@ -1,8 +1,7 @@
 kurupira:
   hosts:
-    k2:
+    kurupira2:
       #ansible_host: 10.8.0.3
-      hostname: kurupira4
       hermes_domain: ga.hermes.radio
       vara_callsign: AE4ML
       vara_license: !vault |
@@ -12,10 +11,9 @@ kurupira:
           61623839383136643033353536663562326666376130656332356434333864373038353433346661
           3464376635346636350a646339633232646361653666343463353438313361643463326636613038
           3166
-    k4:
+    kurupira4:
       #ansible_host: 10.8.0.2
       ansible_host: 192.168.0.4
-      hostname: kurupira4
       hermes_domain: ga.hermes.radio
       vara_callsign: PU4GNU
       vara_license: !vault |
@@ -25,9 +23,8 @@ kurupira:
           61623839383136643033353536663562326666376130656332356434333864373038353433346661
           3464376635346636350a646339633232646361653666343463353438313361643463326636613038
           3166
-    k6:
+    kurupira6:
       ansible_host: 10.8.0.3
-      hostname: kurupira6
       hermes_domain: k6.hermes.radio
       vara_callsign: AE4ML
       vara_license: !vault |

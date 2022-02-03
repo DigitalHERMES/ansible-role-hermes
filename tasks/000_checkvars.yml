@@ -26,10 +26,6 @@
       debug:
         msg: "{{ install_uuardop_path }}"
 
-    - name: Check if hostname is given in playbook
-      debug:
-        msg: "{{ hostname }}"
-
     - name: Check if www_group is given in playbook
       debug:
         msg: "{{ www_group }}"
@@ -57,10 +53,6 @@
     - name: Check if hermes_callsign is given in playbook
       debug:
         msg: "{{ hermes_callsign }}"
-
-    - name: Check if hostname is given in playbook
-      debug:
-        msg: "{{ hostname }}"
 
     - name: Check if isp_user is given in playbook
       debug:

@@ -16,8 +16,8 @@
             become: true
             ignore_errors: yes
             copy:
-              src: "conf/vpn/{{ hostname }}.ovpn"
-              dest: "/etc/openvpn/client/{{ hostname }}.conf"
+              src: "conf/vpn/{{ inventory_hostname }}.ovpn"
+              dest: "/etc/openvpn/client/{{ inventory_hostname }}.conf"
               owner: root
               group: root
               mode: '0744'
@@ -26,7 +26,7 @@
           - name: Network - wifi setup - service openvpn
             become: true
             ansible.builtin.service:
-              name: openvpn-client@{{ hostname }}
+              name: openvpn-client@{{ inventory_hostname }}
               enabled: yes
               state: started
 
