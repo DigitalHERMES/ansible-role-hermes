@@ -1,13 +1,9 @@
 # ansible-role-hermes
-Ansible Roles to install a hermes system in a Debian 11 (bullseye), 
-requires hermes user created on the host and ssh and sudo installed on the hosts
+Ansible Roles to install a hermes system in a Debian 11 (bullseye), requires creation of a user in sudo groupo, ssh and sudo installed, update or create hosts networks inside 
 
 # Sections:
 ## Playbooks
-The playbooks are on root folder and is directly related with the networks associated:
-- achuar
-- kaninde
-- kurupira
+The main playbook is the install in root folder
 
 ## Basic instructions
 ### examples 
