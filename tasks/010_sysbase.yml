@@ -85,7 +85,7 @@
                   - hostapd
                   - htop
                   - iw
-                  - iwatch
+                  - iwatch #TODO: redundant  with iwatch service
                   - jq
                   - libtool
                   - libb64-dev
@@ -107,6 +107,7 @@
                   - wpasupplicant
                   - xterm
 
+            # TODO - define a var to include here
             - name: Set timezone and hwclock to UTC
               become: true
               tags:  
@@ -115,43 +116,3 @@
                 name: EST
                 hwclock: UTC
 
-            - name: System Base - intel-hda module settings 
-              become: true
-              copy:
-                src: "conf/modprobe.d/intel_hda.conf"
-                dest: "/etc/modprobe.d"
-                owner: root
-                group: root
-                mode: '0744'
-
-            - name: System Base - copy iwatch.conf file
-              become: true
-              copy:
-                src: "conf/iwatch.xml"
-                dest: "/etc/iwatch/iwatch.xml"
-                owner: root
-                group: root
-                mode: '0744'
-            
-            - name: System Base - enable iwatch service  
-              become: true
-              service:
-                name: iwatch
-                enabled: yes
-                state: restarted
-              
-
-            - name: System Base - copy volume settings 
-              become: true
-              copy:
-                src: "conf/asound.state"
-                dest: "/var/lib/alsa/asound.state"
-                owner: root
-                group: root
-                mode: '0744'
-
-            - name: System Base - alsactl restore
-              become: true
-              command: "alsactl restore"
-              changed_when: True
-            
