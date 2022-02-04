@@ -1,6 +1,5 @@
     - name: alsa modules and mixer settings
       block:
-
             - name: Alsa - intel-hda module settings 
               become: true
               copy:
@@ -11,14 +10,16 @@
                 mode: '0744'
 
             - name: Alsa - module unload
+              become: true
               modprobe:
                 name: snd-hda-intel
                 state: absent
 
             - name: Alsa - module hda load
+              become: true
               modprobe:
                 name: snd-hda-intel
-                state: absent
+                state: present
 
             - name: System Base - copy volume settings 
               become: true
@@ -33,4 +34,5 @@
               become: true
               command: "alsactl restore"
               changed_when: True
+              ignore_errors: True
             
