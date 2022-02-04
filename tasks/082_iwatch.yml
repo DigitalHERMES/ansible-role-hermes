@@ -1,0 +1,27 @@
+# check for Services
+- name: "Service iwatch"
+  become: true
+  block:
+    - name: Service iwatch - Installing debian packages 
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+          - iwatch
+
+    - name: Service iwatch - copy iwatch.conf file
+      become: true
+      copy:
+        src: "conf/iwatch.xml"
+        dest: "/etc/iwatch/iwatch.xml"
+        owner: root
+        group: root
+        mode: '0744'
+ 
+    - name: Service iwatch - enable iwatch service  
+      become: true
+      service:
+        name: iwatch
+        enabled: yes
+        state: restarted
