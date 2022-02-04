@@ -2,7 +2,10 @@ kurupira:
   hosts:
     kurupira2:
       #ansible_host: 10.8.0.3
-      hermes_domain: ga.hermes.radio
+      ansible_host: 192.168.0.76
+      hermes_domain: k2.hermes.radio
+      hermes_callsign: AE4ML-2
+      hermes_gateway: true
       vara_callsign: AE4ML
       vara_license: !vault |
           $ANSIBLE_VAULT;1.1;AES256
