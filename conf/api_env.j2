@@ -28,7 +28,7 @@ HERMES_NAME={{ inventory_hostname }}
 HERMES_PATH=/hermes/
 HERMES_INBOX={{ inbox_path }}
 HERMES_OUTBOX=outbox/
-{% if hermes_callsign == 'B0DE' or hermes_callsign == 'B0DI'  %} //TODO increase for other networks
+{% if hermes_callsign == vara_callsign  %}
 HERMES_GATEWAY=true
 HERMES_ROUTE=hermes
 {% else %}

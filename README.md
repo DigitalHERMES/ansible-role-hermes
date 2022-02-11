@@ -3,9 +3,10 @@ Ansible Roles to install a hermes system in a Debian 11 (bullseye), requires cre
 
 # Sections:
 ## Playbooks
-The main playbook is the install in root folder
+The main playbook is the install in root folder, change his header to indicate wich HERMES network to use
 
 ## Basic instructions
+
 ### examples 
 - To run some tags
 '''ansible-playbook install.yml -i inventory --tags "web-api,web-gui"'''
