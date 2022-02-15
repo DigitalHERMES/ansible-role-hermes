@@ -4,7 +4,7 @@
       become_user: root
       block: 
         - name: VARA kill vara 
-          command: killall -9 vara
+          command: killall -9 VARA.exe
 
         - name: VARA Install - test for vara install
           file:
