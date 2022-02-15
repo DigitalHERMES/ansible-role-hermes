@@ -1,0 +1,17 @@
+---
+- name: Hermes Station
+  hosts: 
+    - kurupira
+    #- achuar
+    #- kaninde
+
+  tasks: 
+    - name: check for vars
+      import_tasks:
+        file: tasks/000_checkvars.yml
+      tags: vars
+
+    - name: install vara and wine
+      import_tasks:
+        file: tasks/042_varaupd.yml
+      tags: varaupd

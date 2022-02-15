@@ -3,6 +3,8 @@
       become: true
       become_user: root
       block: 
+        - name: VARA kill vara 
+          command: killall -9 vara
 
         - name: VARA Install - test for vara install
           file:
@@ -17,3 +19,8 @@
             group: hermes
             mode: '0775'
             backup: yes
+
+        - name: VARA process template j2 of VARA.ini
+          template:
+            src: "./conf/VARA.ini.j2"
+            dest: "/home/{{ ansible_user }}/VARA/VARA.ini"
