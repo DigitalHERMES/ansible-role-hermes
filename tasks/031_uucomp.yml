@@ -26,7 +26,7 @@
     - name: UUCOMP Setup - Add an apt key
       become: true
       apt_key:
-        url: http://abradig.org.br/hermes/rafael.key
+        url: http://packages.hermes.radio/hermes/rafael.key
         state: present
 
     - name: UUCOMP Setup - remove hermes-codecs legacy package if exists
