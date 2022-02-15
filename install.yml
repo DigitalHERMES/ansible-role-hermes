@@ -39,7 +39,7 @@
     - name: install uucomp
       import_tasks:
         file: tasks/031_uucomp.yml
-      tags: uucomp lpcnet
+      tags: uucomp
 
     - name: install uuardop
       import_tasks:
