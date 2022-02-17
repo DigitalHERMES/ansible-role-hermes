@@ -21,14 +21,54 @@
                 name: snd-hda-intel
                 state: present
 
-            - name: System Base - copy volume settings 
+            - name: System Base - copy volume settings for achuar stations
               become: true
               copy:
-                src: "conf/asound.state"
+                src: "conf/alsa/asound.state.ac"
                 dest: "/var/lib/alsa/asound.state"
                 owner: root
                 group: root
                 mode: '0744'
+              when: vara_callsign == 'B0DE'
+              register: alsa_mixer
+
+            - name: System Base - copy mixer settings for kaninde stations
+              become: true
+              copy:
+                src: "conf/alsa/asound.state.ka"
+                dest: "/var/lib/alsa/asound.state"
+                owner: root
+                group: root
+                mode: '0744'
+              when: vara_callsign == 'B0DK' or ! alsa_mixer.changed
+              register: alsa_mixer
+
+            - name: System Base - copy mixer settings  for k4 station
+              become: true
+              copy:
+                src: "conf/alsa/asound.state.k4"
+                dest: "/var/lib/alsa/asound.state"
+                owner: root
+                group: root
+                mode: '0744'
+              when: vara_callsign == 'PU4GNU'  or ! alsa_mixer.changed
+              register: alsa_mixer
+
+            - name: System Base - copy mixer settings  for k2 station
+              become: true
+              copy:
+                src: "conf/alsa/asound.state.k2"
+                dest: "/var/lib/alsa/asound.state"
+                owner: root
+                group: root
+                mode: '0744'
+              when: vara_callsign == 'PU2UIT' or ! alsa_mixer.changed 
+              register: alsa_mixer
+
+            - name: System Base - alsa mixer settings not copied
+              fail:
+                msg: "Failed to copy alsa mixer settings"
+              when: ! alsa_mixer.changed
 
             - name: System Base - alsactl restore
               become: true
