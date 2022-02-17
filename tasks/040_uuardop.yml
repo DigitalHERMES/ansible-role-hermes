@@ -16,11 +16,19 @@
       args:
         chdir: "{{ build_path }}/rhizo-uuardop/"
 
-    - name: UUARDOP - install 
+    - name: UUARDOP - install host as station
       become: true
       command: make install
       args:
         chdir: "{{ build_path }}/rhizo-uuardop/"
+      when: vara_callsign != hermes_callsign
+
+    - name: UUARDOP - install host as a gateway
+      become: true
+      command: make install_gateway
+      args:
+        chdir: "{{ build_path }}/rhizo-uuardop/"
+      when: vara_callsign == hermes_callsign
 
     - name: UUARDOP - service enable
       become: true
