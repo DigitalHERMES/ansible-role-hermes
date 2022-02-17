@@ -40,7 +40,7 @@
                 owner: root
                 group: root
                 mode: '0744'
-              when: vara_callsign == 'B0DK' or ! alsa_mixer.changed
+              when: vara_callsign == 'B0DK' or not alsa_mixer
               register: alsa_mixer
 
             - name: System Base - copy mixer settings  for k4 station
@@ -51,7 +51,7 @@
                 owner: root
                 group: root
                 mode: '0744'
-              when: vara_callsign == 'PU4GNU'  or ! alsa_mixer.changed
+              when: vara_callsign == 'PU4GNU'  or not alsa_mixer
               register: alsa_mixer
 
             - name: System Base - copy mixer settings  for k2 station
@@ -62,13 +62,13 @@
                 owner: root
                 group: root
                 mode: '0744'
-              when: vara_callsign == 'PU2UIT' or ! alsa_mixer.changed 
+              when: vara_callsign == 'PU2UIT' or not alsa_mixer
               register: alsa_mixer
 
             - name: System Base - alsa mixer settings not copied
               fail:
                 msg: "Failed to copy alsa mixer settings"
-              when: ! alsa_mixer.changed
+              when: not alsa_mixer
 
             - name: System Base - alsactl restore
               become: true
