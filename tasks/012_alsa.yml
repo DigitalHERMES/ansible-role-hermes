@@ -9,17 +9,17 @@
                 group: root
                 mode: '0744'
 
-            - name: Alsa - module unload
-              become: true
-              modprobe:
-                name: snd-hda-intel
-                state: absent
+            #- name: Alsa - module unload
+              #become: true
+              #modprobe:
+                #name: snd-hda-intel
+                #state: absent
 
-            - name: Alsa - module hda load
-              become: true
-              modprobe:
-                name: snd-hda-intel
-                state: present
+            #- name: Alsa - module hda load
+              #become: true
+              #modprobe:
+                #name: snd-hda-intel
+                #state: present
 
             - name: System Base - copy volume settings for achuar stations
               become: true
