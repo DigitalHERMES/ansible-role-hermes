@@ -69,7 +69,7 @@
           msg: Do the manual installation of ispconfig 
       - name: endplay
         meta: end_play
-      when: ispconfig_installed is defined
+      when: ispconfig_installed is not defined
 
     - name: Mail - set default_transport to uucp:gw
       become: true
