@@ -1,0 +1,62 @@
+    - name: HERMES web extra downloads
+      vars:
+        - version: 1.26.0
+        - apk_version: 1.28.1
+    
+      block:
+        - name: create download path
+          become: yes
+          file: 
+            path: "{{ webgui_path }}/downloads/"
+            owner: "{{ ansible_user }}"
+            group: "{{ www_group }}"
+            state: directory
+
+        - name: Download deltachat app file for Debian GNU Linux (deb)
+          get_url: 
+            url: "https://download.delta.chat/desktop/v{{ version}}/deltachat-desktop_{{ version }}_amd64.deb"
+            # updated for 1.26
+            checksum: "sha512:957cc5efab62f7c2bc9ab69e48a278118b9e1c33cf31b21fbb7dd06a507b57a940ad472b0bd1c76bda0fdaa02500d40aec46413666c04ce9b7551ec998c64e67"
+            dest: "{{ webgui_path }}/downloads/deltachat-desktop_{{ version }}_amd64.deb"
+
+        - name: Symbolic link to deltachat file for Debian GNU Linux (deb)) 
+          file:
+            src: "deltachat-desktop_{{ version }}_amd64.deb"
+            dest: "{{ webgui_path }}/downloads/deltachat.deb"
+            state: link
+
+        - name: Download deltachat app file for macosx (dmg)
+          get_url: 
+            url: "https://download.delta.chat/desktop/v{{ version}}/DeltaChat-{{ version }}.dmg"
+            # updated for 1.26
+            dest: "{{ webgui_path }}/downloads/DeltaChat-{{ version }}.dmg"
+
+        - name: Symbolic link to deltachat file for macosx (dmg)) 
+          file:
+            src: "DeltaChat-{{ version }}.dmg"
+            dest: "{{ webgui_path }}/downloads/deltachat.dmg"
+            state: link
+
+        - name: Download deltachat app file for windows (exe)
+          get_url:
+            url: "https://download.delta.chat/desktop/v{{ version }}/DeltaChat%20Setup%20{{ version }}.exe"
+            checksum: "sha512:9c0898bf51a1f6779646b76babf9f0bfd973a525865ada83fbf97d61bc88094f1870b676db5384e858dd49e22117b5f51b519dd81d7fb27a30d8837b834cd23b"
+            dest: "{{ webgui_path }}/downloads/DeltaChat_Setup-{{ version }}.exe"
+
+        - name: Symbolic link to deltachat file for windows (exe)
+          file:
+            src: "DeltaChat_Setup-{{ version }}.exe"
+            dest: "{{ webgui_path }}/downloads/deltachat.exe"
+            state: link
+
+        - name: Download deltachat app file for android (apk)
+          get_url:
+            url: "https://download.delta.chat/android/deltachat-gplay-release-{{ apk_version }}.apk"
+            checksum: "sha512:fd777be53ab192a9f9e90cd3be600a3cc02073f2387806720a3a27a79f7bfc49ef61153a3a331c7302dcbc1a3d9b3197e5e0ed444dbf10b52014215d37b7db05"
+            dest: "{{ webgui_path }}/downloads/deltachat-gplay-release-{{ apk_version }}.apk"
+
+        - name: Symbolic link to deltachat file for android (apk)
+          file:
+            src: "deltachat-gplay-release-{{ apk_version }}.apk"
+            dest: "{{ webgui_path }}/downloads/deltachat.apk"
+            state: link
