@@ -67,9 +67,9 @@
       - name: Mail - manual installation
         debug:
           msg: Do the manual installation of ispconfig 
-
-      - meta: end_play
-      when: not ispconfig_installed.stat.exists
+      - name: endplay
+        meta: end_play
+      when: ispconfig_installed is not defined
 
     - name: Mail - set default_transport to uucp:gw
       become: true

@@ -10,7 +10,7 @@
               owner: root
               group: root
               mode: '0744'
-              backup: yes
+              backup: no
 
           - name: Network - openvpn setup - copying conf file
             become: true

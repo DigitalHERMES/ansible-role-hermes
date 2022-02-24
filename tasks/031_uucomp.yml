@@ -30,6 +30,7 @@
         state: present
 
     - name: UUCOMP Setup - remove hermes-codecs legacy package if exists
+      become: true
       apt:
         state: absent
         name:
