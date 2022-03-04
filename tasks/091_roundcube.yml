@@ -2,7 +2,7 @@
     - name: Mail - roundcube download and unarchive
       become: true
       unarchive:
-        src: 'https://github.com/roundcube/roundcubemail/releases/download/1.4.11/roundcubemail-1.4.11-complete.tar.gz'
+        src: 'https://github.com/roundcube/roundcubemail/releases/download/1.4.13/roundcubemail-1.4.13-complete.tar.gz'
         dest: '{{ build_path }}'
         owner: hermes
         group: www-data
@@ -12,13 +12,13 @@
     - name: Mail - roundcube config
       become: true
       copy:
-        src:  "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php.sample"
-        dest: "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php"
+        src:  "{{ build_path }}/roundcubemail-1.4.13/config/config.inc.php.sample"
+        dest: "{{ build_path }}/roundcubemail-1.4.13/config/config.inc.php"
         owner: hermes
         group: www-data
         mode: '0744'
         remote_src: yes
-        backup: yes
+        backup: no
 
     - name: Mail - roundcube mysql create database  roundcube
       become: true
@@ -43,21 +43,46 @@
         login_unix_socket: /var/run/mysqld/mysqld.sock
         name: roundcubemail
         state: import
-        target: "{{ build_path }}/roundcubemail-1.4.11/SQL/mysql.initial.sql"
+        target: "{{ build_path }}/roundcubemail-1.4.13/SQL/mysql.initial.sql"
         force: yes
 
     - name: Mail - roundcube mysql config
       become: true
       ansible.builtin.lineinfile:
-        path: "{{ build_path }}/roundcubemail-1.4.11/config/config.inc.php"
-        state: present
-        regexp: "^$config['db_dsnw']"
-        #line: "$config['db_dsnw'] = 'sqlite:////tmp/roundcube.db';"
+        path: "{{ build_path }}/roundcubemail-1.4.13/config/config.inc.php"
+        backrefs: yes
+        regexp: "^\\$config\\['db_dsnw']"
         line: "$config['db_dsnw'] = 'mysql://roundcube:Cm3cmal@localhost/roundcubemail';"
+
+    - name: Mail - roundcube product name config
+      become: true
+      ansible.builtin.lineinfile:
+        path: "{{ build_path }}/roundcubemail-1.4.13/config/config.inc.php"
+        backrefs: yes
+        regexp: "^\\$config\\['product_name']" 
+        line: "$config['product_name'] = 'HERMES webmail for {{ hermes_domain }}';"
+
+    - name: Mail - roundcube product info config
+      become: true
+      ansible.builtin.lineinfile:
+        path: "{{ build_path }}/roundcubemail-1.4.13/config/config.inc.php"
+        state: present
+        insertafter: EOF
+        line: "$config['display_product_info'] = 2;"
+
+    - name: Mail - roundcube domain config
+      become: true
+      ansible.builtin.lineinfile:
+        path: "{{ build_path }}/roundcubemail-1.4.13/config/config.inc.php"
+        state: present
+        insertafter: EOF
+        line: "$config['username_domain'] = '{{ hermes_domain }}';"
+
+
 
     - name: Mail - roundcube link to www 
       ansible.builtin.file:
-        src: "{{ build_path }}/roundcubemail-1.4.11"
+        src: "{{ build_path }}/roundcubemail-1.4.13"
         dest: "{{ webpub_path }}/html/mail"
         owner: hermes
         group: www-data
