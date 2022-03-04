@@ -1,7 +1,7 @@
     - name: HERMES web extra downloads
       vars:
         - version: 1.26.0
-        - apk_version: 1.28.1
+        - apk_version: 1.28.3
     
       block:
         - name: create download path
@@ -52,7 +52,7 @@
         - name: Download deltachat app file for android (apk)
           get_url:
             url: "https://download.delta.chat/android/deltachat-gplay-release-{{ apk_version }}.apk"
-            checksum: "sha512:fd777be53ab192a9f9e90cd3be600a3cc02073f2387806720a3a27a79f7bfc49ef61153a3a331c7302dcbc1a3d9b3197e5e0ed444dbf10b52014215d37b7db05"
+            checksum: "sha512:db32b8f649ef953e09f1891051ad986e544ca519a6f6d8a98b397b8db1ccb8c29633f601046e958e1d84d05c302b19932989f4b5b7b9cb757370519209ce9032"
             dest: "{{ webgui_path }}/downloads/deltachat-gplay-release-{{ apk_version }}.apk"
 
         - name: Symbolic link to deltachat file for android (apk)
