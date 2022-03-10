@@ -50,6 +50,11 @@
           args:
             chdir: "{{ webpub_path }}/station-api"
 
+        - name: HERMES API - composer update 
+          command: "composer update"
+          args:
+            chdir: "{{ webpub_path }}/station-api"
+
         - name: HERMES API - gen app key for use in template
           shell: "date | openssl passwd -6 -stdin"
           register: app_key
@@ -65,35 +70,40 @@
 
         - name: HERMES API - create database
           become: true
-          community.mysql.mysql_db:
+          mysql_db:
             login_unix_socket: /var/run/mysqld/mysqld.sock
             name: hermes
             state: present
+          register: database_exists
 
         - name: HERMES API - create database user
           become: true
-          community.mysql.mysql_user:
+          mysql_user:
             login_unix_socket: /var/run/mysqld/mysqld.sock
             name: "{{ hermes_db_user }}"
             password: "{{ hermes_db_password }}"
             priv: "{{ hermes_db }}.*:ALL"
             state: present
+          when: database_exists.changed
 
         - name: HERMES API - create database tables
           command: "php artisan migrate:refresh"
           args:
             chdir: "{{ webpub_path }}/station-api/"
+          when: database_exists.changed
                 
         - name: HERMES API - populate database tables
           command: "php artisan db:seed"
           args:
             chdir: "{{ webpub_path }}/station-api/"
-                
-        - name: HERMES API - create user admin TODO 
-          command: echo TODO
+          when: database_exists.changed
+
+        - name: HERMES API - migrating database 
+          command: "php artisan migrate"
           args:
             chdir: "{{ webpub_path }}/station-api/"
-
+          when: database_exists.changed
+                
         - name: UUCP - create inbox path pubdir 
           become: yes
           file: 
@@ -103,7 +113,7 @@
             mode: '0777'
             state: directory
 
-        - name: HEMES API - create path .gnupg for www-data
+        - name: HERMES API - create path .gnupg for www-data
           become: true
           file: 
             path: "{{ webpub_path }}/.gnupg"
