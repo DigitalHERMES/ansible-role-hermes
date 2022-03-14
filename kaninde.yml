@@ -1,9 +1,9 @@
 ---
 - name: Hermes Station
   hosts: 
-    - kurupira
+    #- kurupira
     #- achuar
-    #- kaninde
+    - kaninde
 
   tasks: 
     - name: check for vars
@@ -50,12 +50,12 @@
       import_tasks:
         file: tasks/041_vara.yml
       tags: vara
+      when: (false == true)
 
     - name: Update vara 
       import_tasks:
         file: tasks/042_varaupd.yml
       tags: varaupd
-      when: (false == true)
 
     - name: Install nginx
       import_tasks:
