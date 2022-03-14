@@ -43,6 +43,12 @@
       include_tasks:
         file: tasks/041_vara.yml
       tags: vara
+      when: (false == true)
+
+    - name: update vara 
+      import_tasks:
+        file: tasks/042_varaupd.yml
+        tags: varaupd
 
     - name: install nginx
       include_tasks:
@@ -72,7 +78,7 @@
     - name: install alsatonic
       include_tasks:
         file: tasks/071_radiotone.yml
-      tags: radio 
+      tags: alsatonic
 
     - name: install vnc
       include_tasks: 
