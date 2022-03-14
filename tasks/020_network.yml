@@ -14,7 +14,7 @@
 
           - name: Network - openvpn setup - copying conf file
             become: true
-            ignore_errors: yes
+            ignore_errors: true
             copy:
               src: "conf/vpn/{{ inventory_hostname }}.ovpn"
               dest: "/etc/openvpn/client/{{ inventory_hostname }}.conf"

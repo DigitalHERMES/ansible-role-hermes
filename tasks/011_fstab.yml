@@ -1,7 +1,7 @@
     - name: fstab settings
       block:
       - name: set options and remount root file system
-        become: yes
+        become: true
         ansible.posix.mount:
           path: /
           fstype: btrfs
