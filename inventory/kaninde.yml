@@ -1,5 +1,15 @@
 kaninde:
   hosts:
-    b0di:
-      hermes_domain: ka1.hermes.radio
+    b0dk:
+      hermes_domain: ka.hermes.radio
+      hermes_callsign: B0DK
       ansible_host: 192.168.0.70
+      #ansible_host: 10.8.0.30
+    b0dk-1:
+      hermes_domain: ka1.hermes.radio
+      hermes_callsign: B0DK-1
+      ansible_host: 10.8.0.31
+    b0dk-2:
+      hermes_domain: ka2.hermes.radio
+      hermes_callsign: B0DK-2
+      ansible_host: 10.8.0.32
