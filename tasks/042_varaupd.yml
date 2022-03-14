@@ -13,8 +13,8 @@
 
         - name: VARA Install - vara files
           copy:
-            src: conf/VARA
-            dest: "/home/{{ ansible_user }}/VARA"
+            src: conf/VARA-4.6.1/
+            dest: "/home/{{ ansible_user }}/VARA/"
             owner: "{{ ansible_user }}"
             group: hermes
             mode: '0775'
