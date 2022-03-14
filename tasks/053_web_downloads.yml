@@ -1,8 +1,13 @@
     - name: HERMES web extra downloads
+      vars:
+        - version: 1.26.0
+        - apk_version: 1.28.3
+        - url: https://hermes.radio/deltachat
+        - urlorig: https://download.delta.chat/desktop/v{{ version}}
     
       block:
         - name: create download path
-          become: yes
+          become: true
           file: 
             path: "{{ webgui_path }}/downloads/"
             owner: "{{ ansible_user }}"
@@ -11,48 +16,54 @@
 
         - name: Download deltachat app file for Debian GNU Linux (deb)
           get_url: 
-            url: "https://download.delta.chat/desktop/v1.22.2/deltachat-desktop_1.22.2_amd64.deb"
-            checksum: "sha512:8024da0aa5d439680dcc83e31166abb636ea2a5b788aaa94d69bc6a5bd17cfd22420f06c34d18f5c041d6540b9f582b4b8f1751c37f60d14b6e657fd38f77c20"
-            dest: "{{ webgui_path }}/downloads/deltachat-desktop_1.22.2_amd64.deb"
+            url: "{{ url }}/deltachat-desktop_{{ version }}_amd64.deb"
+            # updated for 1.26
+            checksum: "sha512:957cc5efab62f7c2bc9ab69e48a278118b9e1c33cf31b21fbb7dd06a507b57a940ad472b0bd1c76bda0fdaa02500d40aec46413666c04ce9b7551ec998c64e67"
+            dest: "{{ webgui_path }}/downloads/deltachat-desktop_{{ version }}_amd64.deb"
 
         - name: Symbolic link to deltachat file for Debian GNU Linux (deb)) 
           file:
-            src: "deltachat-desktop_1.22.2_amd64.deb"
+            src: "{{ webgui_path }}/downloads/deltachat-desktop_{{ version }}_amd64.deb"
             dest: "{{ webgui_path }}/downloads/deltachat.deb"
             state: link
+            force: yes
 
         - name: Download deltachat app file for macosx (dmg)
           get_url: 
-            url: "https://download.delta.chat/desktop/v1.22.2/DeltaChat-1.22.2.dmg"
-            checksum: "sha512:d6ad57becb47e5a649b23b7e2ce2a0c21131ed2d95dd0eabb25e47ba6b0f3fa4219455fdb0eb40bb016a80c5c8d9164810dba5478c7c2a47ebfd609a617046fe"
-            dest: "{{ webgui_path }}/downloads/DeltaChat-1.22.2.dmg"
+            url: "{{ url }}/DeltaChat-{{ version }}.dmg"
+            # updated for 1.26
+            dest: "{{ webgui_path }}/downloads/DeltaChat-{{ version }}.dmg"
 
         - name: Symbolic link to deltachat file for macosx (dmg)) 
           file:
-            src: "DeltaChat-1.22.2.dmg"
+            src: "{{ webgui_path }}/downloads/DeltaChat-{{ version }}.dmg"
             dest: "{{ webgui_path }}/downloads/deltachat.dmg"
             state: link
+            force: yes
 
         - name: Download deltachat app file for windows (exe)
           get_url:
-            url: "https://download.delta.chat/desktop/v1.22.2/DeltaChat%20Setup%201.22.2.exe"
-            checksum: "sha512:a3d25134b94f36d6880b1f6efb632ed00f8bf5a2088f4ab7f6733fe69ae816c752919ed90868172d97e99791e63d31695beb26594eebc18a8680d700128cfa02"
-            dest: "{{ webgui_path }}/downloads/DeltaChat_Setup-1.22.2.exe"
+            url: "{{ url }}/DeltaChat%20Setup%20{{ version }}.exe"
+            checksum: "sha512:9c0898bf51a1f6779646b76babf9f0bfd973a525865ada83fbf97d61bc88094f1870b676db5384e858dd49e22117b5f51b519dd81d7fb27a30d8837b834cd23b"
+            dest: "{{ webgui_path }}/downloads/DeltaChat_Setup-{{ version }}.exe"
 
         - name: Symbolic link to deltachat file for windows (exe)
           file:
-            src: "DeltaChat_Setup-1.22.2.exe"
+            src: "{{webgui_path }}/downloads/DeltaChat_Setup-{{ version }}.exe"
             dest: "{{ webgui_path }}/downloads/deltachat.exe"
             state: link
+            force: yes
 
         - name: Download deltachat app file for android (apk)
           get_url:
-            url: "https://download.delta.chat/android/deltachat-gplay-release-1.22.1.apk"
-            checksum: "sha512:ad06f5b4c1c25536e91a189918f2ba448694a0d19953e04b45ad12722895262bb3839803b30432803f9aa34abc072b3c2f9da55445fe65a5da1ed17e2cb48c59"
-            dest: "{{ webgui_path }}/downloads/deltachat-gplay-release-1.22.1.apk"
+            # url: "https://download.delta.chat/android/deltachat-gplay-release-{{ apk_version }}.apk"
+            url: "{{ url }}/deltachat-gplay-release-{{ apk_version }}.apk"
+            checksum: "sha512:db32b8f649ef953e09f1891051ad986e544ca519a6f6d8a98b397b8db1ccb8c29633f601046e958e1d84d05c302b19932989f4b5b7b9cb757370519209ce9032"
+            dest: "{{ webgui_path }}/downloads/deltachat-gplay-release-{{ apk_version }}.apk"
 
         - name: Symbolic link to deltachat file for android (apk)
           file:
-            src: "deltachat-gplay-release-1.22.1.apk"
+            src: "{{webgui_path}}/downloads/deltachat-gplay-release-{{ apk_version }}.apk"
             dest: "{{ webgui_path }}/downloads/deltachat.apk"
             state: link
+            force: yes
