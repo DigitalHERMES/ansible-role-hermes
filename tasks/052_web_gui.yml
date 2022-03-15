@@ -2,7 +2,7 @@
       block:
         - name: Download HERMES web gui angular from github
           git:
-            repo: "git://github.com/DigitalHERMES/angular.git"
+            repo: "https://github.com/DigitalHERMES/angular.git"
             clone: yes
             dest: "{{ build_path }}/angular"
             version: "master"

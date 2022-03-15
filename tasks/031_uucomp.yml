@@ -2,7 +2,7 @@
   block:
     - name: UUCOMP Setup - clone from git main
       git:
-        repo: "git://github.com/DigitalHERMES/uucomp.git"
+        repo: "https://github.com/DigitalHERMES/uucomp.git"
         clone: yes
         dest: "{{ build_path }}/uucomp/"
         version: main 

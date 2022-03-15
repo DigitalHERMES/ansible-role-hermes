@@ -2,7 +2,7 @@
   block:
     - name: Radio Setup - clone firmware from git main
       git:
-        repo: "git://github.com/DigitalHERMES/ubitxv6.git"
+        repo: "https://github.com/DigitalHERMES/ubitxv6.git"
         clone: yes
         force: yes
         dest: "{{ build_path }}/ubitxv6/"
