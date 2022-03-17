@@ -10,31 +10,31 @@ achuar:
       hermes_domain: ac1.hermes.radio
     b0de3:
       hermes_domain: ac3.hermes.radio
-      hermes_callsign: B0DE-2
+      hermes_callsign: B0DE-3
       ansible_host: 10.8.0.13
     b0de4:
       hermes_domain: ac4.hermes.radio
-      hermes_callsign: B0DE-3
+      hermes_callsign: B0DE-4
       ansible_host: 10.8.0.14
     b0de5:
       hermes_domain: ac5.hermes.radio
-      hermes_callsign: B0DE-4
+      hermes_callsign: B0DE-5
       ansible_host: 10.8.0.15
     b0de6:
       hermes_domain: ac6.hermes.radio
-      hermes_callsign: B0DE-5
+      hermes_callsign: B0DE-6
       ansible_host: 10.8.0.16
     b0de7:
       hermes_domain: ac7.hermes.radio
-      hermes_callsign: B0DE-6
+      hermes_callsign: B0DE-7
       ansible_host: 10.8.0.17
     b0de8:
       hermes_domain: ac8.hermes.radio
-      hermes_callsign: B0DE-7
+      hermes_callsign: B0DE-8
       ansible_host: 10.8.0.18
     b0de9:
       hermes_domain: ac9.hermes.radio
-      hermes_callsign: B0DE-8
+      hermes_callsign: B0DE-9
       ansible_host: 10.8.0.19 
     b0de10:
       hermes_domain: ac10.hermes.radio
