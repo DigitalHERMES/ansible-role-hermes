@@ -26,7 +26,8 @@ address 10.8.0.10
 chat "" \d\d\r\c ogin: \d\L word: \P
 
 {% for n in range(1,15) %}
-system {{hermes_callsign }}-{{ n }}
+
+system {{vara_callsign}}-{{ n }}
 {% if hermes_callsign == vara_callsign+ n|string   %}
 alias local
 {% else %}
@@ -34,13 +35,12 @@ alias ac{{ n }}
 {% endif %}
 alternate 
 port TCP
-{% if hermes_callsign == 'B0DE'%}}}
+{% if vara_callsign == 'B0DE'%}
 address 10.8.0.{{ n+10 }}
-{% elif hermes_callsign == 'B0DK' %}}
+{% elif vara_callsign == 'B0DK' %}
 address 10.8.0.{{ n+30 }}
 {% endif %}
 chat "" \d\d\r\c ogin: \d\L word: \P
-
 {% endfor %}
 
 system hermes
@@ -73,7 +73,7 @@ address 10.8.0.8
 {% endif %}
 chat "" \d\d\r\c ogin: \d\L word: \P
 
-system{{ vara_callsign }}-R
+system {{ vara_callsign }}-R
 {% if hermes_callsign == 'B0DE' %}
 alias acr
 {% elif hermes_callsign == 'B0DK' %}
@@ -92,21 +92,3 @@ address 10.8.0.49
 address 10.8.0.9
 {% endif %}
 chat "" \d\d\r\c ogin: \d\L word: \P
-
-system PU4GNU
-alias k4
-port TCP
-protocol i
-address 10.8.0.2
-chat "" \d\d\r\c ogin: \d\L word: \P
-alternate 
-port HFP
-
-system PU2UIT 
-alias k2
-port TCP
-protocol i
-address 10.8.0.3
-chat "" \d\d\r\c ogin: \d\L word: \P
-alternate 
-port HFP
