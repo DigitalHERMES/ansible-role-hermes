@@ -26,6 +26,8 @@
           command: "npm i"
           args:
             chdir: "{{ build_path }}/angular/"
+
+
         
         #- name: HERMES web gui install node modules 2
           #become: true
@@ -37,6 +39,16 @@
           args:
             chdir: "{{ build_path }}/angular/"
 
+        - name: HERMES web gui remove install
+          become: true
+          file:
+            state: absent
+            path: 
+              - "{{ webpub_path }}/html/es"
+              - "{{ webpub_path }}/html/en-US"
+              - "{{ webpub_path }}/html/pt"
+            force: yes
+
         - name: HERMES web gui - install files
           become: true
           copy:
@@ -47,6 +59,17 @@
             mode: '0766'
             remote_src: yes
             backup: no
+
+        # - name: HERMES web gui install img
+        #   become: true
+        #   copy:
+        #     src: "{{ build_path }}/angular/src/assets"
+        #     dest: 
+        #       - "{{ webpub_path }}/html/es/"
+        #       - "{{ webpub_path }}/html/en-US/"
+        #       - "{{ webpub_path }}/html/pt-BR/"
+        #     remote_src: yes
+        #     force: yes
 
         - name: HERMES API reforce Web Setup - NGINX public folder permissions
           become: true
