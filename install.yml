@@ -72,11 +72,6 @@
         file: tasks/052_web_gui.yml
       tags: gui
 
-    - name: Download deltachat file packages in public web directory
-      import_tasks:
-        file: tasks/053_web_downloads.yml
-      tags: downloads 
-
     - name: Install ubitx and update firmware
       import_tasks: 
         file: tasks/070_radio.yml
@@ -106,6 +101,11 @@
       import_tasks:
         file: tasks/091_roundcube.yml
       tags: roundcube
+
+    - name: Download deltachat file packages in public web directory
+      import_tasks:
+        file: tasks/053_web_downloads.yml
+      tags: downloads 
 
     - name: check services
       import_tasks: 
