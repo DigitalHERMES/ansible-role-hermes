@@ -21,7 +21,7 @@
         - name: HERMES API - Download HERMES station-api from github
           become: true
           git:
-            repo: "git://github.com/DigitalHERMES/station-api.git"
+            repo: "https://github.com/DigitalHERMES/station-api.git"
             clone: yes
             dest: "{{ webpub_path }}/station-api"
             version: HEAD
@@ -102,7 +102,6 @@
           command: "php artisan migrate"
           args:
             chdir: "{{ webpub_path }}/station-api/"
-          when: database_exists.changed
                 
         - name: UUCP - create inbox path pubdir 
           become: true
