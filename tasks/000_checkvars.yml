@@ -61,3 +61,7 @@
     - name: Check if isp_pass is given in playbook
       debug:
         msg: "{{ isp_pass }}"
+
+    - name: Check if isp_pass is given in playbook
+      debug:
+        msg: "{{ wifi_id }}"

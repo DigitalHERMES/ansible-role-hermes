@@ -1,0 +1,20 @@
+### Wireless network name ###
+interface={{ wifi_id }}
+driver=nl80211
+country_code=BO
+channel=1
+ssid=hermes
+hw_mode=g
+auth_algs=1
+wpa=2
+## Key management algorithms ##
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=TKIP
+wpa_passphrase=amazonia
+## Shared Key Authentication ##
+auth_algs=1 
+## Accept all MAC address ###
+macaddr_acl=0
+## max stations ##
+max_num_sta=7
