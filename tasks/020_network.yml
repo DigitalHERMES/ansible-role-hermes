@@ -21,7 +21,7 @@
           - name: Network - copying interface.d ethernet enp2s0 file
             become: true
             copy:
-              src: conf/interfaces.d/enp3s0
+              src: conf/interfaces.d/enp2s0
               dest: /etc/network/interfaces.d/enp2s0
               owner: root
               group: root
