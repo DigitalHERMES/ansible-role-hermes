@@ -1,10 +1,10 @@
 achuar:
   hosts:
-    b0de:
-      hermes_domain: ac.hermes.radio
-      hermes_callsign: B0DE
-      ansible_host: 10.8.0.10
-      wifi_id: wlxc01c301514a3
+    # b0de:
+    #   hermes_domain: ac.hermes.radio
+    #   hermes_callsign: B0DE
+    #   ansible_host: 10.8.0.10
+    #   wifi_id: wlxc01c301514a3
     b0de1:
       ansible_host: 10.8.0.11
       hermes_callsign: B0DE-1
@@ -33,10 +33,11 @@ achuar:
       hermes_domain: ac8.hermes.radio
       hermes_callsign: B0DE-8
       ansible_host: 10.8.0.18
-    # b0de9:
-    #   hermes_domain: ac9.hermes.radio
-    #   hermes_callsign: B0DE-9
-    #   ansible_host: 10.8.0.19
+    b0de9:
+      hermes_domain: ac9.hermes.radio
+      hermes_callsign: B0DE-9
+      ansible_host: 10.8.0.19
+      wifi_id: wlxc01c301516db
     b0de10:
       hermes_domain: ac10.hermes.radio
       hermes_callsign: B0DE-10
