@@ -21,13 +21,13 @@
           - name: Network - remove wlp2s0 if exists
             become: true
             file:
-              path: conf/interfaces.d/wlps2s0
+              path: /etc/network/interfaces.d/wlp2s0
               state: absent
 
-          - name: Network - copy wifi modprobe interface atheros
+          - name: Network - gen template j2 wifi modprobe interface atheros
             become: true
-            copy:
-              src: conf/interfaces.d/atheros
+            template:
+              src: conf/interfaces.d/atheros.j2
               dest: /etc/network/interfaces.d/atheros
               owner: root
               mode: '0744'
