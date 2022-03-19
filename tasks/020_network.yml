@@ -8,11 +8,21 @@
               name:
                 - firmware-ath9k-htc
 
-          - name: Network - copying interface.d ethernet  file
+          - name: Network - copying interface.d ethernet  enp3s0 file
             become: true
             copy:
               src: conf/interfaces.d/enp3s0
               dest: /etc/network/interfaces.d/enp3s0
+              owner: root
+              group: root
+              mode: '0744'
+              backup: false
+
+          - name: Network - copying interface.d ethernet enp2s0 file
+            become: true
+            copy:
+              src: conf/interfaces.d/enp3s0
+              dest: /etc/network/interfaces.d/enp2s0
               owner: root
               group: root
               mode: '0744'
