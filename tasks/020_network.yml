@@ -1,12 +1,18 @@
     - name: Network setup
-
       block:
+          - name: Network  install debian packages  firmware ath
+            become: true
+            apt:
+              install_recommends: yes
+              state: present
+              name:
+                - firmware-ath9k-htc
 
           - name: Network - copying interface.d ethernet  file
             become: true
             copy:
               src: conf/interfaces.d/enp3s0
-              dest: /etc/network/interfaces.d/en3ps0
+              dest: /etc/network/interfaces.d/enp3s0
               owner: root
               group: root
               mode: '0744'
@@ -15,18 +21,18 @@
           - name: Network - remove wlp2s0 if exists
             become: true
             file:
-              src: conf/interfaces.d/wlps2s0
-              type: absent
+              path: conf/interfaces.d/wlps2s0
+              state: absent
 
           - name: Network - copy wifi modprobe interface atheros
             become: true
             copy:
               src: conf/interfaces.d/atheros
-              dest: /etc/interfaces/atheros"
+              dest: /etc/network/interfaces.d/atheros
               owner: root
-              group: root
               mode: '0744'
               backup: false
+
 
           # - name: Network - openvpn setup - copying conf file
           #   become: true
@@ -46,10 +52,10 @@
           #     enabled: false
           #     state: started
 
-          - name: Network - copy file template j2  for modprobe wifi.conf
+          - name: Network - copy file for modprobe wifi.conf
             become: true
             template:
-              src: conf/modprobe.d/wifi.conf.
+              src: conf/modprobe.d/wifi.conf
               dest: "/etc/modprobe.d/wifi.conf"
               mode: '0754'
               backup: false
@@ -88,8 +94,8 @@
           - name: Network - process template j2  for hostapd.conf file
             become: true
             template:
-              src: conf/hostapd.conf.js
-              dest: /etc/hostapd/hostapd.conf"
+              src: conf/hostapd.conf.j2
+              dest: /etc/hostapd/hostapd.conf
               owner: root
               group: root
               mode: '0744'

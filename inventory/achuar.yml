@@ -33,10 +33,10 @@ achuar:
       hermes_domain: ac8.hermes.radio
       hermes_callsign: B0DE-8
       ansible_host: 10.8.0.18
-    b0de9:
-      hermes_domain: ac9.hermes.radio
-      hermes_callsign: B0DE-9
-      ansible_host: 10.8.0.19
+    # b0de9:
+    #   hermes_domain: ac9.hermes.radio
+    #   hermes_callsign: B0DE-9
+    #   ansible_host: 10.8.0.19
     b0de10:
       hermes_domain: ac10.hermes.radio
       hermes_callsign: B0DE-10
