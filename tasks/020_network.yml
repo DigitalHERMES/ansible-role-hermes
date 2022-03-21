@@ -44,23 +44,23 @@
               backup: false
 
 
-          # - name: Network - openvpn setup - copying conf file
-          #   become: true
-          #   ignore_errors: true
-          #   copy:
-          #     src: conf/vpn/{{ inventory_hostname }}.ovpn
-          #     dest: /etc/openvpn/client/{{ inventory_hostname }}.conf
-          #     owner: root
-          #     group: root
-          #     mode: '0744'
-          #     backup: false
+          - name: Network - openvpn setup - copying conf file
+            become: true
+            ignore_errors: true
+            copy:
+              src: conf/vpn/{{ inventory_hostname }}.ovpn
+              dest: /etc/openvpn/client/{{ inventory_hostname }}.conf
+              owner: root
+              group: root
+              mode: '0744'
+              backup: false
 
-          # - name: Network - wifi setup - service openvpn
-          #   become: true
-          #   ansible.builtin.service:
-          #     name: openvpn-client@{{ inventory_hostname }}
-          #     enabled: false
-          #     state: started
+          - name: Network - wifi setup - service openvpn
+            become: true
+            ansible.builtin.service:
+              name: openvpn-client@{{ inventory_hostname }}
+              enabled: false
+              state: started
 
           - name: Network - copy file for modprobe wifi.conf
             become: true
