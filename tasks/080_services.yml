@@ -26,12 +26,6 @@
         enabled: yes
         state: started
 
-    - name: service ubitx is started?
-      ansible.builtin.service:
-        name: ubitx
-        enabled: yes
-        state: started
-
     - name: service iwatch is started?
       ansible.builtin.service:
         name: iwatch
@@ -41,12 +35,6 @@
     - name: service uucp socket is started?
       ansible.builtin.service:
         name: uucp.socket
-        enabled: yes
-        state: started
-
-    - name: service uuardop is started?
-      ansible.builtin.service:
-        name: uuardopd
         enabled: yes
         state: started
 
@@ -63,7 +51,6 @@
         name: dovecot
         enabled: yes
         state: started
-
 
     - name: Service clamav disable
       become: true
@@ -92,3 +79,17 @@
         name: postgrey
         enabled: yes
         state: started
+
+    - name: service ubitx is started?
+      ansible.builtin.service:
+        name: ubitx
+        enabled: yes
+        state: started
+      ignore_errors: true
+
+    - name: service uuardop is started?
+      ansible.builtin.service:
+        name: uuardopd
+        enabled: yes
+        state: started
+      ignore_errors: true
