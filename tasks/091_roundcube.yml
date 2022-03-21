@@ -54,6 +54,14 @@
         regexp: "^\\$config\\['db_dsnw']"
         line: "$config['db_dsnw'] = 'mysql://roundcube:Cm3cmal@localhost/roundcubemail';"
 
+    - name: Mail - roundcube smtp config
+      become: true
+      ansible.builtin.lineinfile:
+        path: "{{ build_path }}/roundcubemail-1.4.13/config/config.inc.php"
+        backrefs: yes
+        regexp: "^\\$config\\['smtp_port']"
+        line: "$config['smtp_port'] = 25';"
+
     - name: Mail - roundcube product name config
       become: true
       ansible.builtin.lineinfile:
@@ -77,8 +85,6 @@
         state: present
         insertafter: EOF
         line: "$config['username_domain'] = '{{ hermes_domain }}';"
-
-
 
     - name: Mail - roundcube link to www 
       ansible.builtin.file:
