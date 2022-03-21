@@ -28,7 +28,7 @@ chat "" \d\d\r\c ogin: \d\L word: \P
 {% for n in range(1,15) %}
 
 system {{vara_callsign}}-{{ n }}
-{% if hermes_callsign == vara_callsign+ n|string   %}
+{% if hermes_callsign == vara_callsign+ -n|string   %}
 alias local
 {% else %}
 alias ac{{ n }}
@@ -43,20 +43,10 @@ address 10.8.0.{{ n+30 }}
 chat "" \d\d\r\c ogin: \d\L word: \P
 {% endfor %}
 
-system hermes
-{% if hermes_callsign == vara_callsign %}
-alias gw
-{% else %}
-alias central
-{% endif %}
-port TCP
-chat "" \d\d\r\c ogin: \d\L word: \P
-address 10.8.0.1
-
 system {{ vara_callsign }}-T
-{% if hermes_callsign == 'B0DE' %}
+{% if vara_callsign == 'B0DE' %}
 alias act
-{% elif hermes_callsign == 'B0DK' %}
+{% elif vara_callsign == 'B0DK' %}
 alias kat
 {% else %}
 alias kt 
@@ -64,9 +54,9 @@ alias kt
 alternate 
 port TCP
 protocol i
-{% if hermes_callsign == 'B0DE' %}
+{% if vara_callsign == 'B0DE' %}
 address 10.8.0.28
-{% elif hermes_callsign == 'B0DK' %}
+{% elif vara_callsign == 'B0DK' %}
 address 10.8.0.48
 {% else %}
 address 10.8.0.8
@@ -74,9 +64,9 @@ address 10.8.0.8
 chat "" \d\d\r\c ogin: \d\L word: \P
 
 system {{ vara_callsign }}-R
-{% if hermes_callsign == 'B0DE' %}
+{% if vara_callsign == 'B0DE' %}
 alias acr
-{% elif hermes_callsign == 'B0DK' %}
+{% elif vara_callsign == 'B0DK' %}
 alias kar
 {% else %}
 alias kr 
@@ -84,9 +74,9 @@ alias kr
 alternate 
 port TCP
 protocol i
-{% if hermes_callsign == 'B0DE' %}
+{% if vara_callsign == 'B0DE' %}
 address 10.8.0.29
-{% elif hermes_callsign == 'B0DK' %}
+{% elif vara_callsign == 'B0DK' %}
 address 10.8.0.49
 {% else %}
 address 10.8.0.9
