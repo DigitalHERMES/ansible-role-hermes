@@ -2,6 +2,7 @@ ansible_python_interpreter: /usr/bin/python3
 ansible_user: hermes
 ansible_ssh_pass: hermes
 ansible_sudo_pass: hermes
+ansible_password: hermes
 
 build_path: /home/hermes/install
 webpub_path: /var/www
@@ -21,6 +22,6 @@ install_uuardop_path: /tmp/build #TODO checkout
 www_group: www-data
 isp_user: apiadmin
 isp_pass: hermescaduceu
-#vara_callsign: 
-#vara_license: 
+#vara_callsign:
+#vara_license:
 
