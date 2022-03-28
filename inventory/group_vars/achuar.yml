@@ -12,6 +12,8 @@ install_uuardop_path: /tmp/build
 www_group: www-data
 ansible_python_interpreter: /usr/bin/python3
 ansible_user: hermes
+ansible_password: hermes
+ansible_sudo_pass: hermes
 isp_user: apiadmin
 isp_pass: hermescaduceu
 vara_callsign: B0DE

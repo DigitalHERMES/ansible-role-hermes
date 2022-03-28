@@ -41,6 +41,7 @@ achuar:
       hermes_domain: ac8.hermes.radio
       hermes_callsign: B0DE-8
       ansible_host: 10.8.0.18
+      wifi_id: wlxc01c3015149a  # temp
     #  SN005
     b0de9:
       hermes_domain: ac9.hermes.radio
