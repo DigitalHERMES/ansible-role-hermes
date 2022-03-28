@@ -1,54 +1,53 @@
-
 ---
-    - name: VARA Install, 32 bit system base
-      vars:
-        vara_version: "4.6.1"
+- name: VARA Install, 32 bit system base
+  vars:
+    vara_version: "4.6.1"
 
-      when: ansible_facts['distribution'] == 'Debian' and install_wine
-      become_user: root
-      block:
-        - name: VARA Install - test for vara install
-          stat:
-             path: "/home/{{ ansible_user }}/VARA"
-          register: vara_exists
-        
-        - name: VARA Install - add 32bit arch
-          become: true
-          when: vara_exists.stat.exists
-          command: dpkg --add-architecture i386 
+  when: ansible_facts['distribution'] == 'Debian' and install_wine
+  become_user: root
+  block:
+    - name: VARA Install - test for vara install
+      stat:
+        path: "/home/{{ ansible_user }}/VARA"
+      register: vara_exists
 
-        - name: VARA Install - refresh apt 
-          become: true
-          when: not vara_exists.stat.exists
-          apt:
-            update_cache: yes
+    - name: VARA Install - add 32bit arch
+      become: true
+      when: not vara_exists.stat.exists
+      command: dpkg --add-architecture i386
 
-        - name: VARA Install -  wine 64 and 32 bit packages
-          become: true
-          when: not vara_exists.stat.exists
-          apt:
-            install_recommends: no
-            state: present
-            name:
-              - wine
-              - wine32
-              - wine64
-              - winetricks
-              - libwine
-              - libwine:i386
-              - fonts-wine
+    - name: VARA Install - refresh apt
+      become: true
+      when: not vara_exists.stat.exists
+      apt:
+        update_cache: yes
 
-        - name: VARA Install - vara files
-          when: not vara_exists.stat.exists
-          copy:
-            src: conf/VARA-{{vara_version}}/
-            dest: "/home/{{ ansible_user }}/VARA/"
-            owner: "{{ ansible_user }}"
-            group: hermes
-            mode: '0775'
-            backup: no
+    - name: VARA Install -  wine 64 and 32 bit packages
+      become: true
+      when: not vara_exists.stat.exists
+      apt:
+        install_recommends: no
+        state: present
+        name:
+          - wine
+          - wine32
+          - wine64
+          - winetricks
+          - libwine
+          - libwine:i386
+          - fonts-wine
 
-        - name: VARA process template j2 of VARA.ini
-          template:
-            src: "./conf/VARA.ini.j2"
-            dest: "/home/{{ ansible_user }}/VARA/VARA.ini.default"
+    - name: VARA Install - vara files
+      when: not vara_exists.stat.exists
+      copy:
+        src: conf/VARA-{{vara_version}}/
+        dest: "/home/{{ ansible_user }}/VARA/"
+        owner: "{{ ansible_user }}"
+        group: hermes
+        mode: "0775"
+        backup: no
+
+    - name: VARA process template j2 of VARA.ini
+      template:
+        src: "./conf/VARA.ini.j2"
+        dest: "/home/{{ ansible_user }}/VARA/VARA.ini.default"
