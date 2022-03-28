@@ -1,126 +1,135 @@
-    - name: Network setup
-      block:
-          - name: Network  install debian packages  firmware ath
-            become: true
-            apt:
-              install_recommends: yes
-              state: present
-              name:
-                - firmware-ath9k-htc
+- name: Network setup
+  block:
+    - name: Network  install debian packages  firmware ath9k
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+          - firmware-ath9k-htc
+      when: vara_callsign == 'B0DE'
 
-          - name: Network - copying interface.d ethernet  enp3s0 file
-            become: true
-            copy:
-              src: conf/interfaces.d/enp3s0
-              dest: /etc/network/interfaces.d/enp3s0
-              owner: root
-              group: root
-              mode: '0744'
-              backup: false
+    - name: Network  install debian packages  firmware ath9k
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+          - firmware-atheros
+      when: vara_callsign == 'B0DK'
 
-          - name: Network - copying interface.d ethernet enp2s0 file
-            become: true
-            copy:
-              src: conf/interfaces.d/enp2s0
-              dest: /etc/network/interfaces.d/enp2s0
-              owner: root
-              group: root
-              mode: '0744'
-              backup: false
+    - name: Network - copying interface.d ethernet  enp3s0 file
+      become: true
+      copy:
+        src: conf/interfaces.d/enp3s0
+        dest: /etc/network/interfaces.d/enp3s0
+        owner: root
+        group: root
+        mode: "0744"
+        backup: false
 
-          - name: Network - remove wlp2s0 if exists
-            become: true
-            file:
-              path: /etc/network/interfaces.d/wlp2s0
-              state: absent
+    - name: Network - copying interface.d ethernet enp2s0 file
+      become: true
+      copy:
+        src: conf/interfaces.d/enp2s0
+        dest: /etc/network/interfaces.d/enp2s0
+        owner: root
+        group: root
+        mode: "0744"
+        backup: false
 
-          - name: Network - gen template j2 wifi modprobe interface atheros
-            become: true
-            template:
-              src: conf/interfaces.d/atheros.j2
-              dest: /etc/network/interfaces.d/atheros
-              owner: root
-              mode: '0744'
-              backup: false
+    - name: Network - remove wlp2s0 if exists
+      become: true
+      file:
+        path: /etc/network/interfaces.d/wlp2s0
+        state: absent
 
+    - name: Network - gen template j2 wifi modprobe interface atheros
+      become: true
+      template:
+        src: conf/interfaces.d/atheros.j2
+        dest: /etc/network/interfaces.d/atheros
+        owner: root
+        mode: "0744"
+        backup: false
 
-          - name: Network - openvpn setup - copying conf file
-            become: true
-            ignore_errors: true
-            copy:
-              src: conf/vpn/{{ inventory_hostname }}.ovpn
-              dest: /etc/openvpn/client/{{ inventory_hostname }}.conf
-              owner: root
-              group: root
-              mode: '0744'
-              backup: false
+    - name: Network - openvpn setup - copying conf file
+      become: true
+      ignore_errors: true
+      copy:
+        src: conf/vpn/{{ inventory_hostname }}.ovpn
+        dest: /etc/openvpn/client/{{ inventory_hostname }}.conf
+        owner: root
+        group: root
+        mode: "0744"
+        backup: false
 
-          - name: Network - wifi setup - service openvpn
-            become: true
-            ansible.builtin.service:
-              name: openvpn-client@{{ inventory_hostname }}
-              enabled: false
-              state: started
+    - name: Network - wifi setup - service openvpn
+      become: true
+      ansible.builtin.service:
+        name: openvpn-client@{{ inventory_hostname }}
+        enabled: true
+        state: started
 
-          - name: Network - copy file for modprobe wifi.conf
-            become: true
-            template:
-              src: conf/modprobe.d/wifi.conf
-              dest: "/etc/modprobe.d/wifi.conf"
-              mode: '0754'
-              backup: false
+    - name: Network - copy file for modprobe wifi.conf
+      become: true
+      template:
+        src: conf/modprobe.d/wifi.conf
+        dest: "/etc/modprobe.d/wifi.conf"
+        mode: "0754"
+        backup: false
 
-          - name: Network - wifi setup - depmod
-            become: true
-            command: "depmod -a"
+    - name: Network - wifi setup - depmod
+      become: true
+      command: "depmod -a"
 
-          - name: Network - wifi setup - copying dnsmasq.conf file
-            become: true
-            copy:
-              src: conf/dnsmasq.conf
-              dest: "/etc/"
-              owner: root
-              group: root
-              mode: '0744'
-              backup: false
+    - name: Network - wifi setup - copying dnsmasq.conf file
+      become: true
+      copy:
+        src: conf/dnsmasq.conf
+        dest: "/etc/"
+        owner: root
+        group: root
+        mode: "0744"
+        backup: false
 
-          - name: Network - process template j2  for dnsmasq.conf 
-            become: true
-            template:
-              src: conf/dnsmasq.conf.j2
-              dest: "/etc/dnsmasq.conf"
-              owner: root
-              group: root
-              mode: '0744'
-              backup: false
+    - name: Network - process template j2  for dnsmasq.conf
+      become: true
+      template:
+        src: conf/dnsmasq.conf.j2
+        dest: "/etc/dnsmasq.conf"
+        owner: root
+        group: root
+        mode: "0744"
+        backup: false
 
-          - name: Network - wifi setup - service dnsmasq
-            become: true
-            ansible.builtin.service:
-              name: dnsmasq
-              enabled: yes
-              state: started
+    - name: Network - wifi setup - service dnsmasq
+      become: true
+      ansible.builtin.service:
+        name: dnsmasq
+        enabled: yes
+        state: started
 
-          - name: Network - process template j2  for hostapd.conf file
-            become: true
-            template:
-              src: conf/hostapd.conf.j2
-              dest: /etc/hostapd/hostapd.conf
-              owner: root
-              group: root
-              mode: '0744'
-              backup: true
+    - name: Network - process template j2  for hostapd.conf file
+      become: true
+      template:
+        src: conf/hostapd.conf.j2
+        dest: /etc/hostapd/hostapd.conf
+        owner: root
+        group: root
+        mode: "0744"
+        backup: true
 
-          - name: Network - wifi setup - unmask hostapd
-            become: true
-            ansible.builtin.service:
-              name: hostapd
-              masked: no
+    - name: Network - wifi setup - unmask hostapd
+      become: true
+      ansible.builtin.service:
+        name: hostapd
+        masked: no
 
-          - name: Network - wifi setup - service hostpad
-            become: true
-            ansible.builtin.service:
-              name: hostapd
-              enabled: yes
-              masked: no
-              state: started
+    - name: Network - wifi setup - service hostpad
+      become: true
+      ansible.builtin.service:
+        name: hostapd
+        enabled: yes
+        masked: no
+        state: started
