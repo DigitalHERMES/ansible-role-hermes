@@ -1,67 +1,67 @@
-    - name: Check if build_path is given in playbook
-      debug:
-        msg: "{{ build_path }}"
+- name: Check if build_path is given in playbook
+  debug:
+    msg: "{{ build_path }}"
 
-    - name: Check if webpub_path is given in playbook
-      debug:
-        msg: "{{ webpub_path }}"
+- name: Check if webpub_path is given in playbook
+  debug:
+    msg: "{{ webpub_path }}"
 
-    - name: Check if webapi_path is given in playbook
-      debug:
-        msg: "{{ webapi_path }}"
+- name: Check if webapi_path is given in playbook
+  debug:
+    msg: "{{ webapi_path }}"
 
-    - name: Check if inbox_path is given in playbook
-      debug:
-        msg: "{{ inbox_path }}"
+- name: Check if inbox_path is given in playbook
+  debug:
+    msg: "{{ inbox_path }}"
 
-    - name: Check if install_wine is given in playbook
-      debug:
-        msg: "{{ install_wine }}"
+- name: Check if install_wine is given in playbook
+  debug:
+    msg: "{{ install_wine }}"
 
-    - name: Check if ubitx_client is given in playbook
-      debug:
-        msg: "{{ ubitx_client }}"
+- name: Check if ubitx_client is given in playbook
+  debug:
+    msg: "{{ ubitx_client }}"
 
-    - name: Check if install_uuardop_path is given in playbook
-      debug:
-        msg: "{{ install_uuardop_path }}"
+- name: Check if install_uuardop_path is given in playbook
+  debug:
+    msg: "{{ install_uuardop_path }}"
 
-    - name: Check if www_group is given in playbook
-      debug:
-        msg: "{{ www_group }}"
+- name: Check if www_group is given in playbook
+  debug:
+    msg: "{{ www_group }}"
 
-    - name: Check if vara_callsign is given in playbook
-      debug:
-        msg: "{{ vara_callsign }}"
+- name: Check if vara_callsign is given in playbook
+  debug:
+    msg: "{{ vara_callsign }}"
 
-    - name: Check if vara_license is given in playbook
-      debug:
-        msg: "{{ vara_license }}"
+- name: Check if vara_license is given in playbook
+  debug:
+    msg: "{{ vara_license }}"
 
-    - name: Check if hermes_db is given in playbook
-      debug:
-        msg: "{{ hermes_db }}"
+- name: Check if hermes_db is given in playbook
+  debug:
+    msg: "{{ hermes_db }}"
 
-    - name: Check if hermes_db_user is given in playbook
-      debug:
-        msg: "{{ hermes_db_user }}"
+- name: Check if hermes_db_user is given in playbook
+  debug:
+    msg: "{{ hermes_db_user }}"
 
-    - name: Check if hermes_domain is given in playbook
-      debug:
-        msg: "{{ hermes_domain }}"
+- name: Check if hermes_domain is given in playbook
+  debug:
+    msg: "{{ hermes_domain }}"
 
-    - name: Check if hermes_callsign is given in playbook
-      debug:
-        msg: "{{ hermes_callsign }}"
+- name: Check if hermes_callsign is given in playbook
+  debug:
+    msg: "{{ hermes_callsign }}"
 
-    - name: Check if isp_user is given in playbook
-      debug:
-        msg: "{{ isp_user }}"
+- name: Check if isp_user is given in playbook
+  debug:
+    msg: "{{ isp_user }}"
 
-    - name: Check if isp_pass is given in playbook
-      debug:
-        msg: "{{ isp_pass }}"
+- name: Check if isp_pass is given in playbook
+  debug:
+    msg: "{{ isp_pass }}"
 
-    - name: Check if isp_pass is given in playbook
-      debug:
-        msg: "{{ wifi_id }}"
+- name: Check if wifi_id is given in playbook
+  debug:
+    msg: "{{ wifi_id }}"

@@ -5,11 +5,13 @@ kaninde:
       hermes_callsign: B0DK
       ansible_host: 192.168.0.82
       wifi_id: wlp2s0
-      #ansible_host: 10.8.0.30 #vpn
-    # b0dk1:
-    #   hermes_domain: ka1.hermes.radio
-    #   hermes_callsign: B0DK-1
-    #   ansible_host: 10.8.0.31
+      # ansible_host: 10.8.0.30 #vpn
+    b0dk1:
+      hermes_domain: ka1.hermes.radio
+      hermes_callsign: B0DK-1
+      ansible_host: 192.168.0.81
+      # ansible_host: 10.8.0.31
+      wifi_id: wlp2s0
     # b0dk2:
     #   hermes_domain: ka2.hermes.radio
     #   hermes_callsign: B0DK-2

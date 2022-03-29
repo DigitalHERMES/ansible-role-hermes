@@ -1,5 +1,5 @@
 ---
-- name: ISP Config 
+- name: ISP Config
   become_user: root
   block:
     - name: Mail - install packages
@@ -32,13 +32,13 @@
           - clamav-daemon
           - clamav-unofficial-sigs
 
-    - name:  Mail - ISPconfig download and extract tarball
+    - name: Mail - ISPconfig download and extract tarball
       unarchive:
-        src: 'https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz'
-        dest: '{{ build_path }}'
+        src: "https://ispconfig.org/downloads/ISPConfig-3.2.5.tar.gz"
+        dest: "{{ build_path }}"
         remote_src: yes
 
-    - name: Mail - ISPconfig patch debian100.conf.php 
+    - name: Mail - ISPconfig patch debian100.conf.php
       become: true
       ansible.builtin.replace:
         path: "{{ build_path }}/ispconfig3_install/install/dist/conf/debian100.conf.php"
@@ -49,7 +49,7 @@
       template:
         src: "./conf/ispconfig.ini.j2"
         dest: "{{ build_path }}/ispconfig3_install/install/autoinstall.ini"
-        mode: '0754'
+        mode: "0754"
 
     - name: Mail - check if ISPConfig is already installed
       stat:
@@ -57,18 +57,18 @@
       register: ispconfig_installed
 
     #- name: Mail -  Start ISPConfig Installation
-      #become: true
-      #command: "php -q install.php --autoinstall=autoinstall.ini"
-      #args:
-        #chdir: "{{ build_path }}/ispconfig3_install/install/"
-      #when: not ispconfig_installed.stat.exists
-    
+    #become: true
+    #command: "php -q install.php --autoinstall=autoinstall.ini"
+    #args:
+    #chdir: "{{ build_path }}/ispconfig3_install/install/"
+    #when: not ispconfig_installed.stat.exists
+
     - block:
-      - name: Mail - manual installation
-        debug:
-          msg: Do the manual installation of ispconfig 
-      - name: endplay
-        meta: end_play
+        - name: Mail - manual installation
+          debug:
+            msg: Do the manual installation of ispconfig
+        - name: endplay
+          meta: end_play
       when: ispconfig_installed is not defined
 
     - name: Mail - set default_transport to uucp:gw
@@ -90,7 +90,7 @@
         #regexp: "^content_filter = lmtp:[127.0.0.1]:10024"
         line: "#content_filter = lmtp:[127.0.0.1]:10024"
 
-    - name: Mail - comment receive_override 
+    - name: Mail - comment receive_override
       become: true
       ansible.builtin.lineinfile:
         backrefs: yes
@@ -106,7 +106,7 @@
         path: "/etc/postfix/main.cf"
         state: present
         regexp: "^smtpd_recipient_restrictions*"
-        line:  "smtpd_recipient_restrictions = permit_mynetworks, reject_unlisted_recipient, check_recipient_access proxy:mysql:/etc/postfix/mysql-verify_recipients.cf, permit_sasl_authenticated, reject_non_fqdn_recipient, reject_unauth_destination, check_recipient_access proxy:mysql:/etc/postfix/mysql-virtual_recipient.cf, check_policy_service unix:private/quota-status"
+        line: "smtpd_recipient_restrictions = permit_mynetworks, reject_unlisted_recipient, check_recipient_access proxy:mysql:/etc/postfix/mysql-verify_recipients.cf, permit_sasl_authenticated, reject_non_fqdn_recipient, reject_unauth_destination, check_recipient_access proxy:mysql:/etc/postfix/mysql-virtual_recipient.cf, check_policy_service unix:private/quota-status"
 
     - name: Mail - set no run uucico after uucp command
       become: true
@@ -117,7 +117,7 @@
         regexp: "^  flags=Fqhu user=uucp*"
         line: "  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)"
 
-    - name: Mail - tag_as_foreign.re  10024
+    - name: Mail - tag_as_foreign.re 10024
       become: true
       ansible.builtin.lineinfile:
         backrefs: yes
@@ -125,6 +125,17 @@
         state: present
         regexp: "^/^/ FILTER*"
         line: "/^/ FILTER lmtp:[127.0.0.1]:10024"
+      ignore_errors: true
+
+    - name: Mail - tag_as_originating.re 10024
+      become: true
+      ansible.builtin.lineinfile:
+        backrefs: yes
+        path: "/etc/postfix/tag_as_originating.re"
+        state: present
+        regexp: "^/^/ FILTER*"
+        line: "/^/ FILTER lmtp:[127.0.0.1]:10024"
+      ignore_errors: true
 
     - name: Mail - disable clamav-daemon service
       become: true
@@ -136,13 +147,20 @@
     - name: Mail - disable clamav-freshclam
       become: true
       ansible.builtin.service:
-        name: clamav-daemon
+        name: clamav-freshclam
         state: stopped
         enabled: no
 
-    - name: Mail - restart postfix 
+    - name: Mail - restart postfix
       become: true
       ansible.builtin.service:
         name: postfix
+        state: restarted
+        enabled: yes
+
+    - name: Mail - restart dovecot
+      become: true
+      ansible.builtin.service:
+        name: dovecot
         state: restarted
         enabled: yes
