@@ -23,7 +23,11 @@ server {
 	    try_files $uri $uri/ /api/index.php?$query_string;
 	}
 	if ($accept_language ~ "^$") {
+	{% if hermes_callsign ==  'B0DK' %} 
+            set $accept_language "pt";
+	{% elif vara_callsign == 'B0DE' %}
             set $accept_language "es";
+	{% endif %}
         }
 
         rewrite ^/$ /$accept_language permanent;

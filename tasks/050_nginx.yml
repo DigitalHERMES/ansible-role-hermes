@@ -123,8 +123,8 @@
 
     - name: Web Setup - NGINX setup site hermes
       become: true
-      copy:
-        src: conf/nginx_hermes.conf 
+      template:
+        src: conf/nginx_hermes.conf.j2
         #dest: /etc/uucp/
         dest: /etc/nginx/sites-available/hermes.conf
         owner: www-data
