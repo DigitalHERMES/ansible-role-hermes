@@ -1,118 +1,123 @@
-    - name: add user {{ ansible_user }} to groups 
+- name: add user {{ ansible_user }} to groups
+  block:
+    - name: System base - Verify if user exists
+      command: grep {{ ansible_user_id }} /etc/passwd
+      register: user
+
+    - name: System base - Validate the sudoers file before saving
+      become: true
+      ansible.builtin.lineinfile:
+        backrefs: yes
+        path: /etc/sudoers
+        regexp: "^%sudo*"
+        line: "%SUDO ALL=(ALL) NOPASSWD: ALL"
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: System base - adding existing user '{{ ansible_user }}' to group sudo
+      become: true
+      user:
+        name: "{{ ansible_user }}"
+        groups:
+          - sudo
+          - uucp
+          - audio
+          - mail
+        append: yes
+
+    - name: System base - adding existing user 'www-data' to group sudo
+      become: true
+      user:
+        name: www-data
+        groups:
+          - sudo
+        append: yes
+
+    - name: System base - adding existing user 'uucp' to group sudo
+      become: true
+      user:
+        name: uucp
+        groups:
+          - sudo
+        append: yes
+
+    - name: System base - Install packages
+      when: ansible_facts['distribution'] == 'Debian'
+      become: true
+      become_user: root
       block:
-
-        - name: System base - Verify if user exists
-          command: grep {{ ansible_user_id }} /etc/passwd
-          register: user
-
-        - name: System base - Validate the sudoers file before saving
+        - name: System Base - copy sources.list
           become: true
-          ansible.builtin.lineinfile:
-            backrefs: yes
-            path: /etc/sudoers
-            regexp: '^%sudo*'
-            line: '%SUDO ALL=(ALL) NOPASSWD: ALL'
-            validate: /usr/sbin/visudo -cf %s
+          copy:
+            src: "conf/apt/sources.list"
+            dest: "/etc/apt"
+            owner: root
+            group: root
+            mode: "0644"
+            backup: yes
 
-        - name: System base - adding existing user '{{ ansible_user }}' to group sudo
+        - name: System Base - update cache and upgrade debian packages
           become: true
-          user:
-            name: '{{ ansible_user }}'
-            groups: 
+          apt:
+            update_cache: yes
+            upgrade: true
+        - name: System Base - Installing debian packages
+          become: true
+          apt:
+            install_recommends: yes
+            state: present
+            name:
+              - alsa-tools
+              - alsa-utils
+              - arduino-mk
+              - autoconf
+              - bash-completion
+              - bluez-tools
+              - build-essential
+              - curl
+              - dnsmasq
+              - emacs-nox
+              - firmware-realtek
+              - firmware-linux
+              - git
+              - hostapd
+              - htop
+              - iw
+              - iwatch #TODO: redundant  with iwatch service
+              - jq
+              - libtool
+              - libb64-dev
+              - memtest86
+              - memtest86+
+              - mosquitto
+              - net-tools
+              - openvpn
+              - patch
+              - pip
+              - python3
+              - python3-pymysql
+              - rxvt
               - sudo
-              - uucp
-              - audio
-              - mail
-            append: yes
+              - vim-nox
+              - wireless-regdb
+              - wireless-tools
+              - wmaker
+              - wpasupplicant
+              - xterm
 
-        - name: System base - adding existing user 'www-data' to group sudo
+        - name: Set timezone to EST (achuar) and hwclock to UTC
           become: true
-          user:
-            name: www-data
-            groups: 
-              - sudo
-            append: yes
+          tags:
+            - dev
+          community.general.timezone:
+            name: EST
+            hwclock: UTC
+          when: vara_callsign == 'b0de'
 
-        - name: System base - adding existing user 'uucp' to group sudo
-          become: true
-          user:
-            name: uucp
-            groups: 
-              - sudo
-            append: yes
-
-
-        - name: System base - Install packages
-          when: ansible_facts['distribution'] == 'Debian'
-          become: true
-          become_user: root
-          block:
-
-            - name: System Base - copy sources.list
-              become: true
-              copy:
-                src: "conf/apt/sources.list"
-                dest: "/etc/apt"
-                owner: root
-                group: root
-                mode: '0644'
-                backup: yes
-
-            - name: System Base - update cache and upgrade debian packages 
-              become: true
-              apt:
-                update_cache: yes
-                upgrade: true
-            - name: System Base - Installing debian packages 
-              become: true
-              apt:
-                install_recommends: yes
-                state: present
-                name:
-                  - alsa-tools
-                  - alsa-utils
-                  - arduino-mk
-                  - autoconf
-                  - bash-completion
-                  - bluez-tools
-                  - build-essential
-                  - curl
-                  - dnsmasq
-                  - emacs-nox
-                  - firmware-realtek
-                  - firmware-linux
-                  - git
-                  - hostapd
-                  - htop
-                  - iw
-                  - iwatch #TODO: redundant  with iwatch service
-                  - jq
-                  - libtool
-                  - libb64-dev
-                  - memtest86
-                  - memtest86+
-                  - mosquitto
-                  - net-tools 
-                  - openvpn
-                  - patch
-                  - pip
-                  - python3
-                  - python3-pymysql
-                  - rxvt
-                  - sudo 
-                  - vim-nox 
-                  - wireless-regdb
-                  - wireless-tools
-                  - wmaker
-                  - wpasupplicant
-                  - xterm
-
-            # TODO - define a var to include here
-            - name: Set timezone and hwclock to UTC
-              become: true
-              tags:  
-                - dev
-              community.general.timezone:
-                name: EST
-                hwclock: UTC
-
+        # - name: Set timezone to and hwclock to UTC
+        #   become: true
+        #   tags:
+        #     - dev
+        #   community.general.timezone:
+        #     name: Brazil/West
+        #     hwclock: UTC
+        #   when: vara_callsign == 'b0dk'

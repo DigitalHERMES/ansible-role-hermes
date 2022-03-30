@@ -12,14 +12,18 @@ kaninde:
       ansible_host: 192.168.0.81
       # ansible_host: 10.8.0.31
       wifi_id: wlp2s0
-    # b0dk2:
-    #   hermes_domain: ka2.hermes.radio
-    #   hermes_callsign: B0DK-2
-    #   ansible_host: 10.8.0.32
-    # b0dk3:
-    #   hermes_domain: ka3.hermes.radio
-    #   hermes_callsign: B0DK-3
-    #   ansible_host: 10.8.0.33
+    b0dk2:
+      hermes_domain: ka2.hermes.radio
+      hermes_callsign: B0DK-2
+      ansible_host: 192.168.0.83
+      # ansible_host: 10.8.0.32
+      wifi_id: wlp2s0
+    b0dk3:
+      hermes_domain: ka3.hermes.radio
+      hermes_callsign: B0DK-3
+      ansible_host: 192.168.0.84
+      # ansible_host: 10.8.0.33
+      wifi_id: wlp2s0
     # b0dk4:
     #   hermes_domain: ka4.hermes.radio
     #   hermes_callsign: B0DK-4
