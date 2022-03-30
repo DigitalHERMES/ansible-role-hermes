@@ -32,6 +32,7 @@
           get_url: 
             url: "{{ url }}/DeltaChat-{{ version }}.dmg"
             # updated for 1.26
+            checksum: "sha512:fe9abc144eebdb9e4292f60f8c2e61ab4cdbe65bfafbae6b45831c216876c7d23c8d2e0a1878e3029a80f188648d3d342fbd1ed2db08af533136e3b245cbfd82"
             dest: "{{ webgui_path }}/downloads/DeltaChat-{{ version }}.dmg"
 
         - name: Symbolic link to deltachat file for macosx (dmg)) 
