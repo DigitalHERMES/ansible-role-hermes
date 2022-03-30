@@ -22,7 +22,11 @@ alias gw
 {% endif %}
 alternate 
 port TCP
+{% if hermes_callsign ==  'B0DE' %} 
 address 10.8.0.10
+{% elif vara_callsign == 'B0DK' %}
+address 10.8.0.30
+{% endif %}
 chat "" \d\d\r\c ogin: \d\L word: \P
 
 {% for n in range(1,15) %}
@@ -35,7 +39,7 @@ alias ac{{ n }}
 {% endif %}
 alternate 
 port TCP
-{% if vara_callsign == 'B0DE'%}
+{% if vara_callsign == 'B0DE' %}
 address 10.8.0.{{ n+10 }}
 {% elif vara_callsign == 'B0DK' %}
 address 10.8.0.{{ n+30 }}
