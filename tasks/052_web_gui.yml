@@ -1,81 +1,119 @@
-    - name: HERMES web gui angular frontend software
-      block:
-        - name: Download HERMES web gui angular from github
-          git:
-            repo: "https://github.com/DigitalHERMES/angular.git"
-            clone: yes
-            dest: "{{ build_path }}/angular"
-            version: "master"
-            force: yes
+---
+- name: HERMES web gui angular frontend software
+  block:
+    - name: HERMES web gui - Add an apt key
+      become: true
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
 
-        - name: HERMES web gui - angular linux packages
-          become: true
-          apt:
-            install_recommends: yes
-            state: present
-            name:
-              - nodejs
-              - npm
+    - name: HERMES web gui - add  nodesource repository and update
+      become: true
+      apt_repository:
+        repo: deb https://deb.nodesource.com/node_16.x bullseye main
+        state: present
+        update_cache: yes
+        validate_certs: yes
+        filename: hermes
 
-        - name: HERMES web gui -  update node modules 
-          command: "npm update --force"
-          args:
-            chdir: "{{ build_path }}/angular/"
+    - name: HERMES web gui - angular linux packages
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+          - nodejs
+          # - eslint
 
-        - name: HERMES web gui -  install node modules 
-          command: "npm i"
-          args:
-            chdir: "{{ build_path }}/angular/"
+    - name: HERMES webgui install npm package angular
+      become: true
+      npm:
+        name: "@angular/cli"
+        global: true
+        state: present
 
+    - name: HERMES webgui install npm install package yarn
+      become: true
+      npm:
+        name: yarn
+        global: true
+        state: present
 
-        
-        #- name: HERMES web gui install node modules 2
-          #become: true
-          #npm:
-            #path: "{{ build_path }}/angular/"
-            #state: latest
-        - name: HERMES web gui - build 
-          command: "npm run build"
-          args:
-            chdir: "{{ build_path }}/angular/"
+    - name: HERMES webgui install npm packages  ts-node
+      become: true
+      npm:
+        name: ts-node
+        global: true
+        state: present
 
-        - name: HERMES web gui remove install
-          become: true
-          file:
-            state: absent
-            path: 
-              - "{{ webpub_path }}/html/es"
-              - "{{ webpub_path }}/html/en-US"
-              - "{{ webpub_path }}/html/pt"
-            force: yes
+    - name: Download HERMES web gui angular from github
+      git:
+        repo: "https://github.com/DigitalHERMES/angular.git"
+        clone: yes
+        dest: "{{ build_path }}/angular"
+        # version: "master"
+        version: "main"
+        force: yes
 
-        - name: HERMES web gui - install files
-          become: true
-          copy:
-            src:  "{{ build_path }}/angular/dist/hermes/"
-            dest: "{{ webpub_path }}/html"
-            owner: hermes
-            group: www-data
-            mode: '0766'
-            remote_src: yes
-            backup: no
+    - name: HERMES web gui - angular node modules update with yarn
+      yarn:
+        path: "{{ build_path }}/angular"
+        # state: latest
+        # production: true
 
-        # - name: HERMES web gui install img
-        #   become: true
-        #   copy:
-        #     src: "{{ build_path }}/angular/src/assets"
-        #     dest: 
-        #       - "{{ webpub_path }}/html/es/"
-        #       - "{{ webpub_path }}/html/en-US/"
-        #       - "{{ webpub_path }}/html/pt-BR/"
-        #     remote_src: yes
-        #     force: yes
+    - name: HERMES web gui - angular environemnt
+      command: "npx ts-node setEnv.ts"
+      environment:
+        APP_NAME: HERMES
+        API_URL: /api
+        PRODUCTION: "true"
+        GENERATE_SOURCEMAP: "false"
+      args:
+        chdir: "{{ build_path }}/angular/"
 
-        - name: HERMES API reforce Web Setup - NGINX public folder permissions
-          become: true
-          file:
-            path: "{{ webpub_path }}/html" 
-            recurse: yes
-            owner: "{{ ansible_user }}"
-            group: "{{ www_group }}"
-            mode: '0775'
+    - name: HERMES web gui - clean build dist path
+      file:
+        state: absent
+        path: "{{ build_path }}/angular/dist"
+        force: yes
+
+    - name: HERMES web gui - build angular
+      command: "npm run build"
+      args:
+        chdir: "{{ build_path }}/angular/"
+      register: build_output
+
+    - name: HERMES web gui - show build output
+      debug:
+        msg: "{{ build_output.stdout }}"
+
+    - name: HERMES web gui remove install
+      become: true
+      file:
+        state: absent
+        path:
+          - "{{ webpub_path }}/html/es"
+          - "{{ webpub_path }}/html/en-US"
+          - "{{ webpub_path }}/html/pt"
+        force: yes
+
+    - name: HERMES web gui - install files
+      become: true
+      copy:
+        src: "{{ build_path }}/angular/dist/hermes/"
+        dest: "{{ webpub_path }}/html/"
+        owner: hermes
+        group: www-data
+        mode: "0766"
+        directory_mode: yes
+        remote_src: yes
+        backup: no
+
+    - name: HERMES API reforce Web Setup - NGINX public folder permissions
+      become: true
+      file:
+        path: "{{ webpub_path }}/html"
+        recurse: yes
+        owner: "{{ ansible_user }}"
+        group: "{{ www_group }}"
+        mode: "0775"
