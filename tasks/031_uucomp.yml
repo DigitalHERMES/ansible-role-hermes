@@ -45,7 +45,7 @@
         validate_certs: yes
         filename: hermes
     
-    - name: UUCOOMP Setup - Installing debian packages 
+    - name: UUCOMP Setup - Installing debian packages 
       become: true
       apt:
         install_recommends: yes
