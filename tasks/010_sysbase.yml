@@ -74,14 +74,10 @@
               - bluez-tools
               - build-essential
               - curl
-              - dnsmasq
               - emacs-nox
-              - firmware-realtek
               - firmware-linux
               - git
-              - hostapd
               - htop
-              - iw
               - iwatch #TODO: redundant  with iwatch service
               - jq
               - libtool
@@ -90,7 +86,6 @@
               - memtest86+
               - mosquitto
               - net-tools
-              - openvpn
               - patch
               - pip
               - python3
@@ -98,10 +93,7 @@
               - rxvt
               - sudo
               - vim-nox
-              - wireless-regdb
-              - wireless-tools
               - wmaker
-              - wpasupplicant
               - xterm
 
         - name: Set timezone to EST (achuar) and hwclock to UTC
@@ -113,11 +105,11 @@
             hwclock: UTC
           when: vara_callsign == 'b0de'
 
-        # - name: Set timezone to and hwclock to UTC
-        #   become: true
-        #   tags:
-        #     - dev
-        #   community.general.timezone:
-        #     name: Brazil/West
-        #     hwclock: UTC
-        #   when: vara_callsign == 'b0dk'
+        - name: Set timezone to and hwclock to UTC
+          become: true
+          tags:
+            - dev
+          community.general.timezone:
+            name: America/Boa_Vista
+            hwclock: UTC
+          when: vara_callsign == 'b0dk'
