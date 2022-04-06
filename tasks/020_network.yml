@@ -1,22 +1,44 @@
 - name: Network setup
   block:
-    - name: Network  install debian packages  firmware ath9k
+    - name: Network  install network packages and firmware
       become: true
       apt:
         install_recommends: yes
         state: present
         name:
-          - firmware-ath9k-htc
-      when: vara_callsign == 'B0DE'
-
-    - name: Network  install debian packages  firmware ath9k
-      become: true
-      apt:
-        install_recommends: yes
-        state: present
-        name:
+          - hostapd
+          - firmware-realtek
           - firmware-atheros
-      when: vara_callsign == 'B0DK'
+          - openvpn
+          - dnsmasq
+          - wireless-regdb
+          - wireless-tools
+          - wpasupplicant
+          - dnsmasq
+          - iw
+          - linux-headers-amd64
+      # when: vara_callsign == 'B0DE'
+      # when: vara_callsign == 'B0DK' or hermes_callsign == 'B0DK-1'
+
+    - name: Network  - git get driver for rtl8788eu
+      git:
+        repo: "https://github.com/lwfinger/rtl8188eu.git"
+        clone: true
+        dest: "{{ build_path }}/rtl8188eu/"
+        version: HEAD
+        force: true
+    
+    - name: Network -  build driver for rtl8788eu
+      command: make
+      args:
+        chdir: "{{ build_path }}/rtl8188eu/"
+      # when: vara_callsign == 'B0DE'
+
+    - name: Network - install driver for rtl8788eu
+      become: true
+      command: make install
+      args:
+        chdir: "{{ build_path }}/rtl8188eu/"
 
     - name: Network - copying interface.d ethernet  enp3s0 file
       become: true
@@ -64,7 +86,7 @@
         mode: "0744"
         backup: false
 
-    - name: Network - wifi setup - service openvpn
+    - name: Network - openvpn setup - start client service 
       become: true
       ansible.builtin.service:
         name: openvpn-client@{{ inventory_hostname }}
