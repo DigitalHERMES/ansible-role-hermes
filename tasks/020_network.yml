@@ -25,7 +25,7 @@
         repo: "https://github.com/lwfinger/rtl8188eu.git"
         clone: true
         dest: "{{ build_path }}/rtl8188eu/"
-        version: HEAD
+        version: v5.2.2.4
         force: true
     
     - name: Network -  build driver for rtl8788eu
