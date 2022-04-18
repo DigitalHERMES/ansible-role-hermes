@@ -34,8 +34,8 @@ HERMES_ROUTE=hermes
 {% else %}
 HERMES_ROUTE=gw!hermes
 {% endif %}
-HERMES_UUCP=/usr/spool/uucp/
-HERMES_UUCP_IN=/usr/spool/uucppublic/
+HERMES_UUCP=/var/spool/uucp/
+HERMES_UUCP_IN={{ inbox_path }}
 HERMES_EMAILAPI_USER = {{ isp_user }}
 HERMES_EMAILAPI_PASS = {{ isp_pass }}
 HERMES_EMAILAPI_LOC = https://localhost:8080/remote/index.php

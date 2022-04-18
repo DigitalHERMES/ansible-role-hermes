@@ -1,0 +1,16 @@
+[Unit]
+Description=Universal HamRadio Remote
+After=syslog.target network.target
+
+[Service]
+#Type=forking
+Type=simple
+User=root
+#Group=hermes
+WorkingDirectory=/opt/uhrr/
+PIDFile=/var/run/uhrr%H:1.pid
+ExecStart=UHRR
+ExecStop=killall  UHRR
+
+[Install]
+WantedBy=multi-user.target

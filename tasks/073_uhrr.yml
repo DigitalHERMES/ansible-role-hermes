@@ -1,0 +1,43 @@
+- name: Web Radio setup
+  block:
+    - name: Web Radio Setup - clone firmware from git main
+      git:
+        repo: "https://github.com/DigitalHERMES/Universal_HamRadio_Remote_HTML5.git"
+        clone: yes
+        force: yes
+        dest: "/opt/uhrr/"
+        version: origin/master
+
+    - name: Web Radio Setup - install debian packages
+      become: true
+      apt:
+        install_recommends: yes
+        state: present
+        name:
+          - python3
+          - python3-pip
+          - python3-numpy
+          - python3-tornado
+          - python3-serial
+          - python3-pyaudio
+
+    - name: Web Radio Setup - pip install
+      become: true
+      command: "pip install pyalsaaudio pam"
+
+    - name: Web Radio Setup - copy files
+      become: true
+      copy:
+        src: conf/services/uhrr.service
+        dest: /etc/systemd/system
+        owner: root
+        group: root
+        mode: "0744"
+        backup: false
+
+    - name: Radio Setup - uhrr daemon-reload and service enable
+      become: true
+      ansible.builtin.service:
+        name: uhrr
+        enabled: yes
+        state: started
