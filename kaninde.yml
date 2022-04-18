@@ -1,11 +1,11 @@
 ---
 - name: Hermes Station
-  hosts:
+  hosts: 
     #- kurupira
-    #- achuar
+    # - achuar
     - kaninde
 
-  tasks:
+  tasks: 
     - name: check for vars
       import_tasks:
         file: tasks/000_checkvars.yml
@@ -20,7 +20,7 @@
       import_tasks:
         file: tasks/011_fstab.yml
       tags: fstab
-
+    
     - name: alsa setup
       import_tasks:
         file: tasks/012_alsa.yml
@@ -45,7 +45,7 @@
       import_tasks:
         file: tasks/040_uuardop.yml
       tags: uuardop
-
+      
     - name: Install vara and wine
       import_tasks:
         file: tasks/041_vara.yml
@@ -55,7 +55,7 @@
       import_tasks:
         file: tasks/050_nginx.yml
       tags: nginx
-
+    
     - name: Install php, composer and web-api (station-api)
       import_tasks:
         file: tasks/051_web_api.yml
@@ -66,15 +66,10 @@
         file: tasks/052_web_gui.yml
       tags: gui
 
-    - name: Download deltachat file packages in public web directory
-      import_tasks:
-        file: tasks/053_web_downloads.yml
-      tags: downloads
-
     - name: Install ubitx and update firmware
-      import_tasks:
+      import_tasks: 
         file: tasks/070_radio.yml
-      tags: radio
+      tags: radio 
 
     - name: Install alsatonic
       import_tasks:
@@ -82,11 +77,11 @@
       tags: alsatonic
 
     - name: Setup service vnc
-      import_tasks:
+      import_tasks: 
         file: tasks/081_vnc.yml
       tags: vnc
 
-    - name: Setup service iwatch
+    - name: Setup service iwatch 
       import_tasks:
         file: tasks/082_iwatch.yml
       tags: iwatch
@@ -101,12 +96,17 @@
         file: tasks/091_roundcube.yml
       tags: roundcube
 
-    - name: check services
+    - name: Download deltachat file packages in public web directory
       import_tasks:
+        file: tasks/053_web_downloads.yml
+      tags: downloads 
+
+    - name: check services
+      import_tasks: 
         file: tasks/080_services.yml
       tags: services
 
-    - name: final checklist
+    - name: final checklist 
       import_tasks:
         file: tasks/100_checklist.yml
       tags: checklist
