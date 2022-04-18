@@ -1,83 +1,83 @@
-    - name: UUCP Setup - Install uucp system package
-      become: true
-      apt:
-        name:
-          - uucp 
+- name: UUCP Setup - Install uucp system package
+  become: true
+  apt:
+    name:
+      - uucp
 
-    - name: UUCP - copy template configuration files
-      become: true
-      copy:
-        src: conf/uucp/
-        dest: /etc/uucp/
-        directory_mode: true
-        owner: uucp
-        group: uucp
-        mode: '0577'
-        backup: yes
+- name: UUCP - copy template configuration files
+  become: true
+  copy:
+    src: conf/uucp/
+    dest: /etc/uucp/
+    directory_mode: true
+    owner: uucp
+    group: uucp
+    mode: "0577"
+    backup: yes
 
-    - name: UUCP - setting nodename 
-      become: true
-      ansible.builtin.lineinfile:
-        backrefs: yes
-        path: "/etc/uucp/config"
-        state: present
-        regexp: "^nodename"
-        line: "nodename {{ hermes_callsign }}"
+- name: UUCP - setting nodename
+  become: true
+  ansible.builtin.lineinfile:
+    backrefs: yes
+    path: "/etc/uucp/config"
+    state: present
+    regexp: "^nodename"
+    line: "nodename {{ hermes_callsign }}"
 
-    - name: UUCP - process template j2  for sys for networks
-      become: true
-      template:
-        src: "./conf/sys.j2"
-        dest: "/etc/uucp/sys"
-        mode: '0754'
-        backup: yes
-      when: (vara_callsign == 'B0DE' or vara_callsign == 'B0DK')
+- name: UUCP - process template j2  for sys for networks
+  become: true
+  template:
+    src: "./conf/sys.j2"
+    dest: "/etc/uucp/sys"
+    mode: "0754"
+    backup: yes
+  when: (vara_callsign == 'B0DE' or vara_callsign == 'B0DK')
 
-    - name: UUCP - process template j2  for sys for kurupira network
-      become: true
-      template:
-        src: "./conf/sys_kurupira.j2"
-        dest: "/etc/uucp/sys"
-        mode: '0754'
-        backup: yes
-      when: (vara_callsign == 'PU4GNU' or vara_callsign == 'PU2UIT')
+- name: UUCP - process template j2  for sys for kurupira network
+  become: true
+  template:
+    src: "./conf/sys_kurupira.j2"
+    dest: "/etc/uucp/sys"
+    mode: "0754"
+    backup: yes
+  when: (vara_callsign == 'PU4GNU' or vara_callsign == 'PU2UIT')
 
-    - name: UUCP - setting pubdir
-      become: true
-      ansible.builtin.lineinfile:
-        backrefs: yes
-        path: "/etc/uucp/config"
-        state: present
-        regexp: "^pubdir"
-        line: "pubdir {{ inbox_path }}"
+- name: UUCP - setting pubdir
+  become: true
+  ansible.builtin.lineinfile:
+    backrefs: yes
+    path: "/etc/uucp/config"
+    state: present
+    regexp: "^pubdir"
+    line: "pubdir {{ inbox_path }}"
 
-    #- name: UUCP - create inbox path pubdir 
-      #become: yes
-      #file: 
-        #path: "{{ inbox_path }}/"
-        #owner: "{{ ansible_user }}"
-        #group: "{{ www_group }}"
-        #mode: '0777'
-        #state: directory
+#- name: UUCP - create inbox path pubdir
+#become: yes
+#file:
+#path: "{{ inbox_path }}/"
+#owner: "{{ ansible_user }}"
+#group: "{{ www_group }}"
+#mode: '0777'
+#state: directory
 
-    - name: UUCP - setting wrapper to uucico -l
-      become: true
-      ansible.builtin.lineinfile:
-        backrefs: yes
-        path: "/lib/systemd/system/uucp@.service"
-        state: present
-        regexp: "^ExecStart=-/usr/sbin/in.uucpd"
-        line: "ExecStart=-/usr/sbin/uucico -l"
+- name: UUCP - setting wrapper to uucico -l
+  become: true
+  ansible.builtin.lineinfile:
+    backrefs: yes
+    path: "/lib/systemd/system/uucp@.service"
+    state: present
+    regexp: "^ExecStart=-/usr/sbin/in.uucpd"
+    line: "ExecStart=-/usr/sbin/uucico -l"
 
-    - name: UUCP  - Remove system uucp cron daily 
-      become: true
-      ansible.builtin.file:
-        path: /etc/cron.daily/uucp
-        state: absent
+- name: UUCP  - Remove system uucp cron daily
+  become: true
+  ansible.builtin.file:
+    path: /etc/cron.daily/uucp
+    state: absent
 
-    - name: UUCP - restart uucp.socket
-      become: true
-      ansible.builtin.service:
-        name: uucp.socket
-        state: restarted
-        enabled: yes
+- name: UUCP - restart uucp.socket
+  become: true
+  ansible.builtin.service:
+    name: uucp.socket
+    state: restarted
+    enabled: yes
