@@ -113,3 +113,17 @@
             name: America/Boa_Vista
             hwclock: UTC
           when: vara_callsign == 'b0dk'
+
+        - name: Set grub timeout to 1
+          become: true
+          community.general.grub:
+            timeout: 1
+
+        - name: Set grub Mitigation off
+          become: true
+          community.general.grub:
+            mitigation: off
+
+        - name: Reload Grub
+          become: true
+          command: update-grub
