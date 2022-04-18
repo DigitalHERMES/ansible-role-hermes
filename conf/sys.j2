@@ -35,7 +35,11 @@ system {{vara_callsign}}-{{ n }}
 {% if hermes_callsign == vara_callsign+ -n|string   %}
 alias local
 {% else %}
+{% if vara_callsign == 'B0DE' %}
 alias ac{{ n }}
+{% elif vara_callsign == 'B0DK' %}
+alias ka{{ n }}
+{% endif %}
 {% endif %}
 alternate 
 port TCP
