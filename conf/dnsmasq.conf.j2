@@ -4,8 +4,6 @@
 # as the long options legal on the command line. See
 # "/usr/sbin/dnsmasq --help" or "man 8 dnsmasq" for details.
 
-
-
 # Listen on this specific port instead of the standard DNS port
 # (53). Setting this to zero completely disables DNS function,
 # leaving only DHCP and/or TFTP.
@@ -57,7 +55,7 @@
 # If you don't want dnsmasq to read /etc/resolv.conf or any other
 # file, getting its servers from this file instead (see below), then
 # uncomment this.
-#no-resolv
+no-resolv
 
 # If you don't want dnsmasq to poll /etc/resolv.conf or other resolv
 # files for changes and re-read them then uncomment this.
@@ -105,7 +103,6 @@ address=/#/10.0.0.1
 # specified interfaces (and the loopback) give the name of the
 # interface (eg eth0) here.
 # Repeat the line for more than one interface.
-#interface=
 interface={{ wifi_id }}
 # Or you can specify which interface _not_ to listen on
 #except-interface=

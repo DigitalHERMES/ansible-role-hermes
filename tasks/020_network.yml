@@ -27,7 +27,7 @@
         dest: "{{ build_path }}/rtl8188eu/"
         version: v5.2.2.4
         force: true
-    
+
     - name: Network -  build driver for rtl8788eu
       command: make
       args:
@@ -86,7 +86,7 @@
         mode: "0744"
         backup: false
 
-    - name: Network - openvpn setup - start client service 
+    - name: Network - openvpn setup - start client service
       become: true
       ansible.builtin.service:
         name: openvpn-client@{{ inventory_hostname }}
@@ -104,16 +104,6 @@
     - name: Network - wifi setup - depmod
       become: true
       command: "depmod -a"
-
-    - name: Network - wifi setup - copying dnsmasq.conf file
-      become: true
-      copy:
-        src: conf/dnsmasq.conf
-        dest: "/etc/"
-        owner: root
-        group: root
-        mode: "0744"
-        backup: false
 
     - name: Network - process template j2  for dnsmasq.conf
       become: true
