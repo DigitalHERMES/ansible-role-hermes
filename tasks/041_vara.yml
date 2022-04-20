@@ -36,6 +36,7 @@
           - libwine
           - libwine:i386
           - fonts-wine
+          - libasound2-plugins:i386
 
     - name: VARA Install - vara files
       when: not vara_exists.stat.exists
