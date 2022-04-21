@@ -2,6 +2,12 @@
 vncconfig -iconic &
 
 cp ~/VARA/VARA.ini.default ~/VARA/VARA.ini
-/usr/bin/xterm -bg black -fg green -e wine VARA/VARA.exe &
-/usr/bin/wmaker 
+
+# run VARA
+su hermes -c "/usr/bin/xterm -bg black -fg green -e wine VARA/VARA.exe &" </home/hermes/key
+
+# run UHRR
+su hermes -c "cd /opt/uhrr; /usr/bin/xterm -bg gray50 -fg white -e /opt/uhrr/UHRR &" </home/hermes/key
+
+/usr/bin/wmaker
 #xrdb $HOME/.Xresources
